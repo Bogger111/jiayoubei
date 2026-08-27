@@ -1,0 +1,12 @@
+{
+  "name": "家有备 · 家庭安全协同 AI Agent",
+  "short_name": "家有备",
+  "description": "AI 理解，家庭协作，安全确认 —— 家庭安全协同 AI Agent",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f5ef",
+  "theme_color": "#0f2f2c",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
