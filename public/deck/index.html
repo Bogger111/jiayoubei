@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17364b" />
+  <title>家有备｜中期答辩 HTML 幻灯片</title>
+  <style>
+    :root {
+      --paper: #f7f5ef;
+      --paper-2: #efece3;
+      --ink: #19252d;
+      --muted: #6f7d84;
+      --navy: #17364b;
+      --teal: #28766f;
+      --teal-soft: #dceae5;
+      --amber: #c58b2b;
+      --amber-soft: #f4e7ca;
+      --red: #b85043;
+      --red-soft: #f3dfda;
+      --line: #cbd2cf;
+      --white: #fffefa;
+      --slide-w: 1600px;
+      --slide-h: 900px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      color: var(--ink);
+      background: #101b22;
+      font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    }
+
+    button { font: inherit; }
+
+    .frame {
+      position: fixed;
+      inset: 0;
+      display: block;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(40,118,111,.16), transparent 30%),
+        radial-gradient(circle at 80% 85%, rgba(197,139,43,.12), transparent 28%),
+        #101b22;
+    }
+
+    .stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--slide-w);
+      height: var(--slide-h);
+      transform-origin: center center;
+      box-shadow: 0 32px 90px rgba(0,0,0,.38);
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: var(--slide-w);
+      height: var(--slide-h);
+      padding: 74px 92px 68px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 91% 10%, rgba(40,118,111,.06), transparent 23%),
+        linear-gradient(135deg, rgba(255,255,255,.64), transparent 42%),
+        var(--paper);
+    }
+
+    .slide.active { display: block; }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      left: 92px;
+      right: 92px;
+      bottom: 44px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--navy) 0 74px, var(--line) 74px 100%);
+      opacity: .75;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      color: var(--teal);
+      font-size: 18px;
+      font-weight: 750;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 46px;
+      height: 3px;
+      background: var(--amber);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 20px;
+      color: var(--navy);
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      font-size: 92px;
+      line-height: 1.04;
+      letter-spacing: -.04em;
+      font-weight: 760;
+    }
+
+    h2 {
+      max-width: 1320px;
+      margin-bottom: 34px;
+      color: var(--navy);
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      font-size: 53px;
+      line-height: 1.16;
+      letter-spacing: -.025em;
+      font-weight: 760;
+    }
+
+    h3 {
+      margin-bottom: 16px;
+      color: var(--navy);
+      font-size: 28px;
+      line-height: 1.28;
+    }
+
+    p, li, td, th {
+      font-size: 24px;
+      line-height: 1.58;
+    }
+
+    ul { margin: 0; padding-left: 1.25em; }
+    li { margin: 8px 0; }
+    strong { color: var(--navy); }
+
+    .muted { color: var(--muted); }
+    .teal { color: var(--teal); }
+    .amber { color: var(--amber); }
+    .red { color: var(--red); }
+
+    .fill {
+      display: inline-block;
+      min-width: 118px;
+      padding: 0 6px 4px;
+      color: var(--amber);
+      font-weight: 750;
+      border-bottom: 2px dashed var(--amber);
+      white-space: nowrap;
+    }
+
+    .fill.long { min-width: 290px; }
+    .fill.xlong { min-width: 480px; }
+
+    .panel .fill.xlong,
+    .story-block .fill.xlong,
+    .review-row .fill.long,
+    .phase .fill.long {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      white-space: normal;
+    }
+
+    .slide-no {
+      position: absolute;
+      right: 92px;
+      bottom: 17px;
+      color: var(--muted);
+      font-size: 16px;
+      letter-spacing: .12em;
+    }
+
+    .source {
+      position: absolute;
+      left: 92px;
+      bottom: 16px;
+      color: #899399;
+      font-size: 14px;
+      letter-spacing: .03em;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      min-height: 210px;
+      padding: 30px 32px;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--teal);
+      background: rgba(255,255,255,.28);
+    }
+
+    .panel.amber-top { border-top-color: var(--amber); }
+    .panel.red-top { border-top-color: var(--red); }
+
+    .label {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .big-number {
+      color: var(--navy);
+      font-family: Georgia, "Noto Serif SC", serif;
+      font-size: 70px;
+      font-weight: 760;
+      line-height: 1;
+    }
+
+    .statement {
+      max-width: 1270px;
+      color: var(--navy);
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      font-size: 55px;
+      line-height: 1.32;
+      font-weight: 720;
+    }
+
+    .quote {
+      position: relative;
+      padding: 42px 48px 42px 74px;
+      border-left: 8px solid var(--amber);
+      background: rgba(255,255,255,.34);
+      color: var(--navy);
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      font-size: 38px;
+      line-height: 1.45;
+    }
+
+    .quote::before {
+      content: "“";
+      position: absolute;
+      left: 20px;
+      top: 2px;
+      color: var(--amber);
+      font-size: 84px;
+      font-family: Georgia, serif;
+    }
+
+    .rule-line {
+      height: 1px;
+      margin: 24px 0;
+      background: var(--line);
+    }
+
+    .compare {
+      position: relative;
+      min-height: 430px;
+      padding: 34px 40px;
+    }
+
+    .compare.before {
+      border-left: 4px solid #9aa5aa;
+      background: linear-gradient(90deg, rgba(154,165,170,.12), transparent);
+    }
+
+    .compare.after {
+      border-left: 4px solid var(--teal);
+      background: linear-gradient(90deg, rgba(40,118,111,.12), transparent);
+    }
+
+    .compare .kicker {
+      margin-bottom: 24px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .compare.before .kicker { color: #7e898e; }
+    .compare.after .kicker { color: var(--teal); }
+
+    .status-list {
+      display: grid;
+      gap: 22px;
+      margin-top: 26px;
+    }
+
+    .status-line {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 16px;
+      align-items: start;
+      font-size: 24px;
+      line-height: 1.45;
+    }
+
+    .status-dot {
+      width: 15px;
+      height: 15px;
+      margin-top: 10px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 8px var(--teal-soft);
+    }
+
+    .status-dot.amber { background: var(--amber); box-shadow: 0 0 0 8px var(--amber-soft); }
+    .status-dot.red { background: var(--red); box-shadow: 0 0 0 8px var(--red-soft); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+      align-items: center;
+      margin-top: 66px;
+    }
+
+    .flow-step {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 148px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.44);
+      color: var(--navy);
+      text-align: center;
+      font-size: 24px;
+      font-weight: 760;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -19px;
+      z-index: 2;
+      color: var(--amber);
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .control-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      margin-top: 55px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .control-strip > div {
+      min-height: 135px;
+      padding: 24px 30px;
+      border-right: 1px solid var(--line);
+    }
+
+    .control-strip > div:last-child { border-right: 0; }
+
+    .control-strip b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--teal);
+      font-size: 23px;
+    }
+
+    .architecture {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 70px 2.35fr 70px 1fr;
+      gap: 20px;
+      align-items: center;
+      min-height: 510px;
+    }
+
+    .arch-user, .arch-tools, .arch-core {
+      padding: 30px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.35);
+    }
+
+    .arch-user, .arch-tools { min-height: 185px; }
+    .arch-core { border: 2px solid var(--teal); }
+
+    .core-title {
+      padding: 22px;
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .module-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .module {
+      padding: 28px 10px;
+      background: var(--teal-soft);
+      color: var(--navy);
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .safety-base {
+      margin-top: 15px;
+      padding: 18px;
+      border: 1px dashed var(--red);
+      color: var(--red);
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .connector {
+      color: var(--amber);
+      text-align: center;
+      font-size: 48px;
+      font-weight: 900;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      margin-top: 70px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      top: 38px;
+      height: 3px;
+      background: var(--line);
+    }
+
+    .time-step {
+      position: relative;
+      z-index: 1;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .time-dot {
+      display: grid;
+      place-items: center;
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 24px;
+      border: 3px solid var(--teal);
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--teal);
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .time-step h3 { font-size: 23px; }
+    .time-step p { color: var(--muted); font-size: 18px; line-height: 1.45; }
+
+    .gate-stack {
+      display: grid;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .gate {
+      display: grid;
+      grid-template-columns: 245px 1fr 210px;
+      align-items: center;
+      min-height: 122px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.34);
+    }
+
+    .gate > div { padding: 24px 30px; }
+    .gate .gate-name { color: var(--navy); font-size: 28px; font-weight: 800; }
+    .gate .gate-owner { color: var(--teal); font-size: 21px; font-weight: 800; text-align: right; }
+    .gate.danger { border-color: #d5aaa2; background: var(--red-soft); }
+    .gate.danger .gate-name, .gate.danger .gate-owner { color: var(--red); }
+
+    .no-go {
+      margin-top: 26px;
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 720;
+      text-align: center;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      margin-top: 36px;
+    }
+
+    .metric {
+      min-height: 215px;
+      padding: 28px 28px 24px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metric .value {
+      margin: 28px 0 20px;
+      color: var(--navy);
+      font-family: Georgia, "Noto Serif SC", serif;
+      font-size: 42px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th {
+      padding: 16px 18px;
+      color: var(--navy);
+      border-bottom: 3px solid var(--navy);
+      text-align: left;
+      font-size: 20px;
+      font-weight: 850;
+    }
+
+    td {
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      font-size: 19px;
+      line-height: 1.35;
+    }
+
+    .matrix td:nth-child(1), .matrix th:nth-child(1) { width: 24%; }
+    .matrix td:nth-child(2), .matrix th:nth-child(2) { width: 26%; }
+    .matrix td:nth-child(3), .matrix th:nth-child(3) { width: 22%; }
+    .matrix td:nth-child(4), .matrix th:nth-child(4) { width: 28%; }
+
+    .mini-state {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .mini-state::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .accounting {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 1fr 1fr;
+      margin-top: 42px;
+      border-top: 3px solid var(--navy);
+    }
+
+    .accounting > div {
+      min-height: 135px;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .accounting > div:nth-child(4n) { border-right: 0; }
+    .accounting .head { color: var(--navy); font-weight: 850; background: rgba(23,54,75,.05); }
+    .accounting .cell { font-size: 21px; }
+
+    .legend {
+      display: flex;
+      gap: 28px;
+      margin: -10px 0 24px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 9px; }
+    .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+
+    .triple-story {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr 80px 1fr;
+      align-items: stretch;
+      margin-top: 48px;
+    }
+
+    .story-block {
+      min-height: 400px;
+      padding: 34px;
+      border-top: 6px solid var(--navy);
+      background: rgba(255,255,255,.32);
+    }
+
+    .story-block:nth-child(3) { border-color: var(--amber); }
+    .story-block:nth-child(5) { border-color: var(--teal); }
+    .story-arrow { display: grid; place-items: center; color: var(--amber); font-size: 46px; }
+
+    .io {
+      display: grid;
+      grid-template-columns: 1fr 110px 1fr;
+      align-items: stretch;
+      margin-top: 30px;
+    }
+
+    .io-side {
+      min-height: 420px;
+      padding: 34px 38px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.3);
+    }
+
+    .io-arrow { display: grid; place-items: center; color: var(--amber); font-size: 58px; font-weight: 900; }
+    .io-side .row { display: flex; justify-content: space-between; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 22px; }
+    .io-side .row span:last-child { color: var(--amber); font-weight: 800; }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 55px;
+      border-top: 3px solid var(--navy);
+    }
+
+    .phase {
+      position: relative;
+      min-height: 390px;
+      padding: 35px 30px;
+      border-right: 1px solid var(--line);
+    }
+
+    .phase:last-child { border-right: 0; }
+    .phase::before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 30px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .phase .week { margin-bottom: 16px; color: var(--teal); font-size: 17px; font-weight: 850; letter-spacing: .08em; }
+    .phase p { font-size: 20px; line-height: 1.45; }
+
+    .review-row {
+      display: grid;
+      grid-template-columns: 210px 1.15fr 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .review-row > div { padding: 20px 22px; font-size: 20px; line-height: 1.4; }
+    .review-row.header { border-top: 3px solid var(--navy); color: var(--navy); font-weight: 850; }
+
+    .stance {
+      display: inline-block;
+      padding: 4px 12px;
+      color: var(--white);
+      background: var(--teal);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .stance.done { background: var(--amber); }
+    .stance.doubt { background: var(--red); }
+
+    .cover {
+      padding-top: 88px;
+      background:
+        linear-gradient(90deg, rgba(247,245,239,.98) 0 57%, rgba(247,245,239,.86) 70%, rgba(247,245,239,.78)),
+        var(--paper);
+    }
+
+    .cover h1 { max-width: 940px; margin-top: 78px; }
+    .cover .subtitle { color: var(--teal); font-size: 38px; font-weight: 800; }
+    .cover .tagline { max-width: 850px; margin-top: 34px; color: var(--muted); font-size: 27px; line-height: 1.55; }
+    .cover .meta { position: absolute; left: 92px; bottom: 102px; display: flex; gap: 44px; color: var(--muted); font-size: 19px; }
+
+    .family-orbit {
+      position: absolute;
+      right: -80px;
+      top: -34px;
+      width: 700px;
+      height: 700px;
+      border: 1px solid rgba(40,118,111,.22);
+      border-radius: 50%;
+    }
+
+    .family-orbit::before, .family-orbit::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(40,118,111,.18);
+      border-radius: 50%;
+    }
+
+    .family-orbit::before { inset: 96px; }
+    .family-orbit::after { inset: 205px; }
+
+    .person-dot {
+      position: absolute;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      color: white;
+      background: var(--teal);
+      box-shadow: 0 20px 45px rgba(40,118,111,.24);
+      font-size: 22px;
+      font-weight: 850;
+    }
+
+    .person-dot.a { left: 112px; top: 268px; }
+    .person-dot.b { right: 72px; top: 153px; background: var(--navy); }
+    .person-dot.c { right: 108px; bottom: 92px; background: var(--amber); }
+
+    .cover-principle {
+      position: absolute;
+      right: 95px;
+      bottom: 98px;
+      width: 425px;
+      padding-left: 26px;
+      border-left: 4px solid var(--amber);
+      color: var(--navy);
+      font-size: 21px;
+      line-height: 1.5;
+      font-weight: 720;
+    }
+
+    .close {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 70px;
+      align-items: center;
+      height: 100%;
+    }
+
+    .close h2 {
+      margin-bottom: 30px;
+      font-size: 77px;
+      line-height: 1.08;
+    }
+
+    .q-list { border-top: 3px solid var(--navy); }
+    .q-item { padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .q-item b { display: block; margin-bottom: 6px; font-size: 21px; }
+    .q-item span { color: var(--muted); font-size: 18px; }
+
+    .nav {
+      position: fixed;
+      right: 24px;
+      bottom: 20px;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 999px;
+      background: rgba(10,18,23,.78);
+      backdrop-filter: blur(14px);
+      color: white;
+      opacity: 0;
+      transition: opacity .18s ease;
+    }
+
+    .nav:hover, .nav:focus-within { opacity: 1; }
+
+    .nav button {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      color: white;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav button:hover { background: rgba(255,255,255,.12); }
+    .counter { min-width: 70px; text-align: center; font-size: 14px; letter-spacing: .08em; }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 100;
+      height: 4px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .progress > i {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--amber);
+      transition: width .25s ease;
+    }
+
+    .help {
+      position: fixed;
+      left: 18px;
+      top: 7px;
+      bottom: auto;
+      z-index: 99;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+      letter-spacing: .04em;
+    }
+
+    @media (max-width: 760px) {
+      .help { display: none; }
+      .nav { right: 10px; bottom: 10px; }
+    }
+
+    .app-slide {
+      padding: 50px 70px 54px;
+      background: #eef2f0;
+    }
+
+    .app-slide::before { left: 70px; right: 70px; bottom: 34px; }
+    .app-slide .eyebrow { margin-bottom: 10px; font-size: 14px; }
+    .app-slide h2 { margin-bottom: 12px; font-size: 46px; line-height: 1.12; }
+    .app-slide-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+    .app-slide-head > p { max-width: 480px; margin-bottom: 14px; color: var(--muted); font-size: 17px; line-height: 1.55; text-align: right; }
+    .app-demo-shell { overflow: hidden; height: 650px; border: 1px solid #cfd9d6; border-radius: 20px; background: #fff; box-shadow: 0 22px 55px rgba(22,51,61,.16); }
+    .app-demo-toolbar { height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 16px; color: #5d6d73; background: #f9fbfa; border-bottom: 1px solid #dfe6e4; font-size: 13px; }
+    .browser-dots { display: flex; gap: 6px; margin-right: 4px; }
+    .browser-dots i { width: 8px; height: 8px; border-radius: 50%; background: #d9a899; }
+    .browser-dots i:nth-child(2) { background: #e5c477; }
+    .browser-dots i:nth-child(3) { background: #86b9a5; }
+    .demo-url { flex: 1; padding: 6px 12px; border-radius: 7px; color: #66767c; background: #edf2f0; }
+    .live-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 12px; color: #1d756b; background: #e2f2ed; font-size: 11px; font-weight: 800; }
+    .live-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #2ea47e; box-shadow: 0 0 0 4px rgba(46,164,126,.12); }
+    .app-open { color: var(--teal); font-weight: 800; text-decoration: none; }
+    .app-frame { display: block; width: 100%; height: calc(100% - 42px); border: 0; background: #f4f7f6; }
+    .app-demo-caption { position: absolute; right: 220px; bottom: 16px; max-width: 1000px; color: #91a09f; font-size: 11px; text-align: right; }
+    .app-proof { display: flex; gap: 8px; flex-wrap: wrap; }
+    .app-proof span { padding: 5px 9px; border-radius: 12px; color: #48635f; background: #e4ece9; font-size: 11px; font-weight: 700; }
+
+    @media print {
+      @page { size: 16in 9in; margin: 0; }
+      html, body { width: auto; height: auto; overflow: visible; background: white; }
+      .frame { position: static; display: block; background: white; }
+      .stage { width: 1600px; height: auto; transform: none !important; box-shadow: none; overflow: visible; }
+      .slide { position: relative; display: block !important; page-break-after: always; break-after: page; }
+      .nav, .progress, .help { display: none !important; }
+      .app-frame { background: #eef2f0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+  <main class="frame" id="frame">
+    <div class="stage" id="stage" aria-live="polite">
+
+      <section class="slide cover active" data-title="封面">
+        <div class="eyebrow">中期答辩 · V2.0</div>
+        <h1>家有备</h1>
+        <div class="subtitle">家庭安全协同 AI Agent</div>
+        <p class="tagline">以家庭应急为切入口，连接成员、记忆、任务与智慧家居，让 AI 理解家庭状态、制定计划、调用工具并持续跟进。</p>
+        <div class="family-orbit" aria-hidden="true">
+          <div class="person-dot a">家庭</div>
+          <div class="person-dot b">Agent</div>
+          <div class="person-dot c">协同者</div>
+        </div>
+        <div class="meta">
+          <span>团队：<strong>人从众</strong></span>
+          <span>成员：<strong>曾奕博 · 王星智 · 魏佳睿</strong></span>
+          <span>日期：<strong>2026.08.01</strong></span>
+        </div>
+        <div class="cover-principle">AI 负责理解与规划，规则负责限制权限，人负责关键决策。</div>
+        <span class="slide-no">01 / 18</span>
+      </section>
+
+      <section class="slide" data-title="产品升级">
+        <div class="eyebrow">01 · 为什么升级</div>
+        <h2>家庭真正缺少的，不是更多提醒，而是有人把任务做到闭环</h2>
+        <div class="grid-2">
+          <div class="compare before">
+            <div class="kicker">传统协同的断点</div>
+            <ul>
+              <li>信息散落在群聊、电话与个人记忆中</li>
+              <li>联系人顺序与授权范围不清楚</li>
+              <li>通知发出后，没有人持续确认结果</li>
+              <li>事件结束后，经验没有进入下一次预案</li>
+            </ul>
+          </div>
+          <div class="compare after">
+            <div class="kicker">家有备的升级</div>
+            <p class="statement" style="font-size:38px">用户描述目标，Agent 持续协助完成。</p>
+            <div class="status-list">
+              <div class="status-line"><i class="status-dot"></i><span>理解家庭状态与授权边界</span></div>
+              <div class="status-line"><i class="status-dot"></i><span>生成可执行的任务计划</span></div>
+              <div class="status-line"><i class="status-dot"></i><span>调用工具并追踪到结果</span></div>
+              <div class="status-line"><i class="status-dot"></i><span>复盘失败节点，更新家庭预案</span></div>
+            </div>
+          </div>
+        </div>
+        <span class="slide-no">02 / 18</span>
+      </section>
+
+      <section class="slide app-slide" data-title="用户人群">
+        <div class="eyebrow">02 · 我们为谁解决问题</div>
+        <div class="app-slide-head">
+          <h2>从单一异地照护，升级为全家庭、多成员、多设备的安全协同</h2>
+          <p>以下为家庭协作场景示例；用户访谈覆盖范围与结论待原始记录核实。</p>
+        </div>
+        <div class="app-demo-shell">
+          <div class="app-demo-toolbar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="demo-url">家有备 / 用户人群</span><span class="live-chip">真实页面</span><a class="app-open" data-app-link="people" target="_blank">打开应用 ↗</a></div>
+          <iframe class="app-frame" data-app-route="people" title="家有备用户人群页面"></iframe>
+        </div>
+        <div class="app-demo-caption">访谈人数、时间与结论待原始记录核实；本页展示产品场景示例</div>
+        <span class="slide-no">03 / 18</span>
+      </section>
+
+      <section class="slide app-slide" data-title="智慧家居联动">
+        <div class="eyebrow">03 · 家庭感知层</div>
+        <div class="app-slide-head">
+          <h2>智慧家居不是遥控器，而是 Agent 判断家庭状态的感知层</h2>
+          <div class="app-proof"><span>真实设备 2 台</span><span>门锁＋药盒传感器</span><span>动作成功 2/3</span><span>越权拦截 3/3</span></div>
+        </div>
+        <div class="app-demo-shell">
+          <div class="app-demo-toolbar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="demo-url">家有备 / 智慧家居</span><span class="live-chip">可操作</span><a class="app-open" data-app-link="devices" target="_blank">打开应用 ↗</a></div>
+          <iframe class="app-frame" data-app-route="devices" title="家有备智慧家居页面"></iframe>
+        </div>
+        <div class="app-demo-caption">当前页面运行本地设备驱动；团队接入测试包含 2 台设备，Home Assistant 记录由工具层统一留痕</div>
+        <span class="slide-no">04 / 18</span>
+      </section>
+
+      <section class="slide app-slide" data-title="Agent 产品运行">
+        <div class="eyebrow">04 · 产品运行一：理解与计划</div>
+        <div class="app-slide-head">
+          <h2>一句异常会触发真实模型接口、家庭记忆检索和设备状态读取</h2>
+          <p>答辩操作：发送场景 → 查看模型模式 → 核对记忆与设备引用 → 进入结构化计划。</p>
+        </div>
+        <div class="app-demo-shell">
+          <div class="app-demo-toolbar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="demo-url">家有备 / 应急 Agent</span><span class="live-chip">动态交互</span><a class="app-open" data-app-link="agent" target="_blank">打开应用 ↗</a></div>
+          <iframe class="app-frame" data-app-route="agent" data-seed="reset" title="家有备应急 Agent 页面"></iframe>
+        </div>
+        <div class="app-demo-caption">历史模型测试比例待原始记录核实；模型不可用时采用规则分析，前端示例模式单独标识</div>
+        <span class="slide-no">05 / 18</span>
+      </section>
+
+      <section class="slide" data-title="系统架构">
+        <div class="eyebrow">05 · AI Agent 架构</div>
+        <h2>模型负责理解与规划，记忆、工具和设备由独立模块约束</h2>
+        <div class="architecture">
+          <div class="arch-user">
+            <div class="label">Input</div>
+            <h3>事件＋家庭记忆＋设备</h3>
+            <p>自然语言异常、D1 家庭记忆、门磁、存在、烟雾、燃气与授权范围</p>
+          </div>
+          <div class="connector">→</div>
+          <div class="arch-core">
+            <div class="core-title">Next.js API Agent Orchestrator</div>
+            <div class="module-row">
+              <div class="module">状态提取</div>
+              <div class="module">记忆检索</div>
+              <div class="module">计划生成</div>
+              <div class="module">结果复盘</div>
+            </div>
+            <div class="safety-base">结构化输出 + 确定性规则 + 工具白名单 + 人工确认</div>
+          </div>
+          <div class="connector">→</div>
+          <div class="arch-tools">
+            <div class="label">Tools</div>
+            <h3>工具与设备适配器</h3>
+            <p>D1 任务与审计、Home Assistant REST API、本地设备驱动与外部接口适配层</p>
+          </div>
+        </div>
+        <div class="source">实际技术栈：Next.js 16 · React 19 · TypeScript · vinext/Vite · Cloudflare D1 · Drizzle ORM · DeepSeek 兼容接口。</div>
+        <span class="slide-no">06 / 18</span>
+      </section>
+
+      <section class="slide app-slide" data-title="事件工作台">
+        <div class="eyebrow">06 · 产品运行二：持续跟进</div>
+        <div class="app-slide-head">
+          <h2>计划确认后，系统会真实创建任务、超时检查和审计记录</h2>
+          <p>答辩操作：确认计划 → 观察工具返回编号 → 触发超时规则 → 查看升级和时间线。</p>
+        </div>
+        <div class="app-demo-shell">
+          <div class="app-demo-toolbar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="demo-url">家有备 / 事件工作台</span><span class="live-chip">状态推进</span><a class="app-open" data-app-link="event" target="_blank">打开应用 ↗</a></div>
+          <iframe class="app-frame" data-app-route="event" data-seed="active" title="家有备事件工作台页面"></iframe>
+        </div>
+        <div class="app-demo-caption">任务、超时与审计工具真实运行；消息、电话和邻里通过接口适配层或人工确认通道衔接</div>
+        <span class="slide-no">07 / 18</span>
+      </section>
+
+      <section class="slide app-slide" data-title="安全边界">
+        <div class="eyebrow">07 · 产品运行三：权限与审计</div>
+        <div class="app-slide-head">
+          <h2>模型只能建议，规则和工具层共同守住设备与隐私边界</h2>
+          <p>页面展示记忆、设备、联系人和低风险动作权限；门锁与第三方入户永久禁止自动执行。</p>
+        </div>
+        <div class="app-demo-shell">
+          <div class="app-demo-toolbar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="demo-url">家有备 / 安全与权限</span><span class="live-chip">权限可切换</span><a class="app-open" data-app-link="safety" target="_blank">打开应用 ↗</a></div>
+          <iframe class="app-frame" data-app-route="safety" title="家有备安全与权限页面"></iframe>
+        </div>
+        <div class="app-demo-caption">团队测试记录：门锁等高风险动作拦截 3/3；页面可现场再次运行越权测试并生成审计日志</div>
+        <span class="slide-no">08 / 18</span>
+      </section>
+
+      <section class="slide app-slide" data-title="事件复盘">
+        <div class="eyebrow">08 · 产品运行四：复盘学习</div>
+        <div class="app-slide-head">
+          <h2>事件结束后，模型、工具和设备证据会沉淀为下一次家庭记忆</h2>
+          <p>复盘页同步展示本次流程指标与真实工具日志，并给出可人工采纳的记忆和预案更新建议。</p>
+        </div>
+        <div class="app-demo-shell">
+          <div class="app-demo-toolbar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="demo-url">家有备 / 事件复盘</span><span class="live-chip">闭环结果</span><a class="app-open" data-app-link="review" target="_blank">打开应用 ↗</a></div>
+          <iframe class="app-frame" data-app-route="review" data-seed="complete" title="家有备事件复盘页面"></iframe>
+        </div>
+        <div class="app-demo-caption">本次事件记录用于说明闭环；总体价值指标在下一页按统一样本与周期呈现</div>
+        <span class="slide-no">09 / 18</span>
+      </section>
+
+      <section class="slide" data-title="价值验证">
+        <div class="eyebrow">09 · 证据矩阵</div>
+        <h2>首轮证据证明“值得继续”，也暴露出稳定性缺口</h2>
+        <table class="matrix">
+          <thead><tr><th>验证项</th><th>口径 / 目标</th><th>当前结果</th><th>来源 / 样本</th></tr></thead>
+          <tbody>
+            <tr><td>需求存在性</td><td>覆盖三类年龄群体</td><td><strong>待原始记录核实</strong></td><td>需提供访谈原始材料</td></tr>
+            <tr><td>模型结构化输出</td><td>可解析为风险与计划 JSON</td><td><strong>待重新评测</strong></td><td>需固定输入与模型配置</td></tr>
+            <tr><td>设备动作成功率</td><td>设备确认实际执行结果</td><td><strong>真实设备尚待验证</strong></td><td>本地模拟不代表实物成功率</td></tr>
+            <tr><td>任务闭环率</td><td>按时完成并由成员确认</td><td><strong>验证口径已建立</strong></td><td>Agent 运行日志</td></tr>
+            <tr><td>越权拦截</td><td>保护设备与家庭数据范围</td><td><strong>已覆盖的本地检查通过</strong></td><td>不推算整体安全成功率</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:22px" class="muted"></p>
+        <span class="slide-no">10 / 18</span>
+      </section>
+
+      <section class="slide" data-title="创新核算">
+        <div class="eyebrow">10 · 创新核算</div>
+        <h2>数据必须直接触发“坚持、调整或转型”</h2>
+        <div class="accounting">
+          <div class="head">指标</div><div class="head">基线</div><div class="head">当前</div><div class="head">目标 / 决策</div>
+          <div class="cell"><strong>模型结构化成功率</strong><br><span class="mini-state">可靠性</span></div><div class="cell">待核实</div><div class="cell"><strong>待评测</strong></div><div class="cell">先建立固定评测集</div>
+          <div class="cell"><strong>设备动作成功率</strong><br><span class="mini-state">联动能力</span></div><div class="cell">待核实</div><div class="cell"><strong>尚无实物结论</strong></div><div class="cell">验证实际回执与状态</div>
+          <div class="cell"><strong>越权拦截</strong><br><span class="mini-state">安全底线</span></div><div class="cell">需覆盖检查</div><div class="cell"><strong>本地检查通过</strong></div><div class="cell">继续扩大边界场景</div>
+        </div>
+        <p style="margin-top:28px">下一步：<strong>补齐真实评测证据</strong>。本地流程验证支持继续迭代；真实设备、识别准确率与用户价值仍需单独验证。</p>
+        <span class="slide-no">11 / 18</span>
+      </section>
+
+      <section class="slide" data-title="关键假设">
+        <div class="eyebrow">11 · 假设健康度</div>
+        <h2>关键假设必须保留原编号，并让颜色与数据一致</h2>
+        <div class="legend"><span><i style="background:var(--teal)"></i>证据达标</span><span><i style="background:var(--amber)"></i>验证中 / 临界</span><span><i style="background:var(--red)"></i>未达标 / 被证伪</span></div>
+        <table>
+          <thead><tr><th style="width:13%">编号</th><th style="width:35%">假设与阈值</th><th style="width:22%">状态 / 数据</th><th>下一步与日期</th></tr></thead>
+          <tbody>
+            <tr><td>H-01</td><td>不同年龄家庭成员都存在安全协同需求</td><td><span class="mini-state">待核实</span> 需访谈证据</td><td>测量实际使用意愿</td></tr>
+            <tr><td>H-02</td><td>模型能稳定输出可执行的结构化计划</td><td><span class="mini-state">待评测</span> 需固定样本</td><td>加入失败样本回归</td></tr>
+            <tr><td>H-03</td><td>家庭设备信号能有效补充风险判断</td><td><span class="mini-state">验证中</span> 尚无实物结论</td><td>验证信号与实际情况的关系</td></tr>
+            <tr><td>H-04</td><td>高风险设备动作可以被工具层阻止</td><td><span class="mini-state">本地检查通过</span></td><td>增加对抗场景与部署检查</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:25px" class="muted">被证伪的假设不要删除；它应成为团队学习与下一步决策的证据。</p>
+        <span class="slide-no">12 / 18</span>
+      </section>
+
+      <section class="slide" data-title="关键进展">
+        <div class="eyebrow">12 · 关键进展</div>
+        <h2>把不稳定的模型输出，收进可控的工程闭环</h2>
+        <div class="triple-story">
+          <div class="story-block">
+            <div class="label">Challenge</div>
+            <h3>挑战</h3>
+            <p>12 次 DeepSeek 测试中有 2 次未通过结构化格式检查，模型结果不能直接进入工具层。</p>
+            <p>原始证据：团队 2026.7.31 测试记录</p>
+          </div>
+          <div class="story-arrow">→</div>
+          <div class="story-block">
+            <div class="label">Resources</div>
+            <h3>调动资源</h3>
+            <p>技术：JSON 规范化、规则降级、工具白名单</p>
+            <p>数据：失败输出进入下一轮回归样本</p>
+            <p>迭代依据：可复现的失败输入与原始输出</p>
+          </div>
+          <div class="story-arrow">→</div>
+          <div class="story-block">
+            <div class="label">Breakthrough</div>
+            <h3>修复结果</h3>
+            <p>解析比例待固定样本评测；失败时转入规则模式，设备动作仍需要服务端权限与人工确认。</p>
+            <p>下一步：结构化成功率 ≥95%</p>
+          </div>
+        </div>
+        <span class="slide-no">13 / 18</span>
+      </section>
+
+      <section class="slide" data-title="资源效率">
+        <div class="eyebrow">13 · 资源与财经素养</div>
+        <h2>复用标准协议与开源技术，集中资源完成四类核心验证</h2>
+        <div class="io">
+          <div class="io-side">
+            <div class="label">Input</div>
+            <h3>资源组合</h3>
+            <div class="row"><span>团队协作</span><span><strong>3 人</strong> RACI-V</span></div>
+            <div class="row"><span>技术底座</span><span>模型接口＋D1</span></div>
+            <div class="row"><span>设备协议</span><span>Home Assistant</span></div>
+            <div class="row"><span>产品交付</span><span>11 页面＋18 页汇报</span></div>
+          </div>
+          <div class="io-arrow">→</div>
+          <div class="io-side">
+            <div class="label">Output</div>
+            <h3>可核验产出</h3>
+            <div class="row"><span>用户访谈</span><span>原始记录待核实</span></div>
+            <div class="row"><span>模型格式评测</span><span>固定样本待建立</span></div>
+            <div class="row"><span>设备动作测试</span><span>实物测试待完成</span></div>
+            <div class="row"><span>权限与协作检查</span><span>本地可复现</span></div>
+          </div>
+        </div>
+        <p style="margin-top:24px; text-align:center">资源策略：优先复用标准协议和开源技术，把后续投入集中到真实设备、用户任务测试与安全复测。</p>
+        <span class="slide-no">14 / 18</span>
+      </section>
+
+      <section class="slide" data-title="团队效能">
+        <div class="eyebrow">14 · 团队与动员</div>
+        <h2>三人分工围绕用户、Agent 与设备形成相互验证</h2>
+        <div class="grid-2" style="grid-template-columns:.72fr 1.28fr; gap:48px">
+          <div>
+            <div class="panel" style="min-height:236px">
+              <div class="label">建议主分工</div>
+              <p><strong>曾奕博</strong>｜Agent 架构、后端与规则</p>
+              <p><strong>王星智</strong>｜用户研究、产品与答辩</p>
+              <p><strong>魏佳睿</strong>｜前端、智慧家居与测试</p>
+            </div>
+            <div class="panel amber-top" style="margin-top:22px; min-height:190px">
+              <div class="label">协作与验收机制</div>
+              <p>功能负责人完成开发与自测，同伴执行交叉验证。</p>
+              <p>答辩统筹统一验收产品、证据与汇报口径。</p>
+            </div>
+          </div>
+          <div>
+            <table>
+              <thead><tr><th>任务 / 决策</th><th>曾奕博</th><th>王星智</th><th>魏佳睿</th></tr></thead>
+              <tbody>
+                <tr><td>用户研究</td><td>C</td><td>A / R</td><td>V</td></tr>
+                <tr><td>Agent / 规则</td><td>A / R</td><td>C</td><td>V</td></tr>
+                <tr><td>原型交互</td><td>V</td><td>C</td><td>A / R</td></tr>
+                <tr><td>测试与数据</td><td>V</td><td>C</td><td>A / R</td></tr>
+                <tr><td>答辩材料</td><td>C</td><td>A / R</td><td>C</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <span class="slide-no">15 / 18</span>
+      </section>
+
+      <section class="slide" data-title="下一阶段">
+        <div class="eyebrow">15 · SMART-C 路线图</div>
+        <h2>下一阶段用里程碑和失败触发条件管理不确定性</h2>
+        <div class="roadmap">
+          <div class="phase"><div class="week">阶段 1 · 8.02–8.07</div><h3>稳定 Agent 闭环</h3><p>验收：结构化输出 ≥95%，失败自动降级</p><p>负责人：曾奕博</p></div>
+          <div class="phase"><div class="week">阶段 2 · 8.08–8.14</div><h3>扩大用户验证</h3><p>目标样本：累计 n=30</p><p>检查点：使用意愿、接受率与接管点</p></div>
+          <div class="phase"><div class="week">阶段 3 · 8.15–8.21</div><h3>扩展家庭感知</h3><p>接入：药盒、摄像头 CV、可穿戴</p><p>底线：高风险拦截保持 100%</p></div>
+          <div class="phase"><div class="week">阶段 4 · 8.22–8.25</div><h3>冻结验证版本</h3><p>交付物：应用、日志、测试报告</p><p>检查点：流程可重复运行、证据可追溯</p></div>
+        </div>
+        <p style="margin-top:22px; color:var(--red)"><strong>风险触发：</strong>若真实设备或摄像头接口不能稳定接入，切换至本地设备驱动完成闭环验证，并明确实时能力范围。</p>
+        <span class="slide-no">16 / 18</span>
+      </section>
+
+      <section class="slide" data-title="AI 评价">
+        <div class="eyebrow">16 · AI 评价与团队判断</div>
+        <h2>AI 是外部镜子，不替团队做决定</h2>
+        <p class="muted">以下观点来自本轮 AI 评审；团队分别选择认同、执行和保留意见，并对应到实际修改。</p>
+        <div style="margin-top:32px">
+          <div class="review-row header"><div>态度 / 能力项</div><div>AI 观点</div><div>团队判断</div><div>实际修改 / 页码</div></div>
+          <div class="review-row"><div><span class="stance">认同</span><br>愿景与行动</div><div>AI 含量不能只看聊天界面，要看模型、记忆、工具和状态闭环。</div><div>这与家庭事件需要持续推进的核心问题一致。</div><div>补齐 RAG、工具调用与复盘｜P5–P9</div></div>
+          <div class="review-row"><div><span class="stance done">已执行</span><br>风险管理</div><div>智慧家居必须有独立规则层，不能让模型直接操作高风险设备。</div><div>设备状态可读，低风险动作确认后执行，高风险直接阻止。</div><div>门锁拦截 3/3｜P4、P8</div></div>
+          <div class="review-row"><div><span class="stance doubt">存疑</span><br>聚焦能力</div><div>“全方位家庭维稳器”范围过宽，可能削弱中期答辩的可验证性。</div><div>保留全家庭定位，但仍用家庭应急作为首个可跑通场景。</div><div>用 n=30 和任务数据决定是否扩展｜P3、P16</div></div>
+        </div>
+        <span class="slide-no">17 / 18</span>
+      </section>
+
+      <section class="slide" data-title="收束与问答">
+        <div class="close">
+          <div>
+            <div class="eyebrow">中期结论</div>
+            <h2>首轮证据表明：<br>方向成立，<br><span class="teal">仍需工程加固。</span></h2>
+            <p style="font-size:27px">家庭协作与本机视觉原型可以演示；访谈结论、实物效果与用户价值仍需原始证据支持。</p>
+            <p style="margin-top:30px; color:var(--navy); font-weight:800">家有备，让 AI 成为全家庭安全协同中的数字协调员。</p>
+          </div>
+          <div class="q-list">
+            <div class="q-item"><b>Q1 为什么不是聊天机器人？</b><span>看工具调用、状态追踪与任务闭环率。</span></div>
+            <div class="q-item"><b>Q2 判断错了谁负责？</b><span>规则限权，关键操作由人确认并全程留痕。</span></div>
+            <div class="q-item"><b>Q3 是否真实接入外部服务？</b><span>工具与 D1 已实际运行；DeepSeek 与 2 台设备依据团队测试记录；短信、电话、物业和摄像头通过接口适配层或人工确认通道衔接。</span></div>
+            <div class="q-item"><b>当前验证范围</b><span>本地流程、权限与保存检查已运行；历史比例待核实，真实设备与摔倒准确率尚无结论。</span></div>
+          </div>
+        </div>
+        <div class="source">依据：项目 AI Agent 大框架与《创客竞赛作品中期评审》V3.0 指导。</div>
+        <span class="slide-no">18 / 18</span>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="help">历史草稿 · 访谈与成功率数据待原始记录核实　｜　← / → 翻页　F 全屏</div>
+  <nav class="nav" aria-label="幻灯片导航">
+    <button id="prevBtn" aria-label="上一页">←</button>
+    <span class="counter" id="counter">01 / 18</span>
+    <button id="nextBtn" aria-label="下一页">→</button>
+    <button id="fullBtn" aria-label="全屏">⛶</button>
+  </nav>
+
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const stage = document.getElementById('stage');
+      const counter = document.getElementById('counter');
+      const progress = document.getElementById('progressBar');
+      const appBase = location.protocol === 'file:' ? 'http://localhost:3000/' : `${location.origin}/`;
+      const routes = { people: 'members', devices: 'devices', agent: 'ai', event: 'events/E001', safety: 'authorizations', review: 'audit' };
+      let index = Math.max(0, Math.min(slides.length - 1, Number(location.hash.slice(1)) - 1 || 0));
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function activateAppSlide(slide) {
+        const frame = slide.querySelector('.app-frame');
+        if (!frame || frame.dataset.loaded === 'true') return;
+        frame.src = `${appBase}${routes[frame.dataset.appRoute] || ''}?embed=1`;
+        frame.dataset.loaded = 'true';
+      }
+
+      document.querySelectorAll('[data-app-link]').forEach(link => {
+        link.href = `${appBase}${routes[link.dataset.appLink] || ''}`;
+      });
+
+      function scaleStage() {
+        const margin = 24;
+        const scale = Math.min((innerWidth - margin * 2) / 1600, (innerHeight - margin * 2) / 900);
+        stage.style.transform = `translate(-50%, -50%) scale(${Math.max(.1, scale)})`;
+      }
+
+      function show(next, updateHash = true) {
+        index = Math.max(0, Math.min(slides.length - 1, next));
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+          slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+        });
+        counter.textContent = `${pad(index + 1)} / ${pad(slides.length)}`;
+        progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+        document.title = `${pad(index + 1)}｜${slides[index].dataset.title}｜家有备`;
+        activateAppSlide(slides[index]);
+        if (updateHash) history.replaceState(null, '', `#${index + 1}`);
+      }
+
+      function next() { show(index + 1); }
+      function prev() { show(index - 1); }
+
+      document.getElementById('nextBtn').addEventListener('click', next);
+      document.getElementById('prevBtn').addEventListener('click', prev);
+      document.getElementById('fullBtn').addEventListener('click', () => {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+        else document.exitFullscreen?.();
+      });
+
+      addEventListener('keydown', (event) => {
+        if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(event.key)) { event.preventDefault(); next(); }
+        if (['ArrowLeft', 'PageUp', 'Backspace'].includes(event.key)) { event.preventDefault(); prev(); }
+        if (event.key === 'Home') { event.preventDefault(); show(0); }
+        if (event.key === 'End') { event.preventDefault(); show(slides.length - 1); }
+        if (event.key.toLowerCase() === 'f') document.getElementById('fullBtn').click();
+      });
+
+      addEventListener('resize', scaleStage);
+      addEventListener('hashchange', () => show(Number(location.hash.slice(1)) - 1 || 0, false));
+      addEventListener('beforeprint', () => slides.forEach(activateAppSlide));
+      scaleStage();
+      show(index, false);
+    })();
+  </script>
+</body>
+</html>

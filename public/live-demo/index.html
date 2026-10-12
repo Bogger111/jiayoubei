@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>家有备 · 现场演示控制台</title>
+<style>
+  :root { --bg:#f7f5ef; --card:#fffdf7; --ink:#0f2f2c; --muted:#6b7a76; --accent:#2e7d6b; --amber:#b8860b; --red:#b0413e; --line:#e4dfd2; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--ink); font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif; padding:32px 20px 80px; }
+  .wrap { max-width:960px; margin:0 auto; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; border-bottom:2px solid var(--line); padding-bottom:16px; margin-bottom:24px; }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo .mark { width:38px; height:38px; border-radius:10px; background:var(--ink); color:#f7f5ef; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:800; }
+  h1 { font-size:24px; letter-spacing:1px; }
+  .sub { font-size:13px; color:var(--muted); margin-top:2px; }
+  .badges { display:flex; gap:8px; flex-wrap:wrap; }
+  .badge { font-size:12px; padding:5px 12px; border-radius:99px; border:1px solid var(--line); background:#fff; color:var(--muted); }
+  .badge.ok { color:#fff; background:var(--accent); border-color:var(--accent); }
+  .badge.bad { color:#fff; background:var(--red); border-color:var(--red); }
+  .badge.warn { color:#fff; background:var(--amber); border-color:var(--amber); }
+  section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:20px; box-shadow:0 1px 3px rgba(15,47,44,.05); }
+  h2 { font-size:16px; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  h2 .no { width:22px; height:22px; border-radius:6px; background:var(--ink); color:#f7f5ef; font-size:12px; display:inline-flex; align-items:center; justify-content:center; }
+  .actions { display:flex; gap:10px; flex-wrap:wrap; }
+  button { font-size:14px; padding:10px 18px; border-radius:9px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer; transition:all .15s; }
+  button:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-1px); }
+  button.primary { background:var(--ink); color:#f7f5ef; border-color:var(--ink); }
+  button.primary:hover { background:var(--accent); color:#fff; }
+  button:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+  .btn-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .result { margin-top:14px; border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:#fbfaf5; font-size:13px; line-height:1.7; display:none; }
+  .result.show { display:block; }
+  .result .t { font-weight:700; font-size:14px; }
+  .risk { display:inline-block; padding:2px 10px; border-radius:99px; font-size:12px; font-weight:700; margin-left:6px; vertical-align:1px; }
+  .risk.low { background:#e4efe6; color:#2e7d6b; } .risk.medium { background:#fdf0d8; color:#b8860b; }
+  .risk.high { background:#fbe3e0; color:#b0413e; } .risk.critical { background:#f5d5d2; color:#8f2f2c; }
+  .plan { margin-top:8px; border-top:1px dashed var(--line); padding-top:8px; }
+  .plan .step { display:flex; gap:8px; align-items:baseline; margin:4px 0; }
+  .plan .step .tag { font-size:11px; padding:1px 7px; border-radius:99px; background:#efece2; color:var(--muted); white-space:nowrap; }
+  .evidence { color:var(--muted); font-size:12px; margin-top:6px; }
+  .qa { display:flex; gap:10px; }
+  textarea { flex:1; min-height:64px; padding:10px 12px; border:1px solid var(--line); border-radius:9px; font-size:14px; font-family:inherit; resize:vertical; background:#fff; }
+  textarea:focus { outline:none; border-color:var(--accent); }
+  details { border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:10px; background:#fbfaf5; }
+  summary { cursor:pointer; font-weight:600; font-size:14px; }
+  details .body { margin-top:8px; font-size:13px; color:#3d4a47; line-height:1.8; }
+  .tip { background:#fdf0d8; border:1px solid #ecd9a8; border-radius:10px; padding:12px 14px; font-size:13px; color:#7a5c14; margin-bottom:20px; }
+  .link-btn { font-size:13px; color:var(--accent); text-decoration:none; border-bottom:1px dashed var(--accent); margin-left:6px; }
+  .muted { color:var(--muted); font-size:12px; }
+  footer { text-align:center; color:var(--muted); font-size:12px; margin-top:32px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">
+      <div class="mark">备</div>
+      <div>
+        <h1>家有备 · 现场演示控制台</h1>
+        <div class="sub">家庭安全协同 AI Agent — 演示时先登录，再点按钮触发真实事件</div>
+      </div>
+    </div>
+    <div class="badges" id="badges">
+      <span class="badge" id="b-cloud">云端检测中…</span>
+      <span class="badge" id="b-auth">未登录</span>
+    </div>
+  </header>
+
+  <div class="tip" id="tipBox">💡 <b>演示前检查</b>：电脑 Clash 代理开启 · HA 容器运行中 · 监听器已启动（`启动HA监听器.cmd`）· 手机 Companion App 在线。若无法访问此页，说明网络未通，先处理代理。</div>
+
+  <section>
+    <h2><span class="no">1</span>快速开始</h2>
+    <div class="actions">
+      <button class="primary" id="btnLogin">打开登录页</button>
+      <button id="btnOpen">打开主应用 ↗</button>
+    </div>
+    <div class="result" id="r-login"></div>
+  </section>
+
+  <section>
+    <h2><span class="no">2</span>现场动作 · 触发真实事件（落库云端 D1 + AI 分析）</h2>
+    <div class="btn-row">
+      <button id="t-wifi">📶 手机离开家庭 Wi-Fi</button>
+      <button id="t-battery">🔋 手机停止充电</button>
+      <button id="t-low">🪫 手机电量低</button>
+      <button id="t-presence">🚶 客厅长时间无人活动</button>
+      <button id="t-med-taken">💊 药盒开启（已服药）</button>
+      <button id="t-med-missed">⏰ 未按时服药提醒</button>
+    </div>
+    <div class="result" id="r-trigger"></div>
+  </section>
+
+  <section>
+    <h2><span class="no">3</span>现场动作 · AI 助手实时问答（DeepSeek 真实推理）</h2>
+    <div class="qa">
+      <textarea id="qInput" placeholder="例如：我妈妈今天一直没有活动，客厅传感器也显示没人，怎么办？"></textarea>
+      <button class="primary" id="btnAsk">分析</button>
+    </div>
+    <div class="result" id="r-agent"></div>
+  </section>
+
+  <section>
+    <h2><span class="no">4</span>演示话术（按顺序讲）</h2>
+    <details open><summary>① 开场（30 秒）</summary><div class="body">"家有备 —— 家庭安全协同 AI Agent：AI 理解家庭情况，家人协同确认，真实设备联动。" <b>点【打开登录页】</b>，进入主应用展示 Dashboard。</div></details>
+    <details><summary>② 核心页面（2-3 分钟）</summary><div class="body">事件页（风险等级/时间线）→ 高风险事件的人工确认流程 → 设备/规则页。强调：<b>数据实时落库云端 D1，不是静态 Demo</b>。</div></details>
+    <details><summary>③ 真实联动高光时刻（2 分钟）⭐</summary><div class="body">说："现在演示真实传感器联动"。用本页【触发真实事件】按钮（或现场拔插手机充电器）→ 新事件出现 → <b>等 5-10 秒</b> → 回主应用刷新事件页展示 AI 分析。</div></details>
+    <details><summary>④ AI 规划能力（1 分钟）</summary><div class="body">在本页【AI 助手实时问答】输入"帮我远程打开门锁让邻居进去看看我妈" → 展示 AI 拒绝自动开锁、要求人工确认 —— <b>安全边界</b>。</div></details>
+    <details><summary>⑤ 架构与安全收尾（1 分钟）</summary><div class="body">Cloudflare Workers + D1（亚太）+ DeepSeek + Home Assistant；登录鉴权、服务端权限强制、全量审计、AI 失败自动降级规则。</div></details>
+  </section>
+
+  <section>
+    <h2><span class="no">5</span>现场兜底</h2>
+    <div class="body" style="font-size:13px;line-height:1.9;color:#3d4a47">
+      网址打不开 → Clash 换节点 / 手机热点。<br/>
+      完全没网 → 本地模式：双击桌面「家有备」（Mock 数据仍可完整演示）。<br/>
+      真实联动失败 → 跳过，用页面演示 + 已有真实事件。<br/>
+      需要重置演示数据 → 告诉我，我用脚本清理云端事件。
+    </div>
+  </section>
+
+  <footer>家有备 · 演示控制台 v1.0 · 与主应用同源部署 · 所有按钮调用真实接口</footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const badge = (id, text, cls) => { const el = $(id); el.textContent = text; el.className = "badge" + (cls ? " " + cls : ""); };
+const show = (id, html) => { const el = $(id); el.textContent = String(html).replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]*>/g, ""); el.classList.add("show"); };
+
+async function api(path, options = {}) {
+  const resp = await fetch(path, { headers: { "Content-Type": "application/json" }, ...options });
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
+  return data;
+}
+
+async function checkStatus() {
+  try {
+    const resp = await fetch("/", { method: "GET" });
+    badge("b-cloud", resp.ok ? "云端在线" : "云端异常", resp.ok ? "ok" : "bad");
+  } catch { badge("b-cloud", "云端不可达", "bad"); }
+  try {
+    const me = await api("/api/auth/me");
+    if (me.user) { badge("b-auth", "已登录：" + me.user.name, "ok"); $("btnLogin").disabled = true; $("btnLogin").textContent = "已登录 ✓"; }
+  } catch { badge("b-auth", "未登录", "warn"); }
+}
+
+$('btnLogin').onclick = () => { window.location.assign('/'); };
+
+$("btnOpen").onclick = () => window.open("/", "_blank");
+$("qInput").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) $("btnAsk").click(); });
+
+$("btnAsk").onclick = async () => {
+  const q = $("qInput").value.trim(); if (!q) return;
+  const btn = $("btnAsk"); btn.disabled = true; btn.textContent = "分析中…";
+  show("r-agent", "⏳ DeepSeek 正在推理…");
+  try {
+    const d = await api("/api/agent", { method: "POST", body: JSON.stringify({ query: q }) });
+    const a = d.analysis || {};
+    const risk = a.riskLevel || "medium";
+    const steps = (a.plan || []).map((s) =>
+      `<div class="step"><span class="tag">${s.risk || "medium"}</span><span>${s.title || ""}</span><span class="muted">(${s.tool || ""} · ${s.requiresConfirmation ? "需人工确认" : "自动"}${s.timeoutMinutes ? " · " + s.timeoutMinutes + "min" : ""})</span></div>`
+    ).join("");
+    show("r-agent",
+      `<div class="t">${a.mode === "live_model" ? "🤖 AI 分析（真实模型）" : "⚙️ 规则模式"}</div>
+       <div>风险：<span class="risk ${risk}">${a.riskLabel || risk}</span> <span class="muted">置信度 ${Math.round((a.confidence || 0) * 100)}% · 目标成员 ${a.targetMember || "-"}</span></div>
+       <div style="margin-top:6px">${a.summary || ""}</div>
+       ${a.evidence && a.evidence.length ? `<div class="evidence">📡 证据：${a.evidence.slice(0, 4).join(" · ")}</div>` : ""}
+       ${a.missingInformation && a.missingInformation.length ? `<div class="evidence">❓ 待确认：${a.missingInformation.slice(0, 3).join(" · ")}</div>` : ""}
+       ${steps ? `<div class="plan">📋 协同计划：${steps}</div>` : ""}
+       <div class="muted" style="margin-top:6px">🛡️ ${a.safetyNotice || ""}</div>`);
+  } catch (e) { show("r-agent", "❌ 分析失败：" + e.message); }
+  btn.disabled = false; btn.textContent = "分析";
+};
+
+const SCENARIOS = { "t-wifi": "wifi", "t-battery": "battery_stop", "t-low": "battery_low", "t-presence": "presence", "t-med-taken": "med_taken", "t-med-missed": "med_missed" };
+for (const [btnId, scenario] of Object.entries(SCENARIOS)) {
+  $(btnId).onclick = async () => {
+    const btn = $(btnId); btn.disabled = true;
+    show("r-trigger", "⏳ 正在创建真实事件（设备映射 → 风险分级 → AI 分析 → 落库）…");
+    try {
+      const d = await api("/api/demo/trigger", { method: "POST", body: JSON.stringify({ scenario }) });
+      const risk = d.riskLevel || "low";
+      show("r-trigger",
+        `<div class="t">✅ 事件已创建 <span class="risk ${risk}">${risk}</span></div>
+         <div>事件编号：<b>${d.eventId || "-"}</b> · 标题：${d.title || ""}</div>
+         ${d.aiAssessment ? `<div class="muted" style="margin-top:6px">🤖 ${d.aiAssessment}</div>` : ""}
+         <div class="muted" style="margin-top:6px">👉 现在去主应用「事件页」刷新即可看到此事件（或等手机推送）</div>`);
+    } catch (e) { show("r-trigger", "❌ 触发失败：" + e.message); }
+    btn.disabled = false;
+  };
+}
+
+checkStatus();
+</script>
+</body>
+</html>

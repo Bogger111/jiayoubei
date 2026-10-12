@@ -1,0 +1,26 @@
+# ---- 凭据与敏感文件（绝不提交）----
+# ESPHome 固件含家庭热点 WiFi 密码
+esphome/
+# 本地环境变量与密钥
+.env
+.env.*
+!.env.example
+.dev.vars
+!.dev.vars.example
+*.pem
+*secret*.txt
+*token*.txt
+ha-*.txt
+
+# ---- 构建产物与依赖 ----
+node_modules/
+dist/
+.wrangler/
+*.tsbuildinfo
+
+# ---- 日志与临时文件 ----
+*.log
+.DS_Store
+Thumbs.db
+/tmp/
+test-results/

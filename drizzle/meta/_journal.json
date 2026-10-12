@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1785504057251,
+      "tag": "0000_majestic_maverick",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787631008509,
+      "tag": "0001_product_domain",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791731926440,
+      "tag": "0002_family_scope",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1791732866761,
+      "tag": "0003_task_version",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1791763681935,
+      "tag": "0004_family_invitations",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1791766986294,
+      "tag": "0005_task_notifications",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1791767766322,
+      "tag": "0006_notification_reads",
+      "breakpoints": true
+    }
+  ]
+}
