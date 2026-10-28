@@ -1,0 +1,66 @@
+# ESP32 DevKit 示例，板型和引脚须由团队按实物核对后再烧录。
+esphome:
+  name: jiayoubei-care
+  friendly_name: JiaYouBei Care
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+logger:
+api:
+  encryption:
+    key: !secret api_encryption_key
+ota:
+  - platform: esphome
+    password: !secret ota_password
+binary_sensor:
+  - platform: gpio
+    name: Care Response
+    pin:
+      number: GPIO19
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    filters:
+      - delayed_on: 40ms
+      - delayed_off: 40ms
+  - platform: gpio
+    name: Care Help
+    pin:
+      number: GPIO21
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    filters:
+      - delayed_on: 40ms
+      - delayed_off: 40ms
+  - platform: gpio
+    name: Care Motion
+    device_class: motion
+    pin: GPIO27
+    filters:
+      - delayed_off: 2s
+  - platform: gpio
+    name: Care Door
+    device_class: door
+    pin:
+      number: GPIO22
+      mode:
+        input: true
+        pullup: true
+    filters:
+      - delayed_on: 50ms
+      - delayed_off: 50ms
+output:
+  - platform: gpio
+    pin: GPIO18
+    id: care_led
+light:
+  - platform: binary
+    name: Care Indicator
+    output: care_led

@@ -310,7 +310,7 @@ export function TaskCard({
         <StatusBadge status={task.status} />
       </div>
       <h3>{task.title}</h3>
-      {task.helpRequested && task.status !== "completed" && (
+      {task.helpRequested && !["completed", "cancelled"].includes(task.status) && (
         <em className="task-help-badge">需要协助</em>
       )}
       <p>{task.description}</p>

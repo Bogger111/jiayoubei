@@ -14,6 +14,7 @@ const { d1, r2 } = hostingConfig;
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 const localBindingConfig = {
+  triggers: { crons: ["* * * * *"] },
   main: "./worker/index.ts",
   // nodejs_compat 由 vinext/Cloudflare 插件自动注入；显式声明会导致重复标志错误。
   // 兼容日期固定为本地 wrangler 二进制支持的日期（云端接受更晚日期，但本地 miniflare 不接受）。

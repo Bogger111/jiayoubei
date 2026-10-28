@@ -12,6 +12,7 @@ export type ProductBootstrap = Pick<
   | "services"
   | "notifications"
   | "auditLogs"
+  | "carePlan"
 >;
 
 type Row = Record<string, unknown>;
@@ -86,6 +87,7 @@ const guards: Record<string, (value: unknown) => boolean> = {
       "waiting_confirmation",
       "completed",
       "overdue",
+      "cancelled",
     ]) &&
     optionalText(value, [
       "evidence",

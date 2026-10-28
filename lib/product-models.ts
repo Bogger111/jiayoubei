@@ -10,7 +10,8 @@ export type TaskStatus =
   | "in_progress"
   | "waiting_confirmation"
   | "completed"
-  | "overdue";
+  | "overdue"
+  | "cancelled";
 export type TaskPriority = "low" | "medium" | "high" | "urgent";
 export type AuthorizationPolicy =
   | "always_allow"
@@ -211,6 +212,7 @@ export const taskStatusLabel: Record<TaskStatus, string> = {
   waiting_confirmation: "等待确认",
   completed: "已完成",
   overdue: "超时",
+  cancelled: "已取消",
 };
 export const priorityLabel: Record<TaskPriority, string> = {
   low: "低",

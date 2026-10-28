@@ -1,0 +1,45 @@
+import assert from 'node:assert/strict';
+import http from 'node:http';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {createIsolatedAuthRuntime} from './isolated-runtime.mjs';
+import {demoCareSignals,legacyCareEvidence} from '../lib/care-agent.ts';
+const checks=[],requests=[];let runtime,mode='early',cookie,contextCounter=0;
+const secret='fixture-'+crypto.randomUUID(),token='fixture-'+crypto.randomUUID();
+const entityMap={'binary_sensor.care_motion':{kind:'activity',subjectId:'M-Care-Subject'},'binary_sensor.care_help':{kind:'help',subjectId:'M-Care-Subject'},'binary_sensor.care_response':{kind:'reply',subjectId:'M-Care-Subject'},'light.care_indicator':{kind:'output',subjectId:'M-Care-Subject'}};
+const server=http.createServer(async(req,res)=>{let body='';for await(const chunk of req)body+=chunk;requests.push({path:req.url,method:req.method,body:body?JSON.parse(body):null});assert.equal(req.headers.authorization,'Bearer '+token);if(mode==='reject'){res.writeHead(503,{'Content-Type':'application/json'});res.end('{}');return}const contextId='context-'+(++contextCounter);
+ if(mode==='early')await runtime.dispatchFetch('http://care.test/api/care/ingest',{method:'POST',headers:{'Content-Type':'application/json','X-Care-Ingest-Secret':secret},body:JSON.stringify({eventId:'early-'+contextId,entityId:'light.care_indicator',state:'on',contextId,observedAt:new Date().toISOString()})});
+ res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify([{entity_id:'light.care_indicator',state:'on',context:{id:contextId}}]));});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const port=server.address().port;
+runtime=await createIsolatedAuthRuntime({bindings:{HOME_ASSISTANT_URL:'http://127.0.0.1:'+port,HOME_ASSISTANT_TOKEN:token,HOME_ASSISTANT_FAMILY_ID:'F001',CARE_LIGHT_ENTITY:'light.care_indicator',CARE_ENTITY_MAP:JSON.stringify(entityMap),CARE_INGEST_SECRET:secret,CARE_CAPTURE_CATEGORY:'synthetic',CARE_CAPTURE_ID:'fake-ha-contract-v1'}});
+const call=async(path,body,header={})=>{const response=await runtime.dispatchFetch('http://care.test'+path,{method:body?'POST':'GET',headers:{...(body?{'Content-Type':'application/json'}:{}),...(cookie?{Cookie:cookie}:{}),...header},body:body?JSON.stringify(body):undefined});return {status:response.status,body:await response.json(),cookie:response.headers.get('set-cookie')?.split(';')[0]}};
+const checked=name=>{checks.push({name,passed:true});console.log('PASS '+name)};
+try{
+ await runtime.ready;
+ const admin=await call('/api/auth/setup',{email:'ha-fixture@example.test',password:'QA_'+crypto.randomUUID(),name:'联调测试'});cookie=admin.cookie;
+ const initial=(await call('/api/bootstrap')).body,owner=initial.members[0].id;
+ const database=await runtime.getD1Database('DB');
+ await database.prepare("INSERT INTO family_members(id,family_id,name,relation,role) VALUES('M-Care-Subject','F001','被关怀者','父母','老人')").run();
+ const record={eventId:'event-1',entityId:'binary_sensor.care_motion',state:'on',observedAt:new Date().toISOString()};
+ assert.equal((await call('/api/care/ingest',record)).status,401);assert.equal((await call('/api/care/ingest',{...record,entityId:'binary_sensor.unlisted'},{'X-Care-Ingest-Secret':secret})).status,403);checked('采集接口验证密钥与实体白名单');
+ let received=await call('/api/care/ingest',record,{'X-Care-Ingest-Secret':secret});assert.equal(received.body.inserted,true);received=await call('/api/care/ingest',record,{'X-Care-Ingest-Secret':secret});assert.equal(received.body.inserted,false);checked('重复设备事件只保存一次');
+ const create=async()=>{const r=await call('/api/care',{action:'create',requestId:crypto.randomUUID(),subjectId:'M-Care-Subject',agreement:{contact:owner,waitMinutes:5,silenceMinutes:90,timezone:'Asia/Shanghai',restWindows:[]},records:legacyCareEvidence(demoCareSignals(),Date.now(),'contract').map(e=>({...e,caseId:undefined,subjectId:'M-Care-Subject'}))});assert.equal(r.status,200,JSON.stringify(r.body));return r.body};
+ let plan=await create();const approve=await call('/api/care',{action:'approve',caseId:plan.id,expectedVersion:plan.revision,requestId:crypto.randomUUID()});assert.equal(approve.status,200,JSON.stringify(approve.body));plan=approve.body;
+ const workspace=(await call('/api/care')).body;assert.equal(workspace.jobs[0].status,'acknowledged');assert.equal(requests.length,1);assert.equal(requests[0].path,'/api/services/light/turn_on');assert.equal(requests[0].method,'POST');assert.deepEqual(requests[0].body,{entity_id:'light.care_indicator'});checked('调用真实动作接口契约，提前到达的状态回执不会丢失');
+ assert.equal(workspace.plan.status,'following');assert.ok(workspace.jobs[0].detail.includes('物理效果'));checked('设备状态回执不会冒充人工核实或物理效果');
+ const outcome=await call('/api/care',{action:'outcome',caseId:plan.id,expectedVersion:plan.revision,requestId:crypto.randomUUID(),outcome:{type:'safe_confirmed',remark:'契约测试中明确记录核实结果',method:'phone',confirmed:true}});assert.equal(outcome.status,200);
+ const late=await call('/api/care/ingest',{eventId:'late',entityId:'light.care_indicator',state:'on',contextId:'context-1',observedAt:new Date().toISOString()},{'X-Care-Ingest-Secret':secret});assert.equal(late.status,200);assert.equal((await call('/api/care')).body.plan.status,'resolved');checked('迟到回执不重新激活已解决记录');
+ mode='reject';plan=await create();const rejected=await call('/api/care',{action:'approve',caseId:plan.id,expectedVersion:plan.revision,requestId:crypto.randomUUID()});assert.equal(rejected.status,200);assert.equal((await call('/api/care')).body.jobs[0].status,'failed');checked('设备拒绝动作保留失败，家庭联系仍可继续');
+ const before=requests.length;await call('/api/care');await call('/api/care');assert.equal(requests.length,before);checked('重复刷新不会重发失败或不确定的设备动作');
+ plan=(await call('/api/care')).body.plan;
+ await call('/api/care',{action:'outcome',caseId:plan.id,expectedVersion:plan.revision,requestId:crypto.randomUUID(),outcome:{type:'cancelled_unresolved',remark:'结束本次软件契约序列',method:'phone',confirmed:false}});
+ const now=Date.now(),motion={id:'old-motion',sourceId:'binary_sensor.care_motion',subjectId:'M-Care-Subject',kind:'activity',value:'active',observedAt:now-7200000,receivedAt:now,expiresAt:now+86400000,authorized:true,quality:'valid',provenance:'observation',category:'synthetic',transport:'replay',datasetId:'fake-ha-long-history',sampleId:'long-history'};
+ await database.prepare("DELETE FROM care_evidence WHERE family_id='F001' AND source_id='binary_sensor.care_motion'").run();
+ await database.prepare('INSERT INTO care_evidence VALUES(?,?,?,?,?,?,?)').bind(crypto.randomUUID(),'F001',motion.sourceId,motion.id,motion.observedAt,now,JSON.stringify(motion)).run();
+ for(let start=0;start<300;start+=60)await database.batch(Array.from({length:60},(_,offset)=>{const e={...motion,id:'heartbeat-'+(start+offset),kind:'availability',value:'online',observedAt:now+(start+offset),expiresAt:now+90000};return database.prepare('INSERT INTO care_evidence VALUES(?,?,?,?,?,?,?)').bind(crypto.randomUUID(),'F001',e.sourceId,e.id,e.observedAt,now,JSON.stringify(e))}));
+ const fromHistory=await call('/api/care',{action:'create',requestId:crypto.randomUUID(),subjectId:'M-Care-Subject',agreement:{contact:owner,waitMinutes:5,silenceMinutes:90,timezone:'Asia/Shanghai',restWindows:[]}});assert.equal(fromHistory.status,200,JSON.stringify(fromHistory.body));assert.equal(fromHistory.body.signals.online,true);assert.ok(fromHistory.body.signals.activityMinutes>=90);checked('大量心跳不会挤掉可追溯的上次活动记录');
+ for(const [suffix,state] of [['press','on'],['release','off']]){const r=await call('/api/care/ingest',{eventId:'help-'+suffix,entityId:'binary_sensor.care_help',state,observedAt:new Date().toISOString()},{'X-Care-Ingest-Secret':secret});assert.equal(r.status,200,JSON.stringify(r.body));}
+ assert.equal((await call('/api/care')).body.plan.priority,'urgent');checked('求助按钮松开后仍保留待核实的优先人工响应');
+ await mkdir('public/evidence',{recursive:true});await writeFile('public/evidence/care-p0-ha.json',JSON.stringify({generatedAt:new Date().toISOString(),category:'synthetic',transport:'live',scope:'本机假HA服务的真实HTTP契约测试；不是Home Assistant实例或物理设备台架。',checks,requests,physicalEffectVerified:false},null,2));
+ console.log(JSON.stringify({checks:checks.length,report:'public/evidence/care-p0-ha.json'}));
+}finally{await runtime.dispose();await new Promise(r=>server.close(r))}

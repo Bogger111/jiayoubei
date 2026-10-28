@@ -6,6 +6,7 @@
     "nodejs_compat"
   ],
   "main": "./worker/index.ts",
+  "triggers": { "crons": ["* * * * *"] },
   "assets": {
     "directory": "dist/client",
     "not_found_handling": "none",

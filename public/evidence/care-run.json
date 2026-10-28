@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-28T07:59:02.219Z",
+  "generatedAt": "2026-10-28T10:30:16.132Z",
   "runtime": "v24.18.0",
   "engine": "lib/care-agent.ts",
-  "sourceSha256": "8c2ab26b10d43a5b85962ed8783f8ab75a04825690665559c0d0b1c5cc37a7fc",
+  "sourceSha256": "cd9bc219da3bb00333fe63e04638794ad7326bcec8bd2c8bcf49a1bd06652621",
   "scope": "真实执行本地确定性编排程序；输入为构造情景，图像为已授权语义观察值，设备与通讯为模拟适配器。不是模型识别准确率、真实家庭试用或ESP32实测。",
   "scenarios": [
     {
       "scenario": "unanswered",
       "label": "妈妈暂未回应",
       "inputs": {
-        "observedAt": 1793174342217,
+        "observedAt": 1793183416110,
         "activityMinutes": 120,
         "door": "home",
         "voice": "unanswered",
@@ -18,7 +18,7 @@
         "image": "empty"
       },
       "title": "妈妈还没有回应",
-      "decision": "联动灯光与音箱，再次语音询问；请家人协助联系妈妈",
+      "decision": "开启关怀提示灯，请家人核实回应；请家人协助联系妈妈",
       "status": "pending",
       "steps": 3,
       "evidence": [
@@ -28,21 +28,21 @@
         },
         {
           "label": "门磁记录",
-          "value": "未见离家"
+          "value": "仅有门的开关记录"
         },
         {
-          "label": "语音询问",
+          "label": "回应记录",
           "value": "暂未回应"
         }
       ],
-      "elapsedMs": 0.165,
+      "elapsedMs": 17.699,
       "passed": true
     },
     {
       "scenario": "away",
       "label": "妈妈已外出",
       "inputs": {
-        "observedAt": 1793174342217,
+        "observedAt": 1793183416110,
         "activityMinutes": 120,
         "door": "away",
         "voice": "unanswered",
@@ -50,7 +50,7 @@
         "imageAuthorized": false,
         "image": "empty"
       },
-      "title": "妈妈可能正在外出",
+      "title": "家人已确认外出",
       "decision": "保持关注，暂不安排额外打扰",
       "status": "monitoring",
       "steps": 0,
@@ -61,21 +61,21 @@
         },
         {
           "label": "门磁记录",
-          "value": "有离家记录"
+          "value": "仅有门的开关记录"
         },
         {
-          "label": "语音询问",
-          "value": "暂未回应"
+          "label": "回应记录",
+          "value": "查看本次核实记录"
         }
       ],
-      "elapsedMs": 0.012,
+      "elapsedMs": 0.311,
       "passed": true
     },
     {
       "scenario": "safe",
       "label": "语音报平安",
       "inputs": {
-        "observedAt": 1793174342217,
+        "observedAt": 1793183416110,
         "activityMinutes": 120,
         "door": "home",
         "voice": "safe",
@@ -94,21 +94,21 @@
         },
         {
           "label": "门磁记录",
-          "value": "未见离家"
+          "value": "仅有门的开关记录"
         },
         {
-          "label": "语音询问",
-          "value": "已回应平安"
+          "label": "回应记录",
+          "value": "查看本次核实记录"
         }
       ],
-      "elapsedMs": 0.008,
+      "elapsedMs": 0.231,
       "passed": true
     },
     {
       "scenario": "offline",
       "label": "传感器离线",
       "inputs": {
-        "observedAt": 1793174342217,
+        "observedAt": 1793183416110,
         "activityMinutes": 120,
         "door": "home",
         "voice": "unanswered",
@@ -117,7 +117,7 @@
         "image": "empty"
       },
       "title": "先确认家中的连接",
-      "decision": "检查设备连接，尝试语音联系；请家人协助联系妈妈",
+      "decision": "检查设备连接，发起轻量核实；请家人协助联系妈妈",
       "status": "pending",
       "steps": 3,
       "evidence": [
@@ -127,21 +127,21 @@
         },
         {
           "label": "门磁记录",
-          "value": "记录待更新"
+          "value": "仅有门的开关记录"
         },
         {
-          "label": "语音询问",
+          "label": "回应记录",
           "value": "暂未回应"
         }
       ],
-      "elapsedMs": 0.009,
+      "elapsedMs": 0.285,
       "passed": true
     },
     {
       "scenario": "authorized",
       "label": "加入授权图像场景",
       "inputs": {
-        "observedAt": 1793174342217,
+        "observedAt": 1793183416110,
         "activityMinutes": 120,
         "door": "home",
         "voice": "unanswered",
@@ -150,7 +150,7 @@
         "image": "empty"
       },
       "title": "妈妈还没有回应",
-      "decision": "联动灯光与音箱，再次语音询问；请家人协助联系妈妈",
+      "decision": "开启关怀提示灯，请家人核实回应；请家人协助联系妈妈",
       "status": "pending",
       "steps": 3,
       "evidence": [
@@ -160,10 +160,10 @@
         },
         {
           "label": "门磁记录",
-          "value": "未见离家"
+          "value": "仅有门的开关记录"
         },
         {
-          "label": "语音询问",
+          "label": "回应记录",
           "value": "暂未回应"
         },
         {
@@ -171,7 +171,7 @@
           "value": "客厅暂未见人"
         }
       ],
-      "elapsedMs": 0.011,
+      "elapsedMs": 0.222,
       "passed": true
     }
   ],
@@ -195,20 +195,24 @@
     {
       "name": "确认平安后停止后续联系",
       "passed": true
+    },
+    {
+      "name": "未联系到不能结束跟进",
+      "passed": true
     }
   ],
   "trace": [
     {
       "stage": "综合输入",
-      "at": 1793174342217,
+      "at": 1793183416110,
       "plan": {
-        "id": "CARE-1793174342217",
+        "id": "CARE-1793183416110",
         "revision": 1,
-        "createdAt": 1793174342217,
-        "expiresAt": 1793175542217,
+        "createdAt": 1793183416110,
+        "expiresAt": 1793184616110,
         "status": "pending",
         "title": "妈妈还没有回应",
-        "reason": "结合家中动态，我整理了一份确认计划。",
+        "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
         "evidence": [
           {
             "label": "活动感应",
@@ -216,10 +220,10 @@
           },
           {
             "label": "门磁记录",
-            "value": "未见离家"
+            "value": "仅有门的开关记录"
           },
           {
-            "label": "语音询问",
+            "label": "回应记录",
             "value": "暂未回应"
           },
           {
@@ -230,18 +234,211 @@
         "contact": "M003",
         "waitMinutes": 10,
         "signals": {
-          "observedAt": 1793174342217,
+          "observedAt": 1793183416110,
           "activityMinutes": 120,
-          "door": "home",
-          "voice": "unanswered",
+          "door": "unknown",
+          "voice": "unknown",
           "online": true,
           "imageAuthorized": true,
           "image": "empty"
         },
+        "records": [
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793269816110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-activity",
+            "sourceId": "demo-motion",
+            "kind": "activity",
+            "value": "active",
+            "observedAt": 1793176216110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-online",
+            "sourceId": "demo-motion",
+            "kind": "availability",
+            "value": "online",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-door",
+            "sourceId": "demo-door",
+            "kind": "door",
+            "value": "closed",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-voice",
+            "sourceId": "demo-response",
+            "kind": "reply",
+            "value": "no_answer",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-image",
+            "sourceId": "demo-camera",
+            "kind": "image",
+            "value": "empty",
+            "observedAt": 1793183416110
+          }
+        ],
+        "assessment": {
+          "disposition": "verify",
+          "title": "妈妈还没有回应",
+          "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+          "used": [
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793269816110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-activity",
+              "sourceId": "demo-motion",
+              "kind": "activity",
+              "value": "active",
+              "observedAt": 1793176216110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-online",
+              "sourceId": "demo-motion",
+              "kind": "availability",
+              "value": "online",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-door",
+              "sourceId": "demo-door",
+              "kind": "door",
+              "value": "closed",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-voice",
+              "sourceId": "demo-response",
+              "kind": "reply",
+              "value": "no_answer",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-image",
+              "sourceId": "demo-camera",
+              "kind": "image",
+              "value": "empty",
+              "observedAt": 1793183416110
+            }
+          ],
+          "excluded": [],
+          "missing": [
+            "门磁只能说明门的变化，是否外出仍需本人或家属确认"
+          ]
+        },
+        "agreement": {
+          "contact": "M003",
+          "nearbyContact": "M005",
+          "waitMinutes": 10,
+          "silenceMinutes": 90,
+          "timezone": "Asia/Shanghai",
+          "restWindows": []
+        },
+        "priority": "normal",
+        "history": [],
         "steps": [
           {
             "id": "device",
-            "title": "联动灯光与音箱，再次语音询问",
+            "title": "开启关怀提示灯，请家人核实回应",
             "status": "pending"
           },
           {
@@ -259,15 +456,15 @@
     },
     {
       "stage": "家人批准",
-      "at": 1793174343217,
+      "at": 1793183417110,
       "plan": {
-        "id": "CARE-1793174342217",
-        "revision": 1,
-        "createdAt": 1793174342217,
-        "expiresAt": 1793175542217,
+        "id": "CARE-1793183416110",
+        "revision": 2,
+        "createdAt": 1793183416110,
+        "expiresAt": 1793184616110,
         "status": "following",
         "title": "妈妈还没有回应",
-        "reason": "结合家中动态，我整理了一份确认计划。",
+        "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
         "evidence": [
           {
             "label": "活动感应",
@@ -275,10 +472,10 @@
           },
           {
             "label": "门磁记录",
-            "value": "未见离家"
+            "value": "仅有门的开关记录"
           },
           {
-            "label": "语音询问",
+            "label": "回应记录",
             "value": "暂未回应"
           },
           {
@@ -289,18 +486,218 @@
         "contact": "M003",
         "waitMinutes": 10,
         "signals": {
-          "observedAt": 1793174342217,
+          "observedAt": 1793183416110,
           "activityMinutes": 120,
-          "door": "home",
-          "voice": "unanswered",
+          "door": "unknown",
+          "voice": "unknown",
           "online": true,
           "imageAuthorized": true,
           "image": "empty"
         },
+        "records": [
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793269816110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-activity",
+            "sourceId": "demo-motion",
+            "kind": "activity",
+            "value": "active",
+            "observedAt": 1793176216110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-online",
+            "sourceId": "demo-motion",
+            "kind": "availability",
+            "value": "online",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-door",
+            "sourceId": "demo-door",
+            "kind": "door",
+            "value": "closed",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-voice",
+            "sourceId": "demo-response",
+            "kind": "reply",
+            "value": "no_answer",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-image",
+            "sourceId": "demo-camera",
+            "kind": "image",
+            "value": "empty",
+            "observedAt": 1793183416110
+          }
+        ],
+        "assessment": {
+          "disposition": "verify",
+          "title": "妈妈还没有回应",
+          "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+          "used": [
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793269816110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-activity",
+              "sourceId": "demo-motion",
+              "kind": "activity",
+              "value": "active",
+              "observedAt": 1793176216110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-online",
+              "sourceId": "demo-motion",
+              "kind": "availability",
+              "value": "online",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-door",
+              "sourceId": "demo-door",
+              "kind": "door",
+              "value": "closed",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-voice",
+              "sourceId": "demo-response",
+              "kind": "reply",
+              "value": "no_answer",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-image",
+              "sourceId": "demo-camera",
+              "kind": "image",
+              "value": "empty",
+              "observedAt": 1793183416110
+            }
+          ],
+          "excluded": [],
+          "missing": [
+            "门磁只能说明门的变化，是否外出仍需本人或家属确认"
+          ]
+        },
+        "agreement": {
+          "contact": "M003",
+          "nearbyContact": "M005",
+          "waitMinutes": 10,
+          "silenceMinutes": 90,
+          "timezone": "Asia/Shanghai",
+          "restWindows": []
+        },
+        "priority": "normal",
+        "history": [
+          {
+            "at": 1793183417110,
+            "actor": "演示家庭管理员",
+            "title": "家人批准计划",
+            "detail": "确认第 1 版联系安排"
+          }
+        ],
         "steps": [
           {
             "id": "device",
-            "title": "联动灯光与音箱，再次语音询问",
+            "title": "开启关怀提示灯，请家人核实回应",
             "status": "pending"
           },
           {
@@ -314,22 +711,23 @@
             "status": "pending"
           }
         ],
+        "approvedRevision": 1,
         "approvedBy": "演示家庭管理员",
-        "approvedAt": 1793174343217,
-        "nextCheckAt": 1793174943217
+        "approvedAt": 1793183417110,
+        "nextCheckAt": 1793184017110
       }
     },
     {
       "stage": "协同执行",
-      "at": 1793174344217,
+      "at": 1793183418110,
       "plan": {
-        "id": "CARE-1793174342217",
-        "revision": 1,
-        "createdAt": 1793174342217,
-        "expiresAt": 1793175542217,
+        "id": "CARE-1793183416110",
+        "revision": 4,
+        "createdAt": 1793183416110,
+        "expiresAt": 1793184616110,
         "status": "following",
         "title": "妈妈还没有回应",
-        "reason": "结合家中动态，我整理了一份确认计划。",
+        "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
         "evidence": [
           {
             "label": "活动感应",
@@ -337,10 +735,10 @@
           },
           {
             "label": "门磁记录",
-            "value": "未见离家"
+            "value": "仅有门的开关记录"
           },
           {
-            "label": "语音询问",
+            "label": "回应记录",
             "value": "暂未回应"
           },
           {
@@ -351,28 +749,240 @@
         "contact": "M003",
         "waitMinutes": 10,
         "signals": {
-          "observedAt": 1793174342217,
+          "observedAt": 1793183416110,
           "activityMinutes": 120,
-          "door": "home",
-          "voice": "unanswered",
+          "door": "unknown",
+          "voice": "unknown",
           "online": true,
           "imageAuthorized": true,
           "image": "empty"
         },
+        "records": [
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793269816110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-activity",
+            "sourceId": "demo-motion",
+            "kind": "activity",
+            "value": "active",
+            "observedAt": 1793176216110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-online",
+            "sourceId": "demo-motion",
+            "kind": "availability",
+            "value": "online",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-door",
+            "sourceId": "demo-door",
+            "kind": "door",
+            "value": "closed",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-voice",
+            "sourceId": "demo-response",
+            "kind": "reply",
+            "value": "no_answer",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-image",
+            "sourceId": "demo-camera",
+            "kind": "image",
+            "value": "empty",
+            "observedAt": 1793183416110
+          }
+        ],
+        "assessment": {
+          "disposition": "verify",
+          "title": "妈妈还没有回应",
+          "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+          "used": [
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793269816110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-activity",
+              "sourceId": "demo-motion",
+              "kind": "activity",
+              "value": "active",
+              "observedAt": 1793176216110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-online",
+              "sourceId": "demo-motion",
+              "kind": "availability",
+              "value": "online",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-door",
+              "sourceId": "demo-door",
+              "kind": "door",
+              "value": "closed",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-voice",
+              "sourceId": "demo-response",
+              "kind": "reply",
+              "value": "no_answer",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-image",
+              "sourceId": "demo-camera",
+              "kind": "image",
+              "value": "empty",
+              "observedAt": 1793183416110
+            }
+          ],
+          "excluded": [],
+          "missing": [
+            "门磁只能说明门的变化，是否外出仍需本人或家属确认"
+          ]
+        },
+        "agreement": {
+          "contact": "M003",
+          "nearbyContact": "M005",
+          "waitMinutes": 10,
+          "silenceMinutes": 90,
+          "timezone": "Asia/Shanghai",
+          "restWindows": []
+        },
+        "priority": "normal",
+        "history": [
+          {
+            "at": 1793183417110,
+            "actor": "演示家庭管理员",
+            "title": "家人批准计划",
+            "detail": "确认第 1 版联系安排"
+          },
+          {
+            "at": 1793183417610,
+            "actor": "执行适配器",
+            "title": "收到设备步骤回执",
+            "detail": "本地设备模拟器：客厅灯与语音询问回执"
+          },
+          {
+            "at": 1793183418110,
+            "actor": "执行适配器",
+            "title": "已创建联系任务",
+            "detail": "家庭任务与站内通知写入"
+          }
+        ],
         "steps": [
           {
             "id": "device",
-            "title": "联动灯光与音箱，再次语音询问",
+            "title": "开启关怀提示灯，请家人核实回应",
             "status": "done",
             "detail": "本地设备模拟器：客厅灯与语音询问回执",
-            "at": 1793174343717
+            "at": 1793183417610
           },
           {
             "id": "family",
             "title": "请家人协助联系妈妈",
-            "status": "done",
+            "status": "queued",
             "detail": "家庭任务与站内通知写入",
-            "at": 1793174344217
+            "at": 1793183418110
           },
           {
             "id": "nearby",
@@ -380,22 +990,23 @@
             "status": "pending"
           }
         ],
+        "approvedRevision": 1,
         "approvedBy": "演示家庭管理员",
-        "approvedAt": 1793174343217,
-        "nextCheckAt": 1793174943217
+        "approvedAt": 1793183417110,
+        "nextCheckAt": 1793184017110
       }
     },
     {
       "stage": "回应闭环",
-      "at": 1793174347217,
+      "at": 1793183421110,
       "plan": {
-        "id": "CARE-1793174342217",
-        "revision": 1,
-        "createdAt": 1793174342217,
-        "expiresAt": 1793175542217,
+        "id": "CARE-1793183416110",
+        "revision": 5,
+        "createdAt": 1793183416110,
+        "expiresAt": 1793184616110,
         "status": "resolved",
         "title": "这次牵挂，有了回应",
-        "reason": "结合家中动态，我整理了一份确认计划。",
+        "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
         "evidence": [
           {
             "label": "活动感应",
@@ -403,10 +1014,10 @@
           },
           {
             "label": "门磁记录",
-            "value": "未见离家"
+            "value": "仅有门的开关记录"
           },
           {
-            "label": "语音询问",
+            "label": "回应记录",
             "value": "暂未回应"
           },
           {
@@ -417,42 +1028,270 @@
         "contact": "M003",
         "waitMinutes": 10,
         "signals": {
-          "observedAt": 1793174342217,
+          "observedAt": 1793183416110,
           "activityMinutes": 120,
-          "door": "home",
-          "voice": "unanswered",
+          "door": "unknown",
+          "voice": "unknown",
           "online": true,
           "imageAuthorized": true,
           "image": "empty"
         },
+        "records": [
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793269816110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-activity",
+            "sourceId": "demo-motion",
+            "kind": "activity",
+            "value": "active",
+            "observedAt": 1793176216110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-online",
+            "sourceId": "demo-motion",
+            "kind": "availability",
+            "value": "online",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-door",
+            "sourceId": "demo-door",
+            "kind": "door",
+            "value": "closed",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-voice",
+            "sourceId": "demo-response",
+            "kind": "reply",
+            "value": "no_answer",
+            "observedAt": 1793183416110
+          },
+          {
+            "receivedAt": 1793183416110,
+            "expiresAt": 1793185216110,
+            "authorized": true,
+            "quality": "valid",
+            "provenance": "observation",
+            "category": "synthetic",
+            "transport": "replay",
+            "datasetId": "care-demo-v2",
+            "sampleId": "CARE-1793183416110",
+            "caseId": "CARE-1793183416110",
+            "id": "CARE-1793183416110-image",
+            "sourceId": "demo-camera",
+            "kind": "image",
+            "value": "empty",
+            "observedAt": 1793183416110
+          }
+        ],
+        "assessment": {
+          "disposition": "verify",
+          "title": "妈妈还没有回应",
+          "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+          "used": [
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793269816110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-activity",
+              "sourceId": "demo-motion",
+              "kind": "activity",
+              "value": "active",
+              "observedAt": 1793176216110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-online",
+              "sourceId": "demo-motion",
+              "kind": "availability",
+              "value": "online",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-door",
+              "sourceId": "demo-door",
+              "kind": "door",
+              "value": "closed",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-voice",
+              "sourceId": "demo-response",
+              "kind": "reply",
+              "value": "no_answer",
+              "observedAt": 1793183416110
+            },
+            {
+              "receivedAt": 1793183416110,
+              "expiresAt": 1793185216110,
+              "authorized": true,
+              "quality": "valid",
+              "provenance": "observation",
+              "category": "synthetic",
+              "transport": "replay",
+              "datasetId": "care-demo-v2",
+              "sampleId": "CARE-1793183416110",
+              "caseId": "CARE-1793183416110",
+              "id": "CARE-1793183416110-image",
+              "sourceId": "demo-camera",
+              "kind": "image",
+              "value": "empty",
+              "observedAt": 1793183416110
+            }
+          ],
+          "excluded": [],
+          "missing": [
+            "门磁只能说明门的变化，是否外出仍需本人或家属确认"
+          ]
+        },
+        "agreement": {
+          "contact": "M003",
+          "nearbyContact": "M005",
+          "waitMinutes": 10,
+          "silenceMinutes": 90,
+          "timezone": "Asia/Shanghai",
+          "restWindows": []
+        },
+        "priority": "normal",
+        "history": [
+          {
+            "at": 1793183417110,
+            "actor": "演示家庭管理员",
+            "title": "家人批准计划",
+            "detail": "确认第 1 版联系安排"
+          },
+          {
+            "at": 1793183417610,
+            "actor": "执行适配器",
+            "title": "收到设备步骤回执",
+            "detail": "本地设备模拟器：客厅灯与语音询问回执"
+          },
+          {
+            "at": 1793183418110,
+            "actor": "执行适配器",
+            "title": "已创建联系任务",
+            "detail": "家庭任务与站内通知写入"
+          },
+          {
+            "at": 1793183421110,
+            "actor": "演示家人",
+            "title": "已明确核实平安",
+            "detail": "已与妈妈通话，刚才在午睡，一切平安。"
+          }
+        ],
         "steps": [
           {
             "id": "device",
-            "title": "联动灯光与音箱，再次语音询问",
+            "title": "开启关怀提示灯，请家人核实回应",
             "status": "done",
             "detail": "本地设备模拟器：客厅灯与语音询问回执",
-            "at": 1793174343717
+            "at": 1793183417610
           },
           {
             "id": "family",
             "title": "请家人协助联系妈妈",
-            "status": "done",
-            "detail": "家庭任务与站内通知写入",
-            "at": 1793174344217
+            "status": "skipped",
+            "detail": "已明确核实，取消尚未发出的联系",
+            "at": 1793183421110
           },
           {
             "id": "nearby",
             "title": "仍无回应时，请附近联系人核实",
             "status": "skipped",
-            "detail": "已收到家人回应，无需继续",
-            "at": 1793174347217
+            "detail": "已明确核实，取消尚未发出的联系",
+            "at": 1793183421110
           }
         ],
+        "approvedRevision": 1,
         "approvedBy": "演示家庭管理员",
-        "approvedAt": 1793174343217,
-        "nextCheckAt": 1793174943217,
+        "approvedAt": 1793183417110,
+        "nextCheckAt": 1793184017110,
         "reply": "已与妈妈通话，刚才在午睡，一切平安。",
-        "resolvedAt": 1793174347217
+        "outcome": {
+          "type": "safe_confirmed",
+          "remark": "已与妈妈通话，刚才在午睡，一切平安。",
+          "method": "phone",
+          "actor": "演示家人",
+          "caseId": "CARE-1793183416110",
+          "confirmed": true,
+          "at": 1793183421110
+        },
+        "resolvedAt": 1793183421110
       }
     }
   ]

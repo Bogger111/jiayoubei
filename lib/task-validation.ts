@@ -42,7 +42,7 @@ export function validateTaskPatch(
     Object.keys(body).some((key) => !editable.has(key))
   )
     throw new ProductInputError("包含不支持的任务字段");
-  if (current.status === "completed")
+  if (current.status === "completed" || current.status === "cancelled")
     throw new ProductInputError("任务已完成，不能重复修改或确认", 409);
   const patch: Partial<Task> = {};
   for (const key of ["title", "description", "assignee", "evidence"] as const) {

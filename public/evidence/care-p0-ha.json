@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-10-28T10:17:31.232Z",
+  "category": "synthetic",
+  "transport": "live",
+  "scope": "本机假HA服务的真实HTTP契约测试；不是Home Assistant实例或物理设备台架。",
+  "checks": [
+    {
+      "name": "采集接口验证密钥与实体白名单",
+      "passed": true
+    },
+    {
+      "name": "重复设备事件只保存一次",
+      "passed": true
+    },
+    {
+      "name": "调用真实动作接口契约，提前到达的状态回执不会丢失",
+      "passed": true
+    },
+    {
+      "name": "设备状态回执不会冒充人工核实或物理效果",
+      "passed": true
+    },
+    {
+      "name": "迟到回执不重新激活已解决记录",
+      "passed": true
+    },
+    {
+      "name": "设备拒绝动作保留失败，家庭联系仍可继续",
+      "passed": true
+    },
+    {
+      "name": "重复刷新不会重发失败或不确定的设备动作",
+      "passed": true
+    },
+    {
+      "name": "大量心跳不会挤掉可追溯的上次活动记录",
+      "passed": true
+    },
+    {
+      "name": "求助按钮松开后仍保留待核实的优先人工响应",
+      "passed": true
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/services/light/turn_on",
+      "method": "POST",
+      "body": {
+        "entity_id": "light.care_indicator"
+      }
+    },
+    {
+      "path": "/api/services/light/turn_on",
+      "method": "POST",
+      "body": {
+        "entity_id": "light.care_indicator"
+      }
+    }
+  ],
+  "physicalEffectVerified": false
+}

@@ -9,9 +9,13 @@ for(const [key,path] of Object.entries(files)){const mime=path.endsWith('.jpg')?
 for(const [key,Icon] of Object.entries({arrow:ArrowRight,left:ArrowLeft,check:CheckCircle2}))html=html.replaceAll('__ICON:'+key+'__',renderToStaticMarkup(createElement(Icon,{size:24,strokeWidth:1.7,'aria-hidden':true})));
 const run=JSON.parse(await readFile('public/evidence/care-run.json','utf8'));
 const checks=JSON.parse(await readFile('public/evidence/care-browser-checks.json','utf8'));
-const engine=ts.transpileModule(await readFile('lib/care-agent.ts','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replace(/^export /gm,'');
+const compile=source=>ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replace(/^import[^;]+;\s*/gm,'').replace(/^export /gm,'');
+const engine=compile(await readFile('lib/care-evidence.ts','utf8'))+'\n'+compile(await readFile('lib/care-agent.ts','utf8'));
+const p0=JSON.parse(await readFile('public/evidence/care-p0-summary.json','utf8'));
+html=html.replace('__P0_JSON__',JSON.stringify(p0).replaceAll('<',String.fromCharCode(92)+'u003c')).replace('__API_CHECKS__',String(p0.software.api?.checks.length??0)).replace('__HA_CHECKS__',String(p0.software.ha?.checks.length??0)).replace('__P0_BROWSER_CHECKS__',String(p0.software.browser?.checks.length??0));
 html=html.replace('__ENGINE__',engine).replace('__RUN_JSON__',JSON.stringify(run).replaceAll('<','\\u003c')).replace('__BROWSER_JSON__',JSON.stringify(checks).replaceAll('<','\\u003c')).replace('__RUN_COUNT__',String(run.scenarios.length)).replace('__GUARD_COUNT__',String(run.guards.length)).replace('__RUN_DATE__',run.generatedAt.slice(0,10)).replace('__VIDEO__','data:video/webm;base64,'+(await readFile('public/evidence/media/family-agent-run.webm')).toString('base64'));
-if(/__(?:ASSET|ICON|RUN|VIDEO|ENGINE|BROWSER)/.test(html))throw new Error('Unresolved deck placeholder');
+html=html.replaceAll('__P0_VIDEO__','data:video/webm;base64,'+(await readFile('public/evidence/media/care-p0-family.webm')).toString('base64')).replaceAll('__P0_ADMIN_VIDEO__','data:video/webm;base64,'+(await readFile('public/evidence/media/care-p0-admin.webm')).toString('base64'));
+if(/__(?:ASSET|ICON|RUN|VIDEO|ENGINE|BROWSER|P0|API_CHECKS|HA_CHECKS)/.test(html))throw new Error('Unresolved deck placeholder');
 html=html.replace('</style>','[hidden]{display:none!important}</style>');
 await mkdir('public/competition',{recursive:true});
 await writeFile('public/competition/index.html',html);await writeFile('家有备-创客比赛.html',html);

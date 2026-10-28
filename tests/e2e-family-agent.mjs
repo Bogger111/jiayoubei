@@ -28,8 +28,11 @@ try{
   assert.equal(await page.getByRole('button',{name:'记录家人回应',exact:true}).isEnabled(),true);
   await readMoment();
   await page.screenshot({path:'public/evidence/media/care-following.jpg',quality:90});checks.push({name:'一键批准后写入模拟回执与家庭任务',passed:true});
+  await page.getByRole('button',{name:'接手联系任务',exact:true}).click();checks.push({name:'联系任务创建后仍需明确接手',passed:true});
   await page.getByRole('button',{name:'记录家人回应',exact:true}).click();
+  await page.getByLabel('联系结果',{exact:true}).selectOption('safe_confirmed');
   await page.getByLabel('记录联系结果').fill('已与妈妈通话，刚才在午睡，一切平安。');
+  await page.getByRole('checkbox',{name:'我已核实当前这次情况，可以结束后续联系。'}).check();
   await readMoment();
   await page.getByRole('button',{name:'保存回应并结束跟进',exact:true}).click();
   await page.getByRole('heading',{name:'这次牵挂，有了回应',exact:true}).waitFor();
@@ -40,7 +43,7 @@ try{
   await readMoment();
   const video=page.video();await context.close();await copyFile(await video.path(),'public/evidence/media/family-agent-run.webm');
   const qa=await browser.newContext({viewport:{width:1536,height:1024}});const q=await qa.newPage();q.on('pageerror',e=>errors.push(e.message));
-  for(const [label,heading] of [['妈妈已外出','妈妈可能正在外出'],['语音报平安','妈妈已经回应平安'],['传感器离线','先确认家中的连接'],['加入授权图像场景','妈妈还没有回应']]){
+  for(const [label,heading] of [['妈妈已外出','家人已确认外出'],['语音报平安','妈妈已经回应平安'],['传感器离线','先确认家中的连接'],['加入授权图像场景','妈妈还没有回应']]){
     await q.goto(base,{waitUntil:'networkidle'});await q.getByRole('button',{name:'场景预演',exact:true}).click();await q.getByRole('button',{name:label,exact:true}).click();await q.getByRole('heading',{name:heading,exact:true}).waitFor();checks.push({name:`情景分支：${label}`,passed:true});
   }
   await q.getByRole('button',{name:'查看完整依据',exact:true}).click();await q.getByText('授权图像情景 · 示例画面',{exact:true}).waitFor();await q.getByRole('button',{name:'关闭',exact:true}).click();

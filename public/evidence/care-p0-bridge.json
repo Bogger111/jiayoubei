@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-10-28T10:17:32.389Z",
+  "category": "synthetic",
+  "transport": "live",
+  "scope": "本机WebSocket/HTTP协议夹具运行真实Node桥接进程，验证断线重送；未连接HA实例或实物。",
+  "checks": [
+    {
+      "name": "原生WebSocket完成认证与状态订阅",
+      "passed": true
+    },
+    {
+      "name": "连接失败后原始事件和标识写入本地队列",
+      "passed": true
+    },
+    {
+      "name": "桥接进程重建后使用相同事件标识重送",
+      "passed": true
+    },
+    {
+      "name": "实体白名单与只读状态心跳生效",
+      "passed": true
+    },
+    {
+      "name": "本次恢复后队列清空且原待送记录全部到达",
+      "passed": true
+    }
+  ],
+  "originalPendingIds": [
+    "91b85717d98d90decf13694055681eda0ea65cb9a101530a21b6ce36545d228b",
+    "b3eca90c44425048f933359aabf0ae972a070cf5d7f942e18945ea0579bb227f"
+  ],
+  "deliveredIds": [
+    "91b85717d98d90decf13694055681eda0ea65cb9a101530a21b6ce36545d228b",
+    "b3eca90c44425048f933359aabf0ae972a070cf5d7f942e18945ea0579bb227f",
+    "a347cd61e0b69c6b5f2b31b65489b92655d4e81f94b69cc3f5e8370cd7343e82"
+  ]
+}

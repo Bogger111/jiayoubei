@@ -273,7 +273,7 @@ export default function EventDetail({ id }: { id: string }) {
           </Panel>
           <Panel className="event-next-step">
             <SectionTitle title="下一步行动" />
-            {terminal ? (
+            {event.id.startsWith("CARE-") ? <AppLink className="care-primary" href={state.demoMode?"/":"/care?caseId="+encodeURIComponent(event.id)}>查看关怀确认与联系结果 <ArrowRight size={16}/></AppLink> : terminal ? (
               <div className="success-block">
                 <Check size={18} />
                 {event.status === "closed" ? "事件已关闭" : "事件已解决"}

@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2026-10-28T10:30:14.759Z",
+  "category": "synthetic",
+  "transport": "live",
+  "scope": "两个独立真实认证测试账号访问本地隔离D1；业务输入构造，未接物理设备。",
+  "checks": [
+    {
+      "name": "管理员页面批准计划，未配置设备显示未知",
+      "passed": true
+    },
+    {
+      "name": "另一终端实际查看安排并返回页面接收确认",
+      "passed": true
+    },
+    {
+      "name": "联系人使用独立账号从页面明确接手",
+      "passed": true
+    },
+    {
+      "name": "输入未联系到后，页面仍保留跟进和任务",
+      "passed": true
+    },
+    {
+      "name": "明确结果与人工确认后才结束本次跟进",
+      "passed": true
+    },
+    {
+      "name": "刷新页面后仍能恢复结果与过程记录",
+      "passed": true
+    },
+    {
+      "name": "390px 两端协作页面没有横向溢出",
+      "passed": true
+    },
+    {
+      "name": "实际浏览器无脚本错误",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "videos": [
+    "care-p0-admin.webm",
+    "care-p0-family.webm"
+  ]
+}

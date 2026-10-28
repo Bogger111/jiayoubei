@@ -23,8 +23,11 @@ plan=recordCareStep(plan,'device',true,'本地设备模拟器：客厅灯与语�
 plan=recordCareStep(plan,'family',true,'家庭任务与站内通知写入',now+2000);
 trace.push({stage:'协同执行',at:now+2000,plan:structuredClone(plan)});
 assert.throws(()=>recordCareStep(plan,'nearby',true,'too early',now+3000));guards.push({name:'条件未到不联系邻居',passed:true});
-plan=resolveCarePlan(plan,'已与妈妈通话，刚才在午睡，一切平安。',now+5000);trace.push({stage:'回应闭环',at:now+5000,plan:structuredClone(plan)});
+plan=resolveCarePlan(plan,{type:'safe_confirmed',remark:'已与妈妈通话，刚才在午睡，一切平安。',method:'phone',actor:'演示家人',caseId:plan.id,confirmed:true},now+5000);trace.push({stage:'回应闭环',at:now+5000,plan:structuredClone(plan)});
 assert.equal(plan.steps.at(-1).status,'skipped');guards.push({name:'确认平安后停止后续联系',passed:true});
+const unresolved=approveCarePlan(createCarePlan(demoCareSignals('unanswered',now),now),'演示家人',now);
+assert.equal(resolveCarePlan(unresolved,{type:'no_answer',remark:'还没有联系到',method:'phone',actor:'演示家人',caseId:unresolved.id,confirmed:false},now+1000).status,'following');
+guards.push({name:'未联系到不能结束跟进',passed:true});
 const code=await readFile('lib/care-agent.ts');
 const result={generatedAt:new Date().toISOString(),runtime:process.version,engine:'lib/care-agent.ts',sourceSha256:createHash('sha256').update(code).digest('hex'),scope:'真实执行本地确定性编排程序；输入为构造情景，图像为已授权语义观察值，设备与通讯为模拟适配器。不是模型识别准确率、真实家庭试用或ESP32实测。',scenarios,guards,trace};
 await mkdir('public/evidence',{recursive:true});await writeFile('public/evidence/care-run.json',JSON.stringify(result,null,2));

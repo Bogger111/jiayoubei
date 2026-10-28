@@ -10,7 +10,7 @@
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json --local --show-interactive-dev-session=false",
     "test": "npm run build && npm run test:unit",
-    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs",
+    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs tests/care-report.test.mjs",
     "test:care:e2e": "node tests/e2e-family-agent.mjs",
     "deck:family": "node scripts/competition/run-care-evidence.mjs && node scripts/competition/build-family-deck.mjs",
     "test:deck:family": "node tests/family-deck-check.mjs",
@@ -27,7 +27,15 @@
     "test:production": "node --test tests/production-smoke.test.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "test:care:unit": "node --test tests/care-agent.test.mjs",
+    "test:care:api": "node tests/care-service-isolated.mjs",
+    "test:care:ha": "node tests/care-ha-adapter.mjs",
+    "care:replay": "node scripts/care/run-policy-replay.mjs",
+    "care:prove": "node scripts/care/prove-p0-browser.mjs",
+    "care:report": "node scripts/care/build-evidence-report.mjs",
+    "test:care:bridge": "node tests/care-ha-bridge.mjs",
+    "test:care:p0": "npm run build && npm run test:care:unit && npm run test:care:api && npm run test:care:ha && npm run test:care:bridge && npm run care:replay && node --test tests/care-report.test.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",
@@ -58,7 +66,8 @@
     "typescript": "5.9.3",
     "vinext": "0.0.50",
     "vite": "8.0.13",
-    "wrangler": "4.92.0"
+    "wrangler": "4.92.0",
+    "ws": "8.18.0"
   },
   "type": "module"
 }

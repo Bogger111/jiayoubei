@@ -6,7 +6,7 @@ export function isTaskOverdue(
   current: number,
   observeDeadline = true,
 ) {
-  if (task.status === "completed") return false;
+  if (task.status === "completed" || task.status === "cancelled") return false;
   if (task.status === "overdue") return true;
   if (!observeDeadline) return false;
   const deadline = Date.parse(task.dueAt);

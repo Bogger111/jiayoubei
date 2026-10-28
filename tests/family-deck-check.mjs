@@ -18,11 +18,17 @@ try{
   results.push(check);await p.locator('#stage').screenshot({path:`test-results/quiet/deck/slide-${String(i+1).padStart(2,'0')}.jpg`,type:'jpeg',quality:85});
  }
  await p.evaluate(()=>show(12));await p.getByRole('button',{name:'同意并开始安排',exact:true}).click();assert.equal(await p.getByRole('button',{name:'同意并开始安排',exact:true}).isVisible(),false);
+ await p.getByRole('button',{name:'联系人接手',exact:true}).click();assert.equal(await p.evaluate(()=>demoPlan.steps.find(s=>s.id==='family').status),'accepted');
+ const deadline=await p.evaluate(()=>demoPlan.nextCheckAt);
+ await p.getByRole('button',{name:'还没有联系到',exact:true}).click();assert.equal(await p.evaluate(()=>demoPlan.status),'following');assert.equal(await p.evaluate(()=>demoPlan.nextCheckAt),deadline);
+ await p.locator('#stage').screenshot({path:'test-results/quiet/deck/slide-13-following.jpg',type:'jpeg',quality:90});
+ assert.equal(await p.evaluate(()=>document.querySelector('.demo-plan').getBoundingClientRect().bottom<=document.querySelector('.demo-control').getBoundingClientRect().top-8),true,'following card must leave footer space');
  await p.getByRole('button',{name:'收到平安回应',exact:true}).click();assert.match(await p.locator('#demo-heading').textContent(),/有了回应/);assert.equal(await p.getByRole('button',{name:'推进至等待结束',exact:true}).isVisible(),false);
  await p.getByRole('button',{name:'重新开始',exact:true}).click();await p.getByRole('button',{name:'同意并开始安排',exact:true}).click();await p.getByRole('button',{name:'推进至等待结束',exact:true}).click();assert.match(await p.locator('#demo-steps').textContent(),/附近联系人核实任务/);
  await p.getByLabel('切换家庭情况').selectOption('away');assert.equal(await p.getByRole('button',{name:'同意并开始安排',exact:true}).isVisible(),false);assert.match(await p.locator('#demo-heading').textContent(),/外出/);
  await p.getByLabel('切换家庭情况').selectOption('unanswered');assert.equal(await p.locator('#demo-photo').isVisible(),false);
  await p.getByRole('button',{name:'播放实际操作录屏',exact:true}).click();await p.locator('#run-video').evaluate(async video=>{await video.play()});await p.waitForFunction(()=>document.querySelector('#run-video').currentTime>0);await p.locator('#video-modal [data-close]').click();
+ await p.getByRole('button',{name:'播放实际操作录屏',exact:true}).click();await p.getByLabel('查看终端',{exact:true}).selectOption('admin');await p.locator('#run-video').evaluate(video=>video.play());await p.waitForFunction(()=>document.querySelector('#run-video').currentTime>0);await p.locator('#video-modal [data-close]').click();
  await p.getByRole('button',{name:'目录',exact:true}).click();await p.getByRole('dialog',{name:'演示目录'}).locator('button').filter({hasText:'来源与运行记录'}).click();assert.equal(await p.locator('.slide.active').getAttribute('data-title'),'来源与运行记录');
  const download=p.waitForEvent('download');await p.getByRole('button',{name:'导出运行记录',exact:true}).click();const artifact=await download;assert.match(artifact.suggestedFilename(),/运行记录/);
  await p.getByRole('button',{name:'讲稿',exact:true}).click();assert.ok((await p.locator('#notes-text').textContent()).length>10);await p.locator('#notes-modal [data-close]').click();

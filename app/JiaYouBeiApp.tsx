@@ -5,6 +5,7 @@ import CvFallMonitor from "./CvFallMonitor";
 import AppShell from "./components/QuietShell";
 import Dashboard from "./components/CareHome";
 import FamilyMemory from "./components/FamilyMemory";
+import CareWorkspace from "./components/CareWorkspace";
 import TaskDetail from "./components/TaskDetail";
 import EventDetail from "./components/EventDetail";
 import DeviceDetail from "./components/DeviceDetail";
@@ -177,7 +178,7 @@ function TasksPage() {
       (tab === "mine"
         ? t.assignee === currentMember?.id
         : tab === "help"
-          ? t.helpRequested && t.status !== "completed"
+          ? t.helpRequested && !["completed", "cancelled"].includes(t.status)
           : tab === "ai"
             ? t.creator.includes("AI") || t.creator.includes("规则")
             : t.status === "completed"),
@@ -274,7 +275,7 @@ function TaskRow({
         </span>
         <span>
           <strong>{task.title}</strong>
-          {task.helpRequested && task.status !== "completed" && (
+          {task.helpRequested && !["completed", "cancelled"].includes(task.status) && (
             <em className="task-help-badge">需要协助</em>
           )}
           <small className={overdue ? "deadline-late" : undefined}>
@@ -1163,7 +1164,7 @@ function MembersPage({ id }: { id?: string }) {
                 {
                   state.tasks.filter(
                     (task) =>
-                      task.assignee === m.id && task.status !== "completed",
+                      task.assignee === m.id && !["completed", "cancelled"].includes(task.status),
                   ).length
                 }{" "}
                 项待办任务
@@ -2321,7 +2322,7 @@ function DemoPage() {
           </span>
           <span>
             <strong>
-              {state.tasks.filter((t) => t.status !== "completed").length}
+              {state.tasks.filter((t) => !["completed", "cancelled"].includes(t.status)).length}
             </strong>{" "}
             未完成任务
           </span>
@@ -2518,6 +2519,7 @@ function AppRouter({ initialPath }: { initialPath: string }) {
   else if (path === "/onboarding") content = <Onboarding />;
   else if (path === "/ai") content = <Assistant />;
   else if (path === "/memory") content = <FamilyMemory key={`${state.family.id}-${state.user.id}`} />;
+  else if (path === "/care") content = <CareWorkspace key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/events") content = <EventsPage />;
   else if (path.startsWith("/events/"))
     content = <EventDetail key={path} id={path.split("/")[2]} />;

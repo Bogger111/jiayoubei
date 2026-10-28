@@ -1,0 +1,684 @@
+{
+  "generatedAt": "2026-10-28T10:17:33.027Z",
+  "clock": "2026-10-28T05:00:00.000Z",
+  "category": "synthetic",
+  "transport": "replay",
+  "scope": "同一组冻结构造输入的软件策略对照；没有真实家庭准确率或主动询问因果效果结论。",
+  "baselineCommit": "14295270d645b6b18e1aa0c9f9cdc4137afa8aa1",
+  "hashes": {
+    "baseline": "8c2ab26b10d43a5b85962ed8783f8ab75a04825690665559c0d0b1c5cc37a7fc",
+    "current": "cd9bc219da3bb00333fe63e04638794ad7326bcec8bd2c8bcf49a1bd06652621",
+    "evidencePolicy": "3bb9046bfa7d83637de5138698fba2279337974b25c6b69ceaf4650699f273c4"
+  },
+  "results": [
+    {
+      "id": "rest",
+      "name": "家庭午休约定",
+      "category": "synthetic",
+      "transport": "replay",
+      "datasetId": "frozen-care-policy-v1",
+      "sampleId": "rest",
+      "expected": "rest",
+      "baseline": {
+        "status": "pending",
+        "title": "妈妈还没有回应",
+        "reason": "结合家中动态，我整理了一份确认计划。"
+      },
+      "current": {
+        "status": "monitoring",
+        "disposition": "rest",
+        "title": "在约定的午休时间，先轻声关注",
+        "reason": "家庭午休约定正在生效，设备在线；约定结束后重新核实。",
+        "excluded": [
+          {
+            "id": "frozen-case-image",
+            "reason": "未获授权"
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793250000000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-activity",
+          "sourceId": "demo-motion",
+          "kind": "activity",
+          "value": "active",
+          "observedAt": 1793156400000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-online",
+          "sourceId": "demo-motion",
+          "kind": "availability",
+          "value": "online",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-door",
+          "sourceId": "demo-door",
+          "kind": "door",
+          "value": "closed",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": false,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-image",
+          "sourceId": "demo-camera",
+          "kind": "image",
+          "value": "empty",
+          "observedAt": 1793163600000
+        }
+      ],
+      "agreement": {
+        "contact": "M003",
+        "nearbyContact": "M005",
+        "waitMinutes": 10,
+        "silenceMinutes": 90,
+        "timezone": "Asia/Shanghai",
+        "restWindows": [
+          {
+            "start": "12:00",
+            "end": "14:30"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "id": "door",
+      "name": "门开过，不确认本人已外出",
+      "category": "synthetic",
+      "transport": "replay",
+      "datasetId": "frozen-care-policy-v1",
+      "sampleId": "door",
+      "expected": "verify",
+      "baseline": {
+        "status": "monitoring",
+        "title": "妈妈可能正在外出",
+        "reason": "门磁显示有离家记录。继续关注，暂不安排上门。"
+      },
+      "current": {
+        "status": "pending",
+        "disposition": "verify",
+        "title": "妈妈还没有回应",
+        "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+        "excluded": [
+          {
+            "id": "frozen-case-image",
+            "reason": "未获授权"
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793250000000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-activity",
+          "sourceId": "demo-motion",
+          "kind": "activity",
+          "value": "active",
+          "observedAt": 1793156400000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-online",
+          "sourceId": "demo-motion",
+          "kind": "availability",
+          "value": "online",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-door",
+          "sourceId": "demo-door",
+          "kind": "door",
+          "value": "open",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-voice",
+          "sourceId": "demo-response",
+          "kind": "reply",
+          "value": "no_answer",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": false,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-image",
+          "sourceId": "demo-camera",
+          "kind": "image",
+          "value": "empty",
+          "observedAt": 1793163600000
+        }
+      ],
+      "agreement": {
+        "contact": "M003",
+        "nearbyContact": "M005",
+        "waitMinutes": 10,
+        "silenceMinutes": 90,
+        "timezone": "Asia/Shanghai",
+        "restWindows": []
+      },
+      "passed": true
+    },
+    {
+      "id": "help-offline",
+      "name": "活动设备离线，明确求助仍优先响应",
+      "category": "synthetic",
+      "transport": "replay",
+      "datasetId": "frozen-care-policy-v1",
+      "sampleId": "help-offline",
+      "expected": "priority_response",
+      "baseline": {
+        "status": "pending",
+        "title": "先确认家中的连接",
+        "reason": "设备信息不完整，先检查连接，同时请家人确认情况。"
+      },
+      "current": {
+        "status": "pending",
+        "disposition": "priority_response",
+        "title": "收到明确求助，请家人优先响应",
+        "reason": "新鲜的明确求助优先处理，其他设备离线或午休约定不阻断人工响应。",
+        "excluded": [
+          {
+            "id": "frozen-case-image",
+            "reason": "未获授权"
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793250000000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-activity",
+          "sourceId": "demo-motion",
+          "kind": "activity",
+          "value": "active",
+          "observedAt": 1793156400000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-online",
+          "sourceId": "demo-motion",
+          "kind": "availability",
+          "value": "offline",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-door",
+          "sourceId": "demo-door",
+          "kind": "door",
+          "value": "closed",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-voice",
+          "sourceId": "demo-response",
+          "kind": "reply",
+          "value": "no_answer",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": false,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-image",
+          "sourceId": "demo-camera",
+          "kind": "image",
+          "value": "empty",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793163660000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "fresh-help",
+          "sourceId": "help-button",
+          "kind": "help",
+          "value": "requested",
+          "observedAt": 1793163600000
+        }
+      ],
+      "agreement": {
+        "contact": "M003",
+        "nearbyContact": "M005",
+        "waitMinutes": 10,
+        "silenceMinutes": 90,
+        "timezone": "Asia/Shanghai",
+        "restWindows": []
+      },
+      "passed": true
+    },
+    {
+      "id": "stale-confirmation",
+      "name": "过期确认不能结束当前判断",
+      "category": "synthetic",
+      "transport": "replay",
+      "datasetId": "frozen-care-policy-v1",
+      "sampleId": "stale-confirmation",
+      "expected": "verify",
+      "baseline": {
+        "status": "pending",
+        "title": "先确认家中的连接",
+        "reason": "设备信息不完整，先检查连接，同时请家人确认情况。"
+      },
+      "current": {
+        "status": "pending",
+        "disposition": "verify",
+        "title": "妈妈还没有回应",
+        "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+        "excluded": [
+          {
+            "id": "frozen-case-image",
+            "reason": "未获授权"
+          },
+          {
+            "id": "old-safe",
+            "reason": "已过有效期"
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793250000000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-activity",
+          "sourceId": "demo-motion",
+          "kind": "activity",
+          "value": "active",
+          "observedAt": 1793156400000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-online",
+          "sourceId": "demo-motion",
+          "kind": "availability",
+          "value": "online",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-door",
+          "sourceId": "demo-door",
+          "kind": "door",
+          "value": "closed",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-voice",
+          "sourceId": "demo-response",
+          "kind": "reply",
+          "value": "no_answer",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": false,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-image",
+          "sourceId": "demo-camera",
+          "kind": "image",
+          "value": "empty",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793163540000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "confirmation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "old-safe",
+          "sourceId": "old-reply",
+          "kind": "reply",
+          "value": "safe_confirmed",
+          "observedAt": 1793156400000
+        }
+      ],
+      "agreement": {
+        "contact": "M003",
+        "nearbyContact": "M005",
+        "waitMinutes": 10,
+        "silenceMinutes": 90,
+        "timezone": "Asia/Shanghai",
+        "restWindows": []
+      },
+      "passed": true
+    },
+    {
+      "id": "mixed-source",
+      "name": "门磁离线不抹去活动设备的新鲜信息",
+      "category": "synthetic",
+      "transport": "replay",
+      "datasetId": "frozen-care-policy-v1",
+      "sampleId": "mixed-source",
+      "expected": "verify",
+      "baseline": {
+        "status": "pending",
+        "title": "先确认家中的连接",
+        "reason": "设备信息不完整，先检查连接，同时请家人确认情况。"
+      },
+      "current": {
+        "status": "pending",
+        "disposition": "verify",
+        "title": "妈妈还没有回应",
+        "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+        "excluded": [
+          {
+            "id": "frozen-case-image",
+            "reason": "未获授权"
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793250000000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-activity",
+          "sourceId": "demo-motion",
+          "kind": "activity",
+          "value": "active",
+          "observedAt": 1793156400000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-online",
+          "sourceId": "demo-motion",
+          "kind": "availability",
+          "value": "online",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-door",
+          "sourceId": "demo-door",
+          "kind": "door",
+          "value": "closed",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-voice",
+          "sourceId": "demo-response",
+          "kind": "reply",
+          "value": "no_answer",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": false,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "frozen-case-image",
+          "sourceId": "demo-camera",
+          "kind": "image",
+          "value": "empty",
+          "observedAt": 1793163600000
+        },
+        {
+          "receivedAt": 1793163600000,
+          "expiresAt": 1793165400000,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "frozen-case",
+          "caseId": "frozen-case",
+          "id": "door-offline",
+          "sourceId": "door-device",
+          "kind": "availability",
+          "value": "offline",
+          "observedAt": 1793163600000
+        }
+      ],
+      "agreement": {
+        "contact": "M003",
+        "nearbyContact": "M005",
+        "waitMinutes": 10,
+        "silenceMinutes": 90,
+        "timezone": "Asia/Shanghai",
+        "restWindows": []
+      },
+      "passed": true
+    },
+    {
+      "id": "negative-reply",
+      "name": "未联系到保持跟进",
+      "category": "synthetic",
+      "transport": "replay",
+      "datasetId": "frozen-care-policy-v1",
+      "sampleId": "negative-reply",
+      "baseline": {
+        "status": "resolved"
+      },
+      "current": {
+        "status": "following",
+        "resolvedAt": null
+      },
+      "passed": true
+    }
+  ]
+}

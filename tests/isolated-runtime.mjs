@@ -2,11 +2,12 @@ import { mkdir, readFile, readdir, realpath, rm } from "node:fs/promises";
 import { resolve, dirname, basename } from "node:path";
 import { tmpdir } from "node:os";
 import { Miniflare } from "miniflare";
-export async function createIsolatedAuthRuntime() {
-  const root = resolve(
+export async function createIsolatedAuthRuntime(options = {}) {
+  const root = options.persistPath ?? resolve(
     tmpdir(),
     `jiayoubei-auth-${crypto.randomUUID().slice(0, 8)}`,
   );
+  if (dirname(root).toLowerCase() !== resolve(tmpdir()).toLowerCase() || !/^jiayoubei-auth-[a-f0-9]{8}$/.test(basename(root))) throw new Error("Unexpected isolated runtime path");
   await mkdir(root, { recursive: true });
   const config = JSON.parse(
     await readFile("dist/server/wrangler.json", "utf8"),
@@ -34,6 +35,7 @@ export async function createIsolatedAuthRuntime() {
       AUTH_MODE: "real",
       AUTH_SECRET: crypto.randomUUID() + crypto.randomUUID(),
       AI_API_KEY: "",
+      ...(options.bindings ?? {}),
     },
     d1Databases: { DB: "isolated-auth" },
     d1Persist: root,
@@ -44,12 +46,14 @@ export async function createIsolatedAuthRuntime() {
   });
   let disposal;
   return {
+    persistPath: root,
     ready: runtime.ready,
     dispatchFetch: runtime.dispatchFetch.bind(runtime),
     getD1Database: runtime.getD1Database.bind(runtime),
     dispose() {
       disposal ??= (async () => {
         await runtime.dispose();
+        if (options.keepFiles) return;
         const actualRoot = await realpath(root);
         const actualTemp = await realpath(tmpdir());
         if (

@@ -141,6 +141,7 @@ export default function TaskDetail({
       if (stillCurrent()) setBusy("");
     }
   };
+  if (task.sourceEventId?.startsWith("CARE-")) return <><AppLink className="back-button" href="/tasks">返回家庭任务</AppLink><PageHeader eyebrow="关怀确认" title={task.title} description={task.description} action={<StatusBadge status={task.status}/>}/><Panel><h2>这是一份关怀联系安排</h2><p>请在本次关怀记录中接手，记录是否联系到，以及是否需要继续跟进。</p>{task.evidence&&<p>{task.evidence}</p>}<AppLink className="care-primary" href={state.demoMode?"/":"/care?caseId="+encodeURIComponent(task.sourceEventId)}>进入关怀确认</AppLink></Panel></>;
   return (
     <>
       <AppLink className="back-button" href="/tasks">

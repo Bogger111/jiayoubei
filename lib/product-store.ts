@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
-import { approveCarePlan, createCarePlan, demoCareSignals, recordCareStep, resolveCarePlan, reviseCarePlan, type CareScenario } from "./care-agent";
+import { approveCarePlan, claimCareStep, createCarePlan, demoCareSignals, recordCareStep, resolveCarePlan, reviseCarePlan, type CareScenario, type CareOutcomeInput } from "./care-agent";
+import { careApi } from "@/src/api/careApi";
 import type {
   Authorization,
   FamilyMember,
@@ -326,13 +327,15 @@ class ProductStore {
     if (!this.state.demoMode || this.state.busy) return;
     this.update(s => { s.carePlan = createCarePlan(demoCareSignals(scenario)); });
   }
-  reviseCare(contact: string, waitMinutes: number) {
-    if (!this.state.demoMode || !this.state.carePlan || this.state.busy) return;
+  async reviseCare(contact: string, waitMinutes: number) {
+    if (!this.state.carePlan || this.state.busy) return;
     if (!this.state.members.some(member => member.id === contact)) throw new Error("请选择当前家庭的联系人。");
+    if (!this.state.demoMode) return this.saveCareCommand({action:"revise",contact,waitMinutes});
     this.update(s => { s.carePlan = reviseCarePlan(s.carePlan!, contact, waitMinutes); });
   }
   async approveCare() {
-    if (!this.state.demoMode || !this.state.carePlan || this.state.busy) return;
+    if (!this.state.carePlan || this.state.busy) return;
+    if (!this.state.demoMode) return this.saveCareCommand({action:"approve"});
     const session = this.sessionVersion;
     const plan = approveCarePlan(this.state.carePlan, this.state.user.name);
     this.setBusy("care");
@@ -361,17 +364,32 @@ class ProductStore {
       if (session === this.sessionVersion) this.update(s => { s.lastError = error instanceof Error ? error.message : "计划执行失败，请检查记录。"; });
     } finally { if (session === this.sessionVersion) this.setBusy(null); }
   }
-  resolveCare(reply: string) {
-    if (!this.state.demoMode || !this.state.carePlan || this.state.busy) return;
-    const plan = resolveCarePlan(this.state.carePlan, reply);
+  async saveCareCommand(input: Record<string,unknown>) {
+    const current=this.state.carePlan;if(!current)return;
+    const session=this.sessionVersion;
+    this.setBusy("care");
+    try{const plan=await careApi.command({...input,caseId:current.id,expectedVersion:current.revision});if(session===this.sessionVersion)this.update(s=>{s.carePlan=plan});}
+    finally{if(session===this.sessionVersion)this.setBusy(null);}
+    if(session===this.sessionVersion)await this.refreshRecords();
+  }
+  async claimCare() {
+    if(!this.state.carePlan||this.state.busy)return;
+    if(!this.state.demoMode)return this.saveCareCommand({action:"claim"});
+    const plan=claimCareStep(this.state.carePlan,this.state.user.name);
+    this.update(s=>{s.carePlan=plan;for(const task of s.tasks.filter(t=>t.sourceEventId===plan.id&&t.status==="to_receive"))task.status="in_progress";});
+  }
+  async resolveCare(outcome: Omit<CareOutcomeInput,"actor"|"caseId">) {
+    if (!this.state.carePlan || this.state.busy) return;
+    if(!this.state.demoMode)return this.saveCareCommand({action:"outcome",outcome});
+    const plan = resolveCarePlan(this.state.carePlan, { ...outcome,actor:this.state.user.name,caseId:this.state.carePlan.id });
     this.update(s => {
       s.carePlan = plan;
       const at = new Date().toISOString();
       const event = s.events.find(item => item.id === plan.id);
-      if (event) { event.status = "resolved"; event.updatedAt = at; event.timeline.push({ id: `${plan.id}-REPLY`, time: at, title: "家人已确认情况", detail: reply, actor: s.user.name, tone: "success" }); }
-      for (const task of s.tasks.filter(item => item.sourceEventId === plan.id)) { task.status = "completed"; task.evidence = reply; task.familyConfirmedAt = at; }
+      if (event) { event.status = plan.status==="resolved"?"resolved":plan.status==="cancelled"?"closed":"processing"; event.updatedAt = at; event.timeline.push({ id: `${plan.id}-REPLY-${plan.revision}`, time: at, title: plan.status==="resolved"?"家人已确认情况":"家人更新核实结果", detail: outcome.remark, actor: s.user.name, tone: plan.status==="resolved"?"success":"warning" }); }
+      for (const task of s.tasks.filter(item => item.sourceEventId === plan.id)) { const completed=plan.status==="resolved"&&task.id===`${plan.id}-CONTACT`&&plan.steps.find(step=>step.id==="family")?.status==="done"; task.status = completed?"completed":["resolved","cancelled"].includes(plan.status)?"cancelled":task.status; task.evidence = outcome.remark; if(completed)task.familyConfirmedAt=at; }
     });
-    this.audit(this.state.user.name, "user", plan.id, "记录家人回应", reply);
+    this.audit(this.state.user.name, "user", plan.id, "记录家人回应", outcome.remark);
   }
   advanceCare() {
     const plan = this.state.carePlan;

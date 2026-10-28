@@ -28,6 +28,7 @@ import { env } from "cloudflare:workers";
 import { and, eq, getTableColumns, sql } from "drizzle-orm";
 import { validateTaskPatch } from "@/lib/task-validation";
 import { ProductInputError } from "@/lib/product-input";
+import { CARE_DDL } from "./care-schema";
 
 const parseJson = <T>(value: string | null | undefined, fallback: T): T => {
   if (!value) return fallback;
@@ -150,7 +151,7 @@ async function initializeProductSchema() {
   const binding = (env as unknown as { DB?: D1Database }).DB;
   if (!binding) throw new Error("D1 binding DB is unavailable");
   await binding.batch(
-    PRODUCT_DDL.map((statement) => binding.prepare(statement)),
+    [...PRODUCT_DDL, ...CARE_DDL].map((statement) => binding.prepare(statement)),
   );
   // 已有部署的增量迁移：users 表补充登录相关列（列已存在时忽略错误）
   const usersColumns = await binding
@@ -724,6 +725,7 @@ export async function updateTask(
   const db = getDb();
   const current = await findTask(familyId, id);
   if (!current) return null;
+  if (current.sourceEventId?.startsWith("CARE-")) throw new ProductInputError("请在关怀确认中接手任务并记录明确结果",409);
   const timestamp = new Date().toISOString();
   const allowed = validateTaskPatch(current, patch, timestamp);
   const version = current.version ?? 0;
@@ -867,6 +869,7 @@ export async function updateEvent(
 ) {
   const current = await findEvent(familyId, id);
   if (!current) return null;
+  if (id.startsWith("CARE-")) throw new ProductInputError("请在关怀确认中记录结果，不能直接改为已解决",409);
   if (!patch || typeof patch !== "object" || Array.isArray(patch))
     throw new ProductInputError("事件更新格式不正确");
   const supported = ["title", "description", "status"];
