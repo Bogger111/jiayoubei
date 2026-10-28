@@ -5,6 +5,7 @@ import {ArrowRight,ArrowLeft,CheckCircle2} from 'lucide-react';
 import ts from 'typescript';
 const files={logo:'public/icon-192.png',house:'public/brand/quiet-house.png',family:'public/brand/family-care.png',room:'public/brand/living-room.png',home:'public/evidence/media/care-home.jpg'};
 let html=await readFile('presentations/family-agent.template.html','utf8');
+if((html.match(/<aside class="slide-note">/g)||[]).length!==14)throw new Error('The template must contain exactly one speaker note per slide; remove stale slide fragments.');
 for(const [key,path] of Object.entries(files)){const mime=path.endsWith('.jpg')?'image/jpeg':'image/png';html=html.replaceAll('__ASSET:'+key+'__','data:'+mime+';base64,'+(await readFile(path)).toString('base64'))}
 for(const [key,Icon] of Object.entries({arrow:ArrowRight,left:ArrowLeft,check:CheckCircle2}))html=html.replaceAll('__ICON:'+key+'__',renderToStaticMarkup(createElement(Icon,{size:24,strokeWidth:1.7,'aria-hidden':true})));
 const run=JSON.parse(await readFile('public/evidence/care-run.json','utf8'));
