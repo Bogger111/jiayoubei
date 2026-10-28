@@ -6,6 +6,7 @@ import {
   Camera,
   CheckCircle2,
   FileVideo,
+  EyeOff,
   RefreshCw,
   ShieldCheck,
   Square,
@@ -17,6 +18,10 @@ import {
   type PosePoint,
 } from "@/lib/cv/fall-detector";
 import { createPoseEngine, type PoseEngine } from "@/lib/cv/pose-engine";
+import { VisionRunLog, type VisionRunSummary } from "@/lib/cv/run-log";
+import type { VisionRuleEvidence } from "@/lib/cv/report-input";
+import VisionEvidence from "./VisionEvidence";
+import Pose3DView from "./Pose3DView";
 import { productStore } from "@/lib/product-store";
 import { AppLink } from "./navigation";
 import { PageHeader } from "./ui";
@@ -33,7 +38,7 @@ const initialObservation: FallObservation = {
 };
 const status: Record<FallObservation["state"], string> = {
   no_person: "等待清晰的人体姿态",
-  calibrating: "正在建立站立基准",
+  calibrating: "正在建立姿态基准",
   tracking: "正在观察姿态",
   possible_fall: "正在复核姿态变化",
   suspected_fall: "疑似摔倒，请人工核实",
@@ -48,6 +53,7 @@ const segments = [
   [25, 27],
   [26, 28],
 ];
+const remainingFrameDelay = (started: number) => Math.max(0, 100 - (performance.now() - started));
 
 function relativeWorldAngle(points: PosePoint[] | undefined) {
   if (
@@ -95,10 +101,11 @@ export default function VisionMonitor() {
   const generationRef = useRef(0);
   const trajectoryRef = useRef(0);
   const detectorRef = useRef(new FallDetector());
+  const runLogRef = useRef<VisionRunLog | null>(null);
   const lastVideoTimeRef = useRef(-1);
   const postingRef = useRef(false);
   const pendingReportsRef = useRef<
-    { source: Source; angle: number; drop: number }[]
+    { source: Source; angle: number; drop: number; evidence: VisionRuleEvidence }[]
   >([]);
   const mountedRef = useRef(true);
   const [phase, setPhase] = useState<Phase>("idle");
@@ -112,6 +119,23 @@ export default function VisionMonitor() {
   const [savedSource, setSavedSource] = useState<Source | null>(null);
   const [error, setError] = useState("");
   const [reportError, setReportError] = useState("");
+  const [skeletonOnly, setSkeletonOnly] = useState(false);
+  const [worldPoints, setWorldPoints] = useState<PosePoint[]>([]);
+  const [model, setModel] = useState<"full" | "lite">("lite");
+  const [sampleBusy, setSampleBusy] = useState(false);
+  const [runSummary, setRunSummary] = useState<VisionRunSummary | null>(null);
+  const [runHistory, setRunHistory] = useState<ReturnType<VisionRunLog["recent"]>>([]);
+  const updateRunSummary = () => {
+    setRunSummary(runLogRef.current?.summary() ?? null);
+    setRunHistory(runLogRef.current?.recent() ?? []);
+  };
+  const exportRun = () => {
+    if (!runLogRef.current) return;
+    const url = URL.createObjectURL(new Blob([JSON.stringify(runLogRef.current.export(), null, 2)], {type:"application/json"}));
+    const link = document.createElement("a");
+    link.href = url; link.download = "家有备-本机视觉运行记录.json"; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
 
   const release = useCallback(() => {
     generationRef.current += 1;
@@ -146,17 +170,21 @@ export default function VisionMonitor() {
     };
   }, [release]);
   const resetTrajectory = () => {
+    runLogRef.current?.interrupt("播放中断或重新校准，连续证据重新计时");
+    updateRunSummary();
     trajectoryRef.current += 1;
     detectorRef.current.reset();
     lastVideoTimeRef.current = -1;
     setObservation({
       ...initialObservation,
-      reason: "请保持站立，重新建立姿态基准。",
+      reason: "请站立或坐直，重新建立姿态基准。",
     });
     setWorldAngle(null);
+    setWorldPoints([]);
   };
   useEffect(() => {
     const visibility = () => {
+      runLogRef.current?.interrupt("页面可见性改变，连续证据重新计时");
       trajectoryRef.current += 1;
       detectorRef.current.reset();
       lastVideoTimeRef.current = -1;
@@ -165,6 +193,8 @@ export default function VisionMonitor() {
     return () => document.removeEventListener("visibilitychange", visibility);
   }, []);
   const stop = () => {
+    runLogRef.current?.interrupt("检测已停止，输入资源已释放");
+    updateRunSummary();
     release();
     setPhase("idle");
     setObservation(initialObservation);
@@ -172,6 +202,7 @@ export default function VisionMonitor() {
     setInferenceMs(null);
     setSource(null);
     setEngineMode("");
+    setWorldPoints([]);
   };
 
   const draw = (points: PosePoint[] | undefined) => {
@@ -234,6 +265,7 @@ export default function VisionMonitor() {
           pending.source,
           pending.angle,
           pending.drop,
+          pending.evidence,
         );
         pendingReportsRef.current.shift();
         if (mountedRef.current) {
@@ -296,17 +328,18 @@ export default function VisionMonitor() {
             );
           }
           setObservation(next);
-          setWorldAngle(
-            frame.landmarks.length === 1
-              ? relativeWorldAngle(frame.worldLandmarks[0])
-              : null,
-          );
+          const relativeAngle = frame.landmarks.length === 1 ? relativeWorldAngle(frame.worldLandmarks[0]) : null;
+          setWorldAngle(relativeAngle);
+          setWorldPoints(frame.landmarks.length === 1 ? frame.worldLandmarks[0] ?? [] : []);
           setInferenceMs(Math.round(frame.inferenceMs));
+          runLogRef.current?.add(next, mediaTime * 1000, frame.inferenceMs, frame.landmarks.length, relativeAngle);
+          updateRunSummary();
           if (next.newEvent) {
             pendingReportsRef.current.push({
               source: activeSource,
               angle: next.torsoAngle ?? 55,
               drop: next.hipDrop ?? 0.15,
+              evidence: { ruleVersion: "torso-relative-v2", hipDropRatio: next.hipDropRatio ?? 0, lowPostureMs: next.lowPostureMs ?? 0 },
             });
             void submitReport();
           }
@@ -323,7 +356,7 @@ export default function VisionMonitor() {
     if (runId === generationRef.current)
       timerRef.current = setTimeout(
         () => void loop(runId, activeSource, performance.now()),
-        120,
+        remainingFrameDelay(timestamp),
       );
   };
   const begin = async (nextSource: Source, file?: File) => {
@@ -341,6 +374,9 @@ export default function VisionMonitor() {
     setSourceName(file?.name ?? "本机摄像头");
     setPhase("loading");
     setObservation(initialObservation);
+    setWorldPoints([]);
+    runLogRef.current = new VisionRunLog(nextSource, 3600, model);
+    updateRunSummary();
     try {
       const video = videoRef.current;
       if (!video) throw new Error("视频画面尚未就绪，请重试。");
@@ -385,7 +421,7 @@ export default function VisionMonitor() {
         video.src = objectUrlRef.current;
         video.controls = true;
       }
-      const engine = await createPoseEngine(controller.signal);
+      const engine = await createPoseEngine(controller.signal, model);
       if (runId !== generationRef.current) {
         engine.dispose();
         return;
@@ -423,6 +459,19 @@ export default function VisionMonitor() {
           : phase === "ended"
             ? "视频分析已结束"
             : status[observation.state];
+  const loadSample = async (name: "fall-06" | "adl-04") => {
+    if (sampleBusy) return;
+    setSampleBusy(true);
+    const runId = generationRef.current;
+    try {
+      const response = await fetch(`/evidence/media/${name}.webm`);
+      if (!response.ok) throw new Error("演示素材暂不可用，请选择本地视频。");
+      const blob = await response.blob();
+      if (!mountedRef.current || runId !== generationRef.current) return;
+      await begin("video", new File([blob], `URFD-${name}-学术回放.webm`, {type:"video/webm"}));
+    } catch (cause) { if(mountedRef.current && runId === generationRef.current)setError(cause instanceof Error ? cause.message : "素材加载失败"); }
+    finally { if(mountedRef.current)setSampleBusy(false); }
+  };
   return (
     <div className="cv-page" data-page="jiayoubei-cv" data-engine={engineMode}>
       <PageHeader
@@ -431,7 +480,7 @@ export default function VisionMonitor() {
         description="在本机观察姿态变化，让需要核实的情况有人跟进。"
       />
       <div className="cv-layout">
-        <section className="panel cv-main">
+        <div className="vision-main-column"><section className="panel cv-main">
           <div className="cv-toolbar">
             <button
               className="btn primary"
@@ -467,7 +516,10 @@ export default function VisionMonitor() {
               </button>
             )}
           </div>
-          <div className="cv-stage">
+          <label className="vision-privacy-toggle"><input type="checkbox" checked={skeletonOnly} onChange={e=>setSkeletonOnly(e.target.checked)} /><EyeOff size={16}/>只显示骨架，隐藏原始画面</label>
+          <div className="vision-input-options"><label>检测模式 <select aria-label="检测模式" value={model} disabled={phase!=="idle"} onChange={e=>setModel(e.target.value as "full"|"lite")}><option value="lite">Lite · 轻量默认</option><option value="full">Full · 模型对照</option></select></label><div><button disabled={sampleBusy||phase==="loading"} onClick={()=>void loadSample("fall-06")}>摔倒片段</button><button disabled={sampleBusy||phase==="loading"} onClick={()=>void loadSample("adl-04")}>弯腰对照</button></div></div>
+          <p className="vision-sample-note">示例取自 URFD 学术数据集，属于实验者表演的动作；来源与许可见<a href="/evidence/" target="_blank" rel="noreferrer">实测记录</a>。</p>
+          <div className={`cv-stage ${skeletonOnly ? "skeleton-only" : ""}`}>
             <video
               ref={videoRef}
               playsInline
@@ -475,7 +527,7 @@ export default function VisionMonitor() {
               aria-label="待分析的视频画面"
               onSeeking={resetTrajectory}
               onPause={() => {
-                if (engineRef.current) {
+                if (engineRef.current && !videoRef.current?.ended) {
                   resetTrajectory();
                   setPhase("paused");
                 }
@@ -484,7 +536,9 @@ export default function VisionMonitor() {
                 if (engineRef.current) setPhase("running");
               }}
               onEnded={() => {
-                resetTrajectory();
+                trajectoryRef.current += 1;
+                detectorRef.current.reset();
+                lastVideoTimeRef.current = -1;
                 setPhase("ended");
               }}
               onError={() => {
@@ -501,8 +555,8 @@ export default function VisionMonitor() {
                   <Activity size={32} strokeWidth={1.5} />
                 </span>
                 <strong>等待视频输入</strong>
-                <span>让一人的肩、髋和脚踝完整进入画面</span>
-                <small>镜头保持固定 · 先保持站立片刻</small>
+                <span>让一人的肩、髋清晰入镜，尽量保留全身</span>
+                <small>镜头保持固定 · 先站立或坐直片刻</small>
               </div>
             )}
             {phase === "loading" && (
@@ -532,7 +586,7 @@ export default function VisionMonitor() {
             <ShieldCheck size={15} />
             画面与关键点在浏览器内分析，不保存或上传视频。只把触发时的数值写入待核实记录。
           </p>
-        </section>
+        </section>{phase === "ended" && <p className="vision-sample-note">回放已结束。保留最后一次已分析姿态与运行记录，供复核；重新播放会重新建立基准。</p>}<VisionEvidence observation={observation} summary={runSummary} history={runHistory} onExport={exportRun} active={phase === "running" || phase === "ended"}/></div>
         <aside className="cv-side">
           <section className={`panel cv-result cv-${observation.state}`}>
             <span className="eyebrow">
@@ -546,16 +600,16 @@ export default function VisionMonitor() {
                   ? "暂停期间不计入连续姿态判断，继续播放后重新建立基准。"
                   : phase === "ended"
                     ? "可以拖回开头重新播放，或选择另一段视频。"
-                    : "选择输入后先建立站立基准，再观察连续变化。"}
+                    : "选择输入后先建立姿态基准，再观察连续变化。"}
             </p>
             <div className="cv-calibration">
-              <span>站立基准</span>
+              <span>姿态基准</span>
               <strong>
                 {observation.calibrationProgress >= 1 ? "已建立" : "等待校准"}
               </strong>
               <div
                 role="progressbar"
-                aria-label="站立校准进度"
+                aria-label="姿态校准进度"
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-valuenow={Math.round(
@@ -592,6 +646,7 @@ export default function VisionMonitor() {
               {inferenceMs !== null && `当前每帧分析约 ${inferenceMs} ms。`}
             </small>
           </section>
+          <Pose3DView points={worldPoints}/>
           {eventId && (
             <section className="panel cv-event" role="status">
               <CheckCircle2 size={21} />
@@ -630,19 +685,17 @@ export default function VisionMonitor() {
             <h2>怎样使用更清楚</h2>
             <ol>
               <li>固定镜头，让一人全身入镜。</li>
-              <li>先站立片刻，等待基准建立。</li>
+              <li>先站立或坐直片刻，等待基准建立。</li>
               <li>观察连续姿态变化，出现提示后联系本人核实。</li>
             </ol>
             <p>请使用已有许可的视频进行回放验证，不需要现场模拟危险动作。</p>
             <details>
               <summary>了解判断条件与局限</summary>
               <p>
-                站立基准持续至少 0.8
-                秒；快速髋部下降与躯干倾斜同时出现，并连续保持低位至少 1.2
-                秒才触发提示。
+                稳定姿态持续至少 0.8 秒；髋部下降按基准躯干长度归一化，结合快速倾斜与肩部下降，并持续低位至少 0.6 秒后触发人工核实。
               </p>
               <p>
-                遮挡、多人、镜头移动和不同跌倒方向会影响结果。尚无真实数据集准确率结论，不能作为独立生命安全报警器。
+                已进行公开实验视频检查，仍存在明显漏检。遮挡、多人、镜头移动和不同跌倒方向会影响结果，不能作为独立生命安全报警器。
               </p>
             </details>
           </section>

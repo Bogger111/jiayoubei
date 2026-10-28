@@ -23,14 +23,14 @@ export const mockDevices: Device[] = [
   { id: "D005", name: "入户智能门锁", kind: "lock", room: "玄关", state: "locked", reading: "已上锁", online: true, riskLevel: "warning", lastSync: ago(1), source: "local", permission: "永远需要人工确认", relatedEventIds: ["E002"] },
   { id: "D006", name: "客厅摄像头", kind: "camera", room: "客厅", state: "privacy", reading: "隐私遮罩开启", online: true, riskLevel: "normal", lastSync: ago(4), source: "local", permission: "永远需要人工确认", relatedEventIds: [] },
   { id: "D007", name: "客厅主灯", kind: "lighting", room: "客厅", state: "off", reading: "已关闭", online: true, riskLevel: "normal", lastSync: ago(12), source: "local", permission: "确认后执行", relatedEventIds: [] },
-  { id: "D008", name: "老人智能药盒", kind: "health", room: "卧室", state: "confirmed", reading: "今日 08:12 已服药", online: false, riskLevel: "attention", lastSync: ago(48), source: "real", permission: "读取", relatedEventIds: [] },
+  { id: "D008", name: "老人智能药盒", kind: "health", room: "卧室", state: "opened", reading: "示例：08:12 开盒，服药待确认", online: false, riskLevel: "attention", lastSync: ago(48), source: "simulator", permission: "读取", relatedEventIds: [] },
 ];
 
 export const mockTasks: Task[] = [
   { id: "T001", title: "联系老人确认当前状态", description: "发送低打扰确认消息；若 10 分钟无响应，再由家庭管理员电话联系。", assignee: "M003", creator: "家有备 AI", sourceEventId: "E001", priority: "high", status: "waiting_confirmation", dueAt: when(8), evidence: "已读取门磁、存在传感器，烟雾与燃气正常。" },
   { id: "T002", title: "复核厨房安全传感器", description: "确认烟雾和燃气状态，记录现场或设备证据。", assignee: "M001", creator: "家有备 AI", sourceEventId: "E003", priority: "urgent", status: "to_receive", dueAt: when(18) },
   { id: "T003", title: "确认陌生访客身份", description: "在授权边界内核实访客，不执行自动开锁。", assignee: "M003", creator: "家有备 AI", sourceEventId: "E002", priority: "high", status: "waiting_confirmation", dueAt: when(5) },
-  { id: "T004", title: "补充宠物晚餐照片记录", description: "完成喂食后上传一张照片作为完成证据。", assignee: "M005", creator: "林晓", sourceEventId: "E004", priority: "medium", status: "overdue", dueAt: ago(24) },
+  { id: "T004", title: "记录宠物晚餐情况", description: "完成喂食后填写时间、食量与观察结果，保存为处理记录。", assignee: "M005", creator: "林晓", sourceEventId: "E004", priority: "medium", status: "overdue", dueAt: ago(24) },
   { id: "T005", title: "每周家庭应急联系人检查", description: "确认联系人电话和可用时段没有变化。", assignee: "M003", creator: "林晓", sourceEventId: "E005", priority: "low", status: "completed", dueAt: ago(60), evidence: "5 位联系人已完成验证。" },
 ];
 

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./refined.css";
+import "./competition.css";
+import "./quiet-glass.css";
 
 export const metadata: Metadata = {
-  title: "家有备｜家庭安全协同",
+  title: "家有备｜多模态家庭协作助手",
   description:
-    "让家庭信号有人回应。事件跟进、家庭任务、安全授权与本机视觉监测。",
+    "让远方的关心，变成行动。理解家庭情况，安排家人和设备，持续跟进每一份牵挂。",
   icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
   manifest: "/manifest.json",
 };

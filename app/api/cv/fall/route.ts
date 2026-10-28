@@ -1,5 +1,6 @@
 import { privateJson } from "@/lib/server/json-response";
 import { readObjectBody } from "@/lib/server/request-body";
+import { validVisionReport } from "@/lib/cv/report-input";
 import { and, desc, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import * as schema from "@/db/schema";
@@ -26,21 +27,11 @@ export async function POST(request: Request) {
       return privateJson({ error: "无效的视觉检测结果" }, { status: 400 });
     const body = parsed as Record<string, unknown>;
     const source = body.source;
-    const torsoAngle = body.torsoAngle;
-    const hipDrop = body.hipDrop;
-    if (
-      (source !== "camera" && source !== "video") ||
-      typeof torsoAngle !== "number" ||
-      typeof hipDrop !== "number" ||
-      !Number.isFinite(torsoAngle) ||
-      !Number.isFinite(hipDrop) ||
-      torsoAngle < 55 ||
-      torsoAngle > 90 ||
-      hipDrop < 0.15 ||
-      hipDrop > 1
-    ) {
+    if (!validVisionReport(body)) {
       return privateJson({ error: "无效的视觉检测结果" }, { status: 400 });
     }
+    const torsoAngle = body.torsoAngle as number;
+    const hipDrop = body.hipDrop as number;
 
     await ensureProductSchema();
     const db = getDb();
@@ -110,7 +101,7 @@ export async function POST(request: Request) {
       relatedDevices: "[]",
       relatedTasks: JSON.stringify([taskId]),
       relatedAuthorizationId: null,
-      aiAssessment: `浏览器姿态时序规则触发：躯干倾斜约 ${Math.round(torsoAngle)}°，髋部画面下降约 ${Math.round(hipDrop * 100)}%。需人工复核，不能据此作医疗判断。`,
+      aiAssessment: `浏览器姿态时序规则触发：躯干倾斜约 ${Math.round(torsoAngle)}°，髋部画面下降约 ${Math.round(hipDrop * 100)}%。${body.ruleVersion === "torso-relative-v2" ? `下降约为基准躯干长度的 ${Number(body.hipDropRatio).toFixed(2)} 倍，连续低位 ${Number(body.lowPostureMs) / 1000} 秒。` : ""}客户端数值需人工复核，不能据此作医疗判断。`,
       timeline: JSON.stringify([
         {
           id: `LCV${id()}`,

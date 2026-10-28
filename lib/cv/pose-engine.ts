@@ -48,7 +48,7 @@ function waitForResource<T>(
   });
 }
 
-async function createWorkerEngine(signal: AbortSignal): Promise<PoseEngine> {
+async function createWorkerEngine(signal: AbortSignal, model: "lite" | "full"): Promise<PoseEngine> {
   const worker = new Worker("/cv/pose-worker.js");
   let sequence = 0;
   let disposed = false;
@@ -112,7 +112,7 @@ async function createWorkerEngine(signal: AbortSignal): Promise<PoseEngine> {
       }
     });
   try {
-    await request({ type: "init" }, [], 45_000);
+    await request({ type: "init", model }, [], 45_000);
     return {
       mode: "worker",
       dispose,
@@ -138,6 +138,7 @@ async function createWorkerEngine(signal: AbortSignal): Promise<PoseEngine> {
 
 export async function createPoseEngine(
   signal: AbortSignal,
+  model: "lite" | "full" = "lite",
 ): Promise<PoseEngine> {
   const deadline = Date.now() + 45_000;
   if (
@@ -145,7 +146,7 @@ export async function createPoseEngine(
     typeof createImageBitmap !== "undefined"
   ) {
     try {
-      return await createWorkerEngine(signal);
+      return await createWorkerEngine(signal, model);
     } catch (cause) {
       if (signal.aborted) throw cause;
     }
@@ -163,7 +164,7 @@ export async function createPoseEngine(
   const landmarker = await waitForResource(
     PoseLandmarker.createFromOptions(fileset, {
       baseOptions: {
-        modelAssetPath: "/cv/pose_landmarker_lite.task",
+        modelAssetPath: `/cv/pose_landmarker_${model}.task`,
         delegate: "CPU",
       },
       runningMode: "VIDEO",

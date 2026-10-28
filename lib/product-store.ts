@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import { approveCarePlan, createCarePlan, demoCareSignals, recordCareStep, resolveCarePlan, reviseCarePlan, type CareScenario } from "./care-agent";
 import type {
   Authorization,
   FamilyMember,
@@ -62,6 +63,7 @@ const initialMessages: ProductState["aiMessages"] = [
 ];
 
 const mockInitialState: ProductState = {
+  carePlan: createCarePlan(demoCareSignals()),
   family: clone(mockFamily),
   user: clone(mockUser),
   members: clone(mockMembers),
@@ -320,6 +322,76 @@ class ProductStore {
       s.lastError = null;
     });
   }
+  prepareCareScenario(scenario: CareScenario) {
+    if (!this.state.demoMode || this.state.busy) return;
+    this.update(s => { s.carePlan = createCarePlan(demoCareSignals(scenario)); });
+  }
+  reviseCare(contact: string, waitMinutes: number) {
+    if (!this.state.demoMode || !this.state.carePlan || this.state.busy) return;
+    if (!this.state.members.some(member => member.id === contact)) throw new Error("请选择当前家庭的联系人。");
+    this.update(s => { s.carePlan = reviseCarePlan(s.carePlan!, contact, waitMinutes); });
+  }
+  async approveCare() {
+    if (!this.state.demoMode || !this.state.carePlan || this.state.busy) return;
+    const session = this.sessionVersion;
+    const plan = approveCarePlan(this.state.carePlan, this.state.user.name);
+    this.setBusy("care");
+    this.update(s => { s.carePlan = plan; });
+    try {
+      await mockDelay(450);
+      if (session !== this.sessionVersion) return;
+      const light = this.state.devices.find(device => device.id === "D007");
+      const online = Boolean(light?.online && plan.signals.online);
+      const withDevice = recordCareStep(plan, "device", online, online ? "本地设备模拟器回执：客厅灯已亮，语音询问已发出" : "设备没有返回成功回执，继续请家人确认");
+      const following = recordCareStep(withDevice, "family", true, "已创建家庭联系任务与站内通知，等待家人接手");
+      this.update(s => {
+        s.carePlan = following;
+        const at = new Date().toISOString();
+        const taskId = `${plan.id}-CONTACT`;
+        s.events.unshift({ id: plan.id, title: "妈妈暂未回应 · 家庭确认", description: plan.reason, riskLevel: "attention", status: "processing", source: "情景回放 · 多模态规则编排", createdAt: at, updatedAt: at, relatedMembers: ["M001", plan.contact], relatedDevices: ["D001", "D002", "D007"], relatedTasks: [taskId], aiAssessment: plan.reason, timeline: [
+          { id: `${plan.id}-APPROVAL`, time: at, title: "家人批准完整计划", detail: `${plan.approvedBy} 确认第 ${plan.revision} 版计划；等待 ${plan.waitMinutes} 分钟后再请求附近联系人`, actor: plan.approvedBy!, tone: "info" },
+          ...following.steps.filter(step => step.at).map(step => ({ id: `${plan.id}-${step.id}`, time: new Date(step.at!).toISOString(), title: step.title, detail: step.detail!, actor: "家有备 · 本地演示", tone: step.status === "failed" ? "warning" as const : "success" as const })),
+        ] });
+        s.tasks.unshift({ id: taskId, title: "联系妈妈并记录回应", description: `先联系妈妈；${plan.waitMinutes} 分钟后仍无回应，再安排附近联系人。`, assignee: plan.contact, creator: "家有备 AI", sourceEventId: plan.id, priority: "high", status: "to_receive", dueAt: new Date(following.nextCheckAt!).toISOString() });
+        s.notifications.unshift({ id: `${plan.id}-NOTICE`, title: "家庭确认计划已开始", detail: "联系任务已创建，等待家人接手。", category: "family", time: at, read: false, eventId: plan.id, taskId });
+        if (online) { const device = s.devices.find(item => item.id === "D007")!; device.state = "on"; device.reading = "已开启（本地模拟回执）"; }
+      });
+      this.audit(this.state.user.name, "user", plan.id, "批准家庭确认计划", "本地情景回放，执行回执已记录");
+    } catch (error) {
+      if (session === this.sessionVersion) this.update(s => { s.lastError = error instanceof Error ? error.message : "计划执行失败，请检查记录。"; });
+    } finally { if (session === this.sessionVersion) this.setBusy(null); }
+  }
+  resolveCare(reply: string) {
+    if (!this.state.demoMode || !this.state.carePlan || this.state.busy) return;
+    const plan = resolveCarePlan(this.state.carePlan, reply);
+    this.update(s => {
+      s.carePlan = plan;
+      const at = new Date().toISOString();
+      const event = s.events.find(item => item.id === plan.id);
+      if (event) { event.status = "resolved"; event.updatedAt = at; event.timeline.push({ id: `${plan.id}-REPLY`, time: at, title: "家人已确认情况", detail: reply, actor: s.user.name, tone: "success" }); }
+      for (const task of s.tasks.filter(item => item.sourceEventId === plan.id)) { task.status = "completed"; task.evidence = reply; task.familyConfirmedAt = at; }
+    });
+    this.audit(this.state.user.name, "user", plan.id, "记录家人回应", reply);
+  }
+  advanceCare() {
+    const plan = this.state.carePlan;
+    if (!this.state.demoMode || this.state.busy || !plan || plan.status !== "following" || Date.now() < (plan.nextCheckAt ?? Infinity) || plan.steps.find(step => step.id === "nearby")?.status !== "pending") return;
+    const nearby = this.state.members.find(member => member.relation === "邻居" && member.emergencyContact);
+    const updated = recordCareStep(plan, "nearby", Boolean(nearby), nearby ? "等待时间已到，已创建附近联系人的核实任务" : "没有可用的附近联系人，请家人继续联系");
+    this.update(s => {
+      s.carePlan = updated;
+      const at = new Date().toISOString();
+      const event = s.events.find(item => item.id === plan.id);
+      if (nearby) {
+        const id = `${plan.id}-NEARBY`;
+        s.tasks.unshift({ id, title: "请协助核实妈妈当前情况", description: "等待时间已到，家人仍未记录回应，请先联系家庭管理员再核实情况。", assignee: nearby.id, creator: "家有备 AI", sourceEventId: plan.id, priority: "high", status: "to_receive", dueAt: new Date(Date.now() + 10 * 60_000).toISOString() });
+        event?.relatedTasks.push(id);
+      }
+      event?.timeline.push({ id: `${plan.id}-TIMEOUT`, time: at, title: "等待期限到达", detail: updated.steps.at(-1)!.detail!, actor: "家有备 · 本地演示", tone: "warning" });
+      s.notifications.unshift({ id: `${plan.id}-TIMEOUT`, category: "action", title: nearby ? "已安排附近联系人协助核实" : "请家人继续确认情况", detail: updated.steps.at(-1)!.detail!, time: at, read: false, eventId: plan.id });
+    });
+    this.audit("家有备", "rule", plan.id, "按计划推进附近核实", "本地任务已更新，外部通讯未接入");
+  }
   captureSession() {
     const version = this.sessionVersion;
     return () => version === this.sessionVersion;
@@ -514,13 +586,14 @@ class ProductStore {
     source: "camera" | "video",
     torsoAngle: number,
     hipDrop: number,
+    ruleEvidence?: import("./cv/report-input").VisionRuleEvidence,
   ): Promise<string> {
     if (!apiConfig.useMock) {
       const session = this.sessionVersion;
       this.writeVersion += 1;
       const result = await apiRequest<{ eventId: string }>("/api/cv/fall", {
         method: "POST",
-        body: JSON.stringify({ source, torsoAngle, hipDrop }),
+        body: JSON.stringify({ source, torsoAngle, hipDrop, ...ruleEvidence }),
       }).catch((error) => {
         if (
           session === this.sessionVersion &&
@@ -563,7 +636,7 @@ class ProductStore {
     const timestamp = new Date().toISOString();
     const description = replay
       ? "本地视频回放触发姿态规则。这是回放验证记录，请填写观察结果。视频画面未保存或上传。"
-      : "本机视觉模块检测到站立后快速倒地并持续低位。仅为疑似摔倒，请立即由家庭成员联系核实；未保存或上传视频画面。";
+      : "本机视觉模块检测到姿态快速降低并持续低位。仅为疑似摔倒，请立即由家庭成员联系核实；未保存或上传视频画面。";
     this.update((s) => {
       s.events.unshift({
         id: eventId,

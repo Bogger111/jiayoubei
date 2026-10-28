@@ -2203,3 +2203,30 @@ select:focus-visible {
     min-height: 44px;
   }
 }
+.vision-main-column { display: grid; gap: 18px; min-width: 0; }
+.vision-privacy-toggle { display: flex; gap: 9px; align-items: center; font-size: 13px; color: #536b62; margin: 0 0 14px; cursor: pointer; }
+.vision-privacy-toggle input { accent-color: #246d60; width: 17px; height: 17px; }
+.cv-stage.skeleton-only video { opacity: 0; }
+.vision-section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.vision-section-title h2 { font-size: 18px; margin: 0; }
+.vision-section-title > span { font-size: 12px; color: #61766e; }
+.vision-evidence { padding: 24px; }
+.vision-gates { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; margin-top: 22px; }
+.vision-gates > div { display: grid; grid-template-columns: 18px 1fr; gap: 7px; color: #71817b; border-top: 3px solid #dce3df; padding-top: 14px; }
+.vision-gates > div.met { border-color: #287567; color: #226757; }
+.vision-gates strong { font-size: 14px; }
+.vision-gates small,.vision-gates span { grid-column: 2; font-size: 11px; line-height: 1.6; }
+.vision-run-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; border-top: 1px solid #e7ece8; margin-top: 24px; padding-top: 18px; }
+.vision-run-summary > span { display: grid; gap: 3px; font-size: 11px; color: #5f746c; }
+.vision-run-summary strong { font-size: 22px; color: #193e36; font-variant-numeric: tabular-nums; }
+.vision-run-summary button { margin-left: auto; }
+.vision-history { list-style: none; margin: 20px 0 10px; padding: 0; }
+.vision-history li { display: flex; gap: 14px; margin: 8px 0; font-size: 12px; line-height: 1.7; }
+.vision-history time { min-width: 48px; color: #286b5d; font-variant-numeric: tabular-nums; }
+.vision-run-note { font-size: 11px; line-height: 1.8; color: #6b7e75; }
+.vision-3d { background: #f3f6ef; border: 1px solid #dce4d8; border-radius: 16px; padding: 20px; }
+.vision-3d canvas { display: block; width: 100%; aspect-ratio: 640/440; }
+.vision-3d label { display: flex; gap: 12px; align-items: center; font-size: 12px; }
+.vision-3d input { min-width: 0; flex: 1; accent-color: #276e5d; }
+.vision-3d p { font-size: 11px; line-height: 1.8; color: #61766c; margin-bottom: 0; }
+@media(max-width:600px) { .vision-gates { grid-template-columns: 1fr 1fr; } .vision-run-summary { gap: 14px; } .vision-run-summary button { margin-left: 0; } }

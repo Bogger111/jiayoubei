@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { FallDetector } from "../lib/cv/fall-detector.ts";
+import { FallDetector, FALL_RULES } from "../lib/cv/fall-detector.ts";
 
 const pose = ({ hipY = .48, horizontal = false } = {}) => {
   const points = Array.from({ length: 33 }, () => ({ x: .5, y: .5, visibility: 1 }));
@@ -19,7 +19,7 @@ const standing = (detector, start = 0) => {
 };
 const falling = (detector, start = 1100) => {
   let result;
-  for (let t = start; t <= start + 1200; t += 100) result = detector.update(pose({ hipY: .72, horizontal: true }), t);
+  for (let t = start; t <= start + FALL_RULES.holdMs; t += 100) result = detector.update(pose({ hipY: .72, horizontal: true }), t);
   return result;
 };
 test("standing calibration and continuous fall create exactly one event", () => {
@@ -69,9 +69,28 @@ test("angles account for aspect ratio and invalidate resizing trajectories", () 
   assert.equal(resized.calibrationProgress, 0); assert.equal(resized.newEvent, false);
 });
 test("invalid coordinates and duplicate timestamps are ignored", () => {
-  const detector = new FallDetector(); const points = pose(); points[27].x = 1.2;
+  const detector = new FallDetector(); const points = pose(); points[11].x = 1.2;
   assert.equal(detector.update(points, 0).state, "no_person");
   assert.equal(detector.update(pose(), 0).newEvent, false);
   assert.equal(detector.update(pose(), NaN).newEvent, false);
   assert.equal(detector.update(pose(), 100, 0).state, "no_person");
+});
+
+test("occluded ankles do not erase visible torso evidence", () => {
+  const detector=new FallDetector();standing(detector);let result;
+  for(let t=1100;t<=1100+FALL_RULES.holdMs;t+=100){const p=pose({hipY:.72,horizontal:true});p[27].visibility=0;p[28].visibility=0;result=detector.update(p,t);}
+  assert.equal(result.newEvent,true);
+});
+test("scale-normalized descent works for a smaller person in the frame", () => {
+  const detector=new FallDetector();const scaled=p=>p.map(point=>({...point,x:.5+(point.x-.5)*.5,y:.5+(point.y-.5)*.5}));
+  for(let t=0;t<=1000;t+=100)detector.update(scaled(pose()),t);
+  let result;for(let t=1100;t<=1100+FALL_RULES.holdMs;t+=100)result=detector.update(scaled(pose({hipY:.72,horizontal:true})),t);
+  assert.equal(result.newEvent,true);assert.ok(result.hipDrop<.15);assert.ok(result.hipDropRatio>=.6);
+});
+test("a brief dip and bending without hip descent do not trigger", () => {
+  const detector=new FallDetector();standing(detector);
+  for(let t=1100;t<1100+FALL_RULES.holdMs;t+=100)assert.equal(detector.update(pose({hipY:.72,horizontal:true}),t).newEvent,false);
+  assert.equal(detector.update(pose(),1700).newEvent,false);
+  const bending=new FallDetector();standing(bending);
+  for(let t=1100;t<=3000;t+=100)assert.equal(bending.update(pose({hipY:.49,horizontal:true}),t).newEvent,false);
 });

@@ -51,7 +51,8 @@ export function useDialogFocusTrap(onClose: () => void) {
         (element) =>
           element.getClientRects().length > 0 && !element.closest("[inert]"),
       );
-    (focusable()[0] ?? dialog).focus();
+    const initialItems = focusable();
+    (initialItems.find(element => element.hasAttribute("data-dialog-autofocus")) ?? initialItems[0] ?? dialog).focus();
     const keydown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();

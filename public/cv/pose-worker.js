@@ -7,7 +7,7 @@ self.onmessage = async ({ data }) => {
     if (data.type === "init") {
       const fileset = await Vision.FilesetResolver.forVisionTasks(`${self.location.origin}/cv/wasm`);
       landmarker = await Vision.PoseLandmarker.createFromOptions(fileset, {
-        baseOptions: { modelAssetPath: `${self.location.origin}/cv/pose_landmarker_lite.task`, delegate: "CPU" },
+        baseOptions: { modelAssetPath: `${self.location.origin}/cv/pose_landmarker_${data.model === "full" ? "full" : "lite"}.task`, delegate: "CPU" },
         runningMode: "VIDEO", numPoses: 2, minPoseDetectionConfidence: 0.6, minPosePresenceConfidence: 0.6, minTrackingConfidence: 0.5,
       });
       self.postMessage({ id: data.id, type: "ready" });

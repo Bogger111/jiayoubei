@@ -17,9 +17,14 @@ export type FallObservation = {
   hipDrop: number | null;
   calibrationProgress: number;
   newEvent: boolean;
+  hipDropRatio?: number | null;
+  lowPostureMs?: number;
 };
-const REQUIRED = [11, 12, 23, 24, 27, 28] as const;
-const HOLD_MS = 1200;
+// Ankles often become occluded on the floor. Only the visible torso is needed
+// after calibration; a stable vertical seated torso is also a valid baseline.
+const REQUIRED = [11, 12, 23, 24] as const;
+export const FALL_RULES = { version: "torso-relative-v2", holdMs: 600, calibrationMs: 800, dropRatio: 0.6, tiltDegrees: 55 } as const;
+const HOLD_MS = FALL_RULES.holdMs;
 const CALIBRATION_MS = 800;
 const MAX_TRANSITION_MS = 2200;
 const MAX_FRAME_GAP_MS = 500;
@@ -39,6 +44,8 @@ const visible = (point: PosePoint | undefined) =>
   (point.visibility ?? 1) >= 0.5;
 export class FallDetector {
   private uprightHipY: number | null = null;
+  private uprightShoulderY: number | null = null;
+  private torsoScale: number | null = null;
   private uprightAt = -Infinity;
   private uprightStartedAt: number | null = null;
   private calibrationReady = false;
@@ -54,6 +61,8 @@ export class FallDetector {
   }
   private clearTrajectory() {
     this.uprightHipY = null;
+    this.uprightShoulderY = null;
+    this.torsoScale = null;
     this.uprightAt = -Infinity;
     this.uprightStartedAt = null;
     this.calibrationReady = false;
@@ -78,6 +87,8 @@ export class FallDetector {
       hipDrop,
       calibrationProgress: progress,
       newEvent,
+      hipDropRatio: hipDrop !== null && this.torsoScale ? hipDrop / this.torsoScale : null,
+      lowPostureMs: this.candidateAt === null ? 0 : Math.min(HOLD_MS, Math.max(0, timestampMs - this.candidateAt)),
     });
     if (!Number.isFinite(timestampMs) || timestampMs <= this.lastFrameAt)
       return observation("no_person", "等待新的有效视频帧");
@@ -93,11 +104,10 @@ export class FallDetector {
     this.aspectRatio = aspectRatio;
     if (!points || REQUIRED.some((index) => !visible(points[index]))) {
       this.clearTrajectory();
-      return observation("no_person", "关键点不完整，需要重新建立站立基准");
+      return observation("no_person", "肩髋关键点不完整，需要重新建立姿态基准");
     }
     const shoulders = midpoint(points[11], points[12]);
     const hips = midpoint(points[23], points[24]);
-    const ankles = midpoint(points[27], points[28]);
     // x/y are normalized by different dimensions; convert to the same scale.
     const torsoAngle =
       (Math.atan2(
@@ -106,15 +116,19 @@ export class FallDetector {
       ) *
         180) /
       Math.PI;
-    const bodyHeight = ankles.y - shoulders.y;
+    const torsoLength = Math.hypot((shoulders.x - hips.x) * aspectRatio, shoulders.y - hips.y);
+    const hipDropBeforeUpdate = this.uprightHipY === null ? 0 : hips.y - this.uprightHipY;
     const upright =
-      torsoAngle < 35 && bodyHeight > 0.25 && hips.y < ankles.y - 0.12;
+      torsoAngle < 35 && hips.y - shoulders.y > 0.08 &&
+      (!this.calibrationReady || hipDropBeforeUpdate < (this.torsoScale ?? torsoLength) * 0.35);
     if (upright) {
       if (this.uprightStartedAt === null) this.uprightStartedAt = timestampMs;
       this.uprightHipY =
         this.uprightHipY === null
           ? hips.y
           : this.uprightHipY * 0.85 + hips.y * 0.15;
+      this.uprightShoulderY = this.uprightShoulderY === null ? shoulders.y : this.uprightShoulderY * 0.85 + shoulders.y * 0.15;
+      this.torsoScale = this.torsoScale === null ? torsoLength : this.torsoScale * 0.85 + torsoLength * 0.15;
       this.candidateAt = null;
       const progress = Math.min(
         1,
@@ -123,7 +137,7 @@ export class FallDetector {
       if (progress < 1)
         return observation(
           "calibrating",
-          "请保持站立，正在建立姿态基准",
+          "请站立或坐直，正在建立姿态基准",
           torsoAngle,
           0,
           false,
@@ -134,7 +148,7 @@ export class FallDetector {
       this.latched = false;
       return observation(
         "tracking",
-        "站立基准已建立，正在观察连续姿态",
+        "姿态基准已建立，正在观察连续姿态",
         torsoAngle,
         0,
       );
@@ -145,11 +159,13 @@ export class FallDetector {
         ? hips.y - this.uprightHipY
         : null;
     const recentUpright = timestampMs - this.uprightAt <= MAX_TRANSITION_MS;
+    const low = hipDrop !== null && this.torsoScale !== null && this.uprightShoulderY !== null &&
+      hipDrop >= this.torsoScale * FALL_RULES.dropRatio &&
+      shoulders.y - this.uprightShoulderY >= this.torsoScale * 0.5;
     if (
       !this.calibrationReady ||
-      torsoAngle < 55 ||
-      hipDrop === null ||
-      hipDrop < 0.15 ||
+      !low ||
+      (this.candidateAt === null && torsoAngle < FALL_RULES.tiltDegrees) ||
       (!recentUpright && this.candidateAt === null)
     ) {
       this.candidateAt = null;
@@ -157,7 +173,7 @@ export class FallDetector {
         "tracking",
         this.calibrationReady
           ? "未出现连续的快速倒地轨迹"
-          : "需要先观察完整站立姿态，尚未开始摔倒判断",
+          : "需要先观察稳定的站立或坐直姿态，尚未开始摔倒判断",
         torsoAngle,
         hipDrop,
       );
@@ -174,7 +190,7 @@ export class FallDetector {
     this.latched = true;
     return observation(
       "suspected_fall",
-      "站立后快速倒地并持续低位，请由家人核实",
+      "姿态快速降低并持续低位，请由家人核实",
       torsoAngle,
       hipDrop,
       newEvent,

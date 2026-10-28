@@ -1,0 +1,135 @@
+{
+  "runAt": "2026-10-28T07:58:38.088Z",
+  "scope": "真实 Chromium 操作与录屏；业务数据是演示家庭，外部硬件与通讯为本地模拟。",
+  "checks": [
+    {
+      "name": "编辑整份计划并应用联系人",
+      "passed": true
+    },
+    {
+      "name": "未授权画面不加入判断",
+      "passed": true
+    },
+    {
+      "name": "一键批准后写入模拟回执与家庭任务",
+      "passed": true
+    },
+    {
+      "name": "真实记录回应后停止后续联系",
+      "passed": true
+    },
+    {
+      "name": "事件时间线保存回应",
+      "passed": true
+    },
+    {
+      "name": "情景分支：妈妈已外出",
+      "passed": true
+    },
+    {
+      "name": "情景分支：语音报平安",
+      "passed": true
+    },
+    {
+      "name": "情景分支：传感器离线",
+      "passed": true
+    },
+    {
+      "name": "情景分支：加入授权图像场景",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /tasks",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /devices",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /memory",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /events",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /ai",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /members",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /services",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /authorizations",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /audit",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /settings",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /notifications",
+      "passed": true
+    },
+    {
+      "name": "桌面入口 /cv",
+      "passed": true
+    },
+    {
+      "name": "家庭记忆新增与搜索",
+      "passed": true
+    },
+    {
+      "name": "首页输入进入助手并发送消息",
+      "passed": true
+    },
+    {
+      "name": "手机入口 /",
+      "passed": true
+    },
+    {
+      "name": "手机入口 /tasks",
+      "passed": true
+    },
+    {
+      "name": "手机入口 /devices",
+      "passed": true
+    },
+    {
+      "name": "手机入口 /memory",
+      "passed": true
+    },
+    {
+      "name": "手机入口 /members",
+      "passed": true
+    },
+    {
+      "name": "手机入口 /settings",
+      "passed": true
+    },
+    {
+      "name": "手机更多菜单导航",
+      "passed": true
+    },
+    {
+      "name": "全局搜索快捷键与任务入口",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

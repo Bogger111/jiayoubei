@@ -81,31 +81,28 @@ test("routes assistant messages through the agent adapter with a safe fallback",
 });
 
 test("shows member and device status directly on the dashboard", async () => {
-  const dashboard = await read("app/components/Dashboard.tsx");
-  assert.match(dashboard, /title="家庭成员状态"/);
-  assert.match(dashboard, /title="设备状态"/);
+  const dashboard = await read("app/components/CareHome.tsx");
+  assert.match(dashboard, /care-family/);
+  assert.match(dashboard, /state\.members/);
+  assert.match(dashboard, /care-signals/);
+  assert.match(dashboard, /state\.devices/);
 });
 
 test("attributes user actions to the current account", async () => {
   const store = await read("lib/product-store.ts");
   assert.match(store, /const actor = this\.state\.user\.name/);
   assert.doesNotMatch(store, /this\.audit\("林晓"/);
-  assert.match(await read("app/components/AppShell.tsx"), /state\.user\.avatar/);
+  assert.match(await read("app/components/QuietShell.tsx"), /state\.user\.avatar/);
 });
 
-test("marks historical deck data as unverified and links current app routes", async () => {
-  const deck = await read("public/deck/index.html");
+test("ships the approved offline competition deck with an identical standalone copy", async () => {
+  const deck = await read("public/competition/index.html");
   const slides = deck.match(/<section class="slide/g) ?? [];
-  const liveEmbeds = deck.match(/data-app-route=/g) ?? [];
-
-  assert.equal(slides.length, 18);
-  assert.equal(liveEmbeds.length, 6);
-  assert.match(deck, /团队：<strong>人从众<\/strong>/);
-  assert.match(deck, /曾奕博 · 王星智 · 魏佳睿/);
-  assert.match(deck, /历史草稿 · 访谈与成功率数据待原始记录核实/);
-  assert.match(deck, /event: 'events\/E001'/);
-  assert.doesNotMatch(deck, /#\$\{frame\.dataset\.appRoute\}/);
-  assert.match(deck, /Next\.js 16 · React 19 · TypeScript/);
+  assert.equal(slides.length, 14);
+  assert.match(deck, /多模态家庭协作 Agent/);
+  assert.match(deck, /子女订阅，全家受益/);
+  assert.match(deck, /data:video\/webm;base64,/);
+  assert.equal(deck, await read("家有备-创客比赛.html"));
 });
 
 test("retains the model, memory, tool and smart-home safety boundaries", async () => {

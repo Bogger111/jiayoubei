@@ -1,0 +1,101 @@
+{
+  "runAt": "2026-10-28T05:05:33.150Z",
+  "scope": "真实浏览器 UI 检查；这里的业务数据为演示模式，CV 是实际本机推理。",
+  "results": [
+    {
+      "path": "/",
+      "title": "奕博，家里的事一起照顾",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/ai",
+      "title": "AI 助手",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/events",
+      "title": "事件中心",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/tasks",
+      "title": "家庭任务",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/members",
+      "title": "家庭成员",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/devices",
+      "title": "智能设备",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/services",
+      "title": "服务资源",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/audit",
+      "title": "安全与审计",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/settings",
+      "title": "设置",
+      "desktopOverflow": false
+    },
+    {
+      "path": "/cv",
+      "title": "疑似摔倒检测",
+      "desktopOverflow": false
+    },
+    {
+      "check": "全局搜索 ID、回车打开事件",
+      "passed": true
+    },
+    {
+      "path": "/",
+      "mobileOverflow": false
+    },
+    {
+      "path": "/tasks",
+      "mobileOverflow": false
+    },
+    {
+      "path": "/cv",
+      "mobileOverflow": false
+    },
+    {
+      "path": "/settings",
+      "mobileOverflow": false
+    },
+    {
+      "path": "/devices",
+      "mobileOverflow": false
+    },
+    {
+      "path": "/ai",
+      "mobileOverflow": false
+    },
+    {
+      "check": "实际视频回放与本机日志导出",
+      "frames": 29,
+      "events": 1,
+      "passed": true
+    },
+    {
+      "check": "只显示骨架与真实相对 3D 旋转",
+      "passed": true
+    },
+    {
+      "check": "实际弯腰回放",
+      "frames": 48,
+      "events": 0,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

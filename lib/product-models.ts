@@ -171,6 +171,7 @@ export type AIMessage = {
 };
 
 export type ProductState = {
+  carePlan?: import("./care-agent").CarePlan;
   family: Family;
   user: User;
   members: FamilyMember[];

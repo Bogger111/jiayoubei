@@ -48,6 +48,11 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
+    // Keep simultaneous mock and isolated API previews from invalidating each
+    // other's optimized browser dependencies.
+    cacheDir: process.env.VITE_USE_MOCK === "false"
+      ? "node_modules/.vite-real"
+      : "node_modules/.vite",
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,

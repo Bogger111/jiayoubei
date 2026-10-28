@@ -1,0 +1,19 @@
+家有备 · 比赛演示与实测材料
+
+视频来源：UR Fall Detection Dataset (URFD), University of Rzeszow.
+https://fenix.ur.edu.pl/~mkepski/ds/uf.html
+
+引用：Kwolek B, Kepski M. Human fall detection on embedded platform using depth maps and wireless accelerometer. Computer Methods and Programs in Biomedicine 117(3), 489–501 (2014).
+
+URFD 原始视频及本目录中的相关衍生素材按 CC BY-NC-SA 4.0 使用。
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+用途为非商业学术展示；不代表数据集作者认可本项目。再次分发衍生素材时需保留署名、许可和修改说明。
+
+修改说明：fall-06.webm、adl-04.webm 从官方 camera 0 左深度/右 RGB 预览中裁取右侧 RGB，保持原始时序并转码为 WebM。vision-replay.webm、cv-replay.png、cv-private.png 为应用运行录制/截图，包含相同视频的显示或骨架衍生内容。离线 HTML 中嵌入的相应素材适用同一许可。
+
+实验性质：数据集为实验者表演的动作，不是真实家庭事故。公开的 JSON、图表来自本机程序运行；不构成家庭环境准确率、医疗性能或报警可靠性承诺。
+
+MediaPipe Pose Landmarker Lite / Full 由 Google 提供，模型与运行库保留各自许可。世界关键点为以髋部为原点的相对姿态估计，不是房间绝对坐标。
+https://ai.google.dev/edge/mediapipe/solutions/vision/pose_landmarker
+
+协作录屏使用隔离数据库和示例账号；输入为明确标识的 API 摘要测试夹具。没有连接实体设备，没有发出外部通知，没有发生真实救援。

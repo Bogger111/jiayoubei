@@ -1,0 +1,407 @@
+{
+  "schemaVersion": 1,
+  "source": "video",
+  "model": "lite",
+  "ruleVersion": "torso-relative-v2",
+  "startedAt": "2026-10-28T05:05:19.584Z",
+  "exportedAt": "2026-10-28T05:05:23.790Z",
+  "scope": "本机检测运行记录；包含姿态数值与状态，不包含视频、姓名或原始关键点。推理耗时不含视频解码和网络耗时。",
+  "algorithm": "2D 时序规则；相对 3D 仅供观察。",
+  "summary": {
+    "frames": 29,
+    "events": 1,
+    "p50Ms": 61.2,
+    "p95Ms": 119.7,
+    "retainedFrames": 29,
+    "interrupted": 0
+  },
+  "truncated": false,
+  "sampleLimit": 3600,
+  "transitions": [
+    {
+      "frame": 1,
+      "mediaMs": 1,
+      "text": "请站立或坐直，正在建立姿态基准"
+    },
+    {
+      "frame": 6,
+      "mediaMs": 851,
+      "text": "姿态基准已建立，正在观察连续姿态"
+    },
+    {
+      "frame": 8,
+      "mediaMs": 1077,
+      "text": "未出现连续的快速倒地轨迹"
+    },
+    {
+      "frame": 11,
+      "mediaMs": 1412,
+      "text": "姿态快速降低，正在持续复核"
+    },
+    {
+      "frame": 14,
+      "mediaMs": 1726,
+      "text": "未出现连续的快速倒地轨迹"
+    },
+    {
+      "frame": 17,
+      "mediaMs": 2029,
+      "text": "姿态快速降低，正在持续复核"
+    },
+    {
+      "frame": 23,
+      "mediaMs": 2632,
+      "text": "姿态快速降低并持续低位，请由家人核实"
+    }
+  ],
+  "samples": [
+    {
+      "frame": 1,
+      "mediaMs": 1,
+      "state": "calibrating",
+      "reason": "请站立或坐直，正在建立姿态基准",
+      "angle": 9.79,
+      "drop": 0,
+      "worldAngle": 13,
+      "inferenceMs": 414.7,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 2,
+      "mediaMs": 424,
+      "state": "calibrating",
+      "reason": "请站立或坐直，正在建立姿态基准",
+      "angle": 16.05,
+      "drop": 0,
+      "worldAngle": 21,
+      "inferenceMs": 92.5,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 3,
+      "mediaMs": 535,
+      "state": "calibrating",
+      "reason": "请站立或坐直，正在建立姿态基准",
+      "angle": 16.71,
+      "drop": 0,
+      "worldAngle": 21,
+      "inferenceMs": 92.2,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 4,
+      "mediaMs": 643,
+      "state": "calibrating",
+      "reason": "请站立或坐直，正在建立姿态基准",
+      "angle": 18.91,
+      "drop": 0,
+      "worldAngle": 24,
+      "inferenceMs": 91.5,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 5,
+      "mediaMs": 750,
+      "state": "calibrating",
+      "reason": "请站立或坐直，正在建立姿态基准",
+      "angle": 21.5,
+      "drop": 0,
+      "worldAngle": 29,
+      "inferenceMs": 97.7,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 6,
+      "mediaMs": 851,
+      "state": "tracking",
+      "reason": "姿态基准已建立，正在观察连续姿态",
+      "angle": 22.53,
+      "drop": 0,
+      "worldAngle": 31,
+      "inferenceMs": 94.3,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 7,
+      "mediaMs": 966,
+      "state": "tracking",
+      "reason": "姿态基准已建立，正在观察连续姿态",
+      "angle": 29.57,
+      "drop": 0,
+      "worldAngle": 36,
+      "inferenceMs": 94.7,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 8,
+      "mediaMs": 1077,
+      "state": "tracking",
+      "reason": "未出现连续的快速倒地轨迹",
+      "angle": 36.19,
+      "drop": 0.04,
+      "worldAngle": 37,
+      "inferenceMs": 108.8,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 9,
+      "mediaMs": 1188,
+      "state": "tracking",
+      "reason": "未出现连续的快速倒地轨迹",
+      "angle": 43.29,
+      "drop": 0.1,
+      "worldAngle": 44,
+      "inferenceMs": 119.7,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 10,
+      "mediaMs": 1311,
+      "state": "tracking",
+      "reason": "未出现连续的快速倒地轨迹",
+      "angle": 60.46,
+      "drop": 0.13,
+      "worldAngle": 62,
+      "inferenceMs": 84.2,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 11,
+      "mediaMs": 1412,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 70.53,
+      "drop": 0.14,
+      "worldAngle": 72,
+      "inferenceMs": 94.8,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 12,
+      "mediaMs": 1524,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 85.46,
+      "drop": 0.15,
+      "worldAngle": 87,
+      "inferenceMs": 81.8,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 13,
+      "mediaMs": 1623,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 86.13,
+      "drop": 0.14,
+      "worldAngle": 86,
+      "inferenceMs": 61.2,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 14,
+      "mediaMs": 1726,
+      "state": "tracking",
+      "reason": "未出现连续的快速倒地轨迹",
+      "angle": 81.17,
+      "drop": 0.13,
+      "worldAngle": 80,
+      "inferenceMs": 63.1,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 15,
+      "mediaMs": 1826,
+      "state": "tracking",
+      "reason": "未出现连续的快速倒地轨迹",
+      "angle": 79.2,
+      "drop": 0.12,
+      "worldAngle": 81,
+      "inferenceMs": 66.2,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 16,
+      "mediaMs": 1927,
+      "state": "tracking",
+      "reason": "未出现连续的快速倒地轨迹",
+      "angle": 77,
+      "drop": 0.13,
+      "worldAngle": 79,
+      "inferenceMs": 49.2,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 17,
+      "mediaMs": 2029,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 83.89,
+      "drop": 0.15,
+      "worldAngle": 85,
+      "inferenceMs": 45.6,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 18,
+      "mediaMs": 2128,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 17.9,
+      "drop": 0.2,
+      "worldAngle": 45,
+      "inferenceMs": 51.4,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 19,
+      "mediaMs": 2228,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 88.88,
+      "drop": 0.16,
+      "worldAngle": 90,
+      "inferenceMs": 41.5,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 20,
+      "mediaMs": 2330,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 88.07,
+      "drop": 0.15,
+      "worldAngle": 86,
+      "inferenceMs": 44.4,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 21,
+      "mediaMs": 2432,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 88.54,
+      "drop": 0.15,
+      "worldAngle": 88,
+      "inferenceMs": 45.4,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 22,
+      "mediaMs": 2532,
+      "state": "possible_fall",
+      "reason": "姿态快速降低，正在持续复核",
+      "angle": 85.89,
+      "drop": 0.14,
+      "worldAngle": 85,
+      "inferenceMs": 46.8,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 23,
+      "mediaMs": 2632,
+      "state": "suspected_fall",
+      "reason": "姿态快速降低并持续低位，请由家人核实",
+      "angle": 87.03,
+      "drop": 0.14,
+      "worldAngle": 86,
+      "inferenceMs": 36.6,
+      "people": 1,
+      "event": true
+    },
+    {
+      "frame": 24,
+      "mediaMs": 2732,
+      "state": "suspected_fall",
+      "reason": "姿态快速降低并持续低位，请由家人核实",
+      "angle": 87.32,
+      "drop": 0.14,
+      "worldAngle": 86,
+      "inferenceMs": 43.4,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 25,
+      "mediaMs": 2832,
+      "state": "suspected_fall",
+      "reason": "姿态快速降低并持续低位，请由家人核实",
+      "angle": 88.03,
+      "drop": 0.15,
+      "worldAngle": 88,
+      "inferenceMs": 43.6,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 26,
+      "mediaMs": 2932,
+      "state": "suspected_fall",
+      "reason": "姿态快速降低并持续低位，请由家人核实",
+      "angle": 87.06,
+      "drop": 0.14,
+      "worldAngle": 87,
+      "inferenceMs": 47.8,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 27,
+      "mediaMs": 3032,
+      "state": "suspected_fall",
+      "reason": "姿态快速降低并持续低位，请由家人核实",
+      "angle": 88.61,
+      "drop": 0.15,
+      "worldAngle": 88,
+      "inferenceMs": 48,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 28,
+      "mediaMs": 3135,
+      "state": "suspected_fall",
+      "reason": "姿态快速降低并持续低位，请由家人核实",
+      "angle": 88.77,
+      "drop": 0.15,
+      "worldAngle": 88,
+      "inferenceMs": 46.3,
+      "people": 1,
+      "event": false
+    },
+    {
+      "frame": 29,
+      "mediaMs": 3235,
+      "state": "suspected_fall",
+      "reason": "姿态快速降低并持续低位，请由家人核实",
+      "angle": 88.49,
+      "drop": 0.15,
+      "worldAngle": 88,
+      "inferenceMs": 42.2,
+      "people": 1,
+      "event": false
+    }
+  ]
+}

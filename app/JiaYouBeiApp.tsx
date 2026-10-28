@@ -2,8 +2,9 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import CvFallMonitor from "./CvFallMonitor";
-import AppShell from "./components/AppShell";
-import Dashboard from "./components/Dashboard";
+import AppShell from "./components/QuietShell";
+import Dashboard from "./components/CareHome";
+import FamilyMemory from "./components/FamilyMemory";
 import TaskDetail from "./components/TaskDetail";
 import EventDetail from "./components/EventDetail";
 import DeviceDetail from "./components/DeviceDetail";
@@ -1593,6 +1594,7 @@ function DevicesPage({ id }: { id?: string }) {
   );
 }
 function DeviceCard({ device }: { device: Device }) {
+  const demoMode = useProductStore().demoMode;
   const icon =
     device.kind === "lock"
       ? LockKeyhole
@@ -1621,7 +1623,7 @@ function DeviceCard({ device }: { device: Device }) {
       <h3>{device.name}</h3>
       <strong>{device.reading}</strong>
       <p>
-        {device.source === "real"
+        {demoMode ? "示例设备" : device.source === "real"
           ? "真实设备"
           : device.source === "local"
             ? "本地驱动"
@@ -2515,6 +2517,7 @@ function AppRouter({ initialPath }: { initialPath: string }) {
   else if (path === "/welcome") content = <Welcome />;
   else if (path === "/onboarding") content = <Onboarding />;
   else if (path === "/ai") content = <Assistant />;
+  else if (path === "/memory") content = <FamilyMemory key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/events") content = <EventsPage />;
   else if (path.startsWith("/events/"))
     content = <EventDetail key={path} id={path.split("/")[2]} />;

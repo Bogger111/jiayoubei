@@ -61,7 +61,7 @@ export default function DeviceDetail({ id }: { id: string }) {
       <PageHeader
         eyebrow="设备详情"
         title={device.name}
-        description={`${device.room} · ${device.source === "real" ? "设备接入记录" : device.source === "local" ? "本地驱动" : "模拟设备"}`}
+        description={`${device.room} · ${state.demoMode ? "示例设备 · 未连接现场硬件" : device.source === "real" ? "设备接入记录" : device.source === "local" ? "本地驱动" : "模拟设备"}`}
         action={<RiskBadge level={device.riskLevel} />}
       />
       <div className="device-detail-layout">
