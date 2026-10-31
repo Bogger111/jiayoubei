@@ -41,6 +41,13 @@ test("production start serves the dashboard, household hub and pinned local demo
     const experience = await fetch(`http://localhost:${port}/experience`);
     assert.equal(experience.status, 200);
     assert.match(await experience.text(), /家有备/);
+    const showcase = await fetch(`http://localhost:${port}/showcase`);
+    assert.equal(showcase.status, 200);
+    for (const name of ['index.html', 'showcase.js', 'showcase.css']) {
+      const resource = await fetch(`http://localhost:${port}/showcase-offline/${name}`);
+      assert.equal(resource.status, 200);
+      assert.deepEqual(Buffer.from(await resource.arrayBuffer()), await readFile(new URL('../deliverables/demo/' + name, import.meta.url)));
+    }
     const manifest = JSON.parse(await readFile(new URL("../third_party/manifest.json", import.meta.url), "utf8"));
     for (const entry of manifest.flatMap((project) => project.files).filter((entry) => entry.local.startsWith("public/"))) {
       const asset = await fetch(`http://localhost:${port}/${entry.local.slice(7)}`);

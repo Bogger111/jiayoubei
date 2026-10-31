@@ -1,0 +1,11 @@
+import {build} from 'vite';
+import react from '@vitejs/plugin-react';
+import {mkdir,writeFile,copyFile} from 'node:fs/promises';
+import path from 'node:path';
+await mkdir('deliverables/demo',{recursive:true});
+await build({configFile:false,plugins:[react()],resolve:{alias:{'@':process.cwd()}},publicDir:false,define:{'process.env.NODE_ENV':JSON.stringify('production')},build:{outDir:'deliverables/demo',emptyOutDir:false,cssCodeSplit:false,lib:{entry:path.resolve('scripts/competition/showcase-entry.tsx'),name:'JiaYouBeiShowcase',formats:['iife'],fileName:()=> 'showcase.js',cssFileName:'showcase'},rollupOptions:{output:{inlineDynamicImports:true}},assetsInlineLimit:Infinity}});
+const html='<!DOCTYPE html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>家有备 · 比赛核心演示</title><link rel="stylesheet" href="./showcase.css"><style>html,body{margin:0;background:#071624}button,a,input,select{touch-action:manipulation}</style><div id="root"></div><script src="./showcase.js"></script></html>';
+await writeFile('deliverables/demo/index.html',html);
+await mkdir('public/showcase-offline',{recursive:true});
+for(const f of ['index.html','showcase.js','showcase.css'])await copyFile('deliverables/demo/'+f,'public/showcase-offline/'+f);
+console.log('Standalone offline demo ready');

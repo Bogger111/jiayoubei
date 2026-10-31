@@ -7,6 +7,7 @@ import Dashboard from "./components/CareHome";
 import FamilyMemory from "./components/FamilyMemory";
 import MultimodalHome from "./components/MultimodalHome";
 import MultimodalExperience from "./components/MultimodalExperience";
+import CompetitionShowcase from "./components/CompetitionShowcase";
 import CareWorkspace from "./components/CareWorkspace";
 import TaskDetail from "./components/TaskDetail";
 import EventDetail from "./components/EventDetail";
@@ -2522,6 +2523,7 @@ function AppRouter({ initialPath }: { initialPath: string }) {
   else if (path === "/ai") content = <Assistant />;
   else if (path === "/memory") content = <FamilyMemory key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/home-agent") content = <MultimodalHome key={`${state.family.id}-${state.user.id}`} />;
+  else if (path === "/showcase") content = <CompetitionShowcase />;
   else if (path === "/experience") content = <MultimodalExperience key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/care") content = <CareWorkspace key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/events") content = <EventsPage />;
@@ -2581,6 +2583,7 @@ function AppRouter({ initialPath }: { initialPath: string }) {
         </Panel>
       </div>
     );
+  if (path === "/showcase") return content;
   return (
     <AppShell path={path}>
       {refreshing && (

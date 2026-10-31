@@ -1,3 +1,9 @@
+终版优先入口（2026-10-31）
+
+现在优先使用 deliverables/家有备_创客大赛_终版.pptx 和同目录 PDF；第 9 页已内嵌约 60 秒视频。
+离线互动：双击 deliverables/启动演示.cmd，或用 Chrome/Edge 打开 deliverables/demo/index.html。
+全部交付与讲稿见 deliverables/演示启动指南.md。旧 HTML 版保留，以下为原版说明。
+
 家有备 · 2026 年 11 月 1 日创客比赛
 
 一、打开与放映

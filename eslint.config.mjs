@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     "public/cv/wasm/**",
     "public/cv/vision_bundle.js",
     "public/integrations/vendor/**",
+    "deliverables/demo/showcase.js",
+    "public/showcase-offline/showcase.js",
     "test-results/**",
   ]),
 ]);

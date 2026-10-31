@@ -10,7 +10,7 @@
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json --local --show-interactive-dev-session=false",
     "test": "npm run build && npm run test:unit",
-    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs tests/care-report.test.mjs tests/multimodal-core.test.mjs",
+    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs tests/care-report.test.mjs tests/multimodal-core.test.mjs tests/showcase.test.mjs",
     "test:care:e2e": "node tests/e2e-family-agent.mjs",
     "deck:family": "node scripts/competition/run-care-evidence.mjs && node scripts/competition/build-family-deck.mjs",
     "test:deck:family": "node tests/family-deck-check.mjs",
@@ -40,10 +40,14 @@
     "test:home:api": "node tests/multimodal-service-isolated.mjs",
     "home:prove": "node scripts/integrations/prove-home-agent.mjs",
     "home:verify-vendor": "node scripts/integrations/verify-vendor.mjs",
-    "experience:prove": "node scripts/integrations/prove-experience.mjs"
+    "experience:prove": "node scripts/integrations/prove-experience.mjs",
+    "showcase:build": "node scripts/competition/build-showcase.mjs",
+    "showcase:prove": "node scripts/competition/prove-showcase.mjs",
+    "deck:final": "node scripts/competition/build-final-pptx.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",
+    "@xyflow/react": "12.12.0",
     "drizzle-orm": "0.45.2",
     "lucide-react": "^1.34.0",
     "next": "16.2.6",

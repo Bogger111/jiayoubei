@@ -1,0 +1,377 @@
+{
+  "schema": 1,
+  "id": "DEMO-1793423771647",
+  "revision": 7,
+  "scenario": "care",
+  "stage": "resolved",
+  "createdAt": 1793423771647,
+  "audit": [
+    {
+      "id": 1,
+      "at": 1793423771647,
+      "actor": "家庭空间",
+      "title": "演示场景已准备",
+      "detail": "本地隔离演示，不向外部设备或联系人发送请求"
+    },
+    {
+      "id": 2,
+      "at": 1793423777999,
+      "actor": "感知模块",
+      "title": "开始端侧姿态回放",
+      "detail": "读取本次本地模型运行的34帧关键点，重新运行时序判定"
+    },
+    {
+      "id": 3,
+      "at": 1793423782328,
+      "actor": "家庭 Agent",
+      "title": "生成待确认的联系计划",
+      "detail": "姿态线索与未回应记录汇合，整理提醒、家庭联系和条件跟进"
+    },
+    {
+      "id": 4,
+      "at": 1793423789204,
+      "actor": "子女 · 小林",
+      "title": "家人批准，任务已创建",
+      "detail": "提醒灯模拟已记录；联系任务等待指定联系人接手"
+    },
+    {
+      "id": 5,
+      "at": 1793423795513,
+      "actor": "联系人 · 小陈",
+      "title": "联系人明确接手",
+      "detail": "负责人、接手时间和当前事件一起保存"
+    },
+    {
+      "id": 6,
+      "at": 1793423800750,
+      "actor": "联系人 · 小陈",
+      "title": "未联系到，继续跟进",
+      "detail": "保留负责人和任务，不把未回应当作平安"
+    },
+    {
+      "id": 7,
+      "at": 1793423809831,
+      "actor": "联系人 · 小陈",
+      "title": "明确核实，本次处理结束",
+      "detail": "结果与确认人已保存；停止尚未执行的联系"
+    }
+  ],
+  "plan": {
+    "id": "DEMO-1793423771647",
+    "revision": 7,
+    "createdAt": 1793423782328,
+    "expiresAt": 1793424982328,
+    "status": "resolved",
+    "title": "这次牵挂，有了回应",
+    "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+    "evidence": [
+      {
+        "label": "姿态变化",
+        "value": "连续低姿态，等待人工确认"
+      },
+      {
+        "label": "活动感应",
+        "value": "近 2 小时较少"
+      },
+      {
+        "label": "门磁记录",
+        "value": "仅有门的开关记录"
+      },
+      {
+        "label": "回应记录",
+        "value": "暂未回应"
+      },
+      {
+        "label": "授权画面",
+        "value": "客厅有人，状态待确认"
+      }
+    ],
+    "contact": "M003",
+    "waitMinutes": 10,
+    "signals": {
+      "observedAt": 1793423782328,
+      "activityMinutes": 120,
+      "door": "unknown",
+      "voice": "unknown",
+      "online": true,
+      "imageAuthorized": true,
+      "image": "person"
+    },
+    "records": [
+      {
+        "receivedAt": 1793423782328,
+        "expiresAt": 1793510182328,
+        "authorized": true,
+        "quality": "valid",
+        "provenance": "observation",
+        "category": "synthetic",
+        "transport": "replay",
+        "datasetId": "care-demo-v2",
+        "sampleId": "DEMO-1793423771647",
+        "caseId": "DEMO-1793423771647",
+        "id": "DEMO-1793423771647-activity",
+        "sourceId": "demo-motion",
+        "kind": "activity",
+        "value": "active",
+        "observedAt": 1793416582328
+      },
+      {
+        "receivedAt": 1793423782328,
+        "expiresAt": 1793425582328,
+        "authorized": true,
+        "quality": "valid",
+        "provenance": "observation",
+        "category": "synthetic",
+        "transport": "replay",
+        "datasetId": "care-demo-v2",
+        "sampleId": "DEMO-1793423771647",
+        "caseId": "DEMO-1793423771647",
+        "id": "DEMO-1793423771647-online",
+        "sourceId": "demo-motion",
+        "kind": "availability",
+        "value": "online",
+        "observedAt": 1793423782328
+      },
+      {
+        "receivedAt": 1793423782328,
+        "expiresAt": 1793425582328,
+        "authorized": true,
+        "quality": "valid",
+        "provenance": "observation",
+        "category": "synthetic",
+        "transport": "replay",
+        "datasetId": "care-demo-v2",
+        "sampleId": "DEMO-1793423771647",
+        "caseId": "DEMO-1793423771647",
+        "id": "DEMO-1793423771647-door",
+        "sourceId": "demo-door",
+        "kind": "door",
+        "value": "closed",
+        "observedAt": 1793423782328
+      },
+      {
+        "receivedAt": 1793423782328,
+        "expiresAt": 1793425582328,
+        "authorized": true,
+        "quality": "valid",
+        "provenance": "observation",
+        "category": "synthetic",
+        "transport": "replay",
+        "datasetId": "care-demo-v2",
+        "sampleId": "DEMO-1793423771647",
+        "caseId": "DEMO-1793423771647",
+        "id": "DEMO-1793423771647-voice",
+        "sourceId": "demo-response",
+        "kind": "reply",
+        "value": "no_answer",
+        "observedAt": 1793423782328
+      },
+      {
+        "receivedAt": 1793423782328,
+        "expiresAt": 1793425582328,
+        "authorized": true,
+        "quality": "valid",
+        "provenance": "observation",
+        "category": "synthetic",
+        "transport": "replay",
+        "datasetId": "care-demo-v2",
+        "sampleId": "DEMO-1793423771647",
+        "caseId": "DEMO-1793423771647",
+        "id": "DEMO-1793423771647-image",
+        "sourceId": "demo-camera",
+        "kind": "image",
+        "value": "person",
+        "observedAt": 1793423782328
+      }
+    ],
+    "assessment": {
+      "disposition": "verify",
+      "title": "妈妈还没有回应",
+      "reason": "静默时长与回应记录需要进一步核实，先整理可确认的联系安排。",
+      "used": [
+        {
+          "receivedAt": 1793423782328,
+          "expiresAt": 1793510182328,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "DEMO-1793423771647",
+          "caseId": "DEMO-1793423771647",
+          "id": "DEMO-1793423771647-activity",
+          "sourceId": "demo-motion",
+          "kind": "activity",
+          "value": "active",
+          "observedAt": 1793416582328
+        },
+        {
+          "receivedAt": 1793423782328,
+          "expiresAt": 1793425582328,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "DEMO-1793423771647",
+          "caseId": "DEMO-1793423771647",
+          "id": "DEMO-1793423771647-online",
+          "sourceId": "demo-motion",
+          "kind": "availability",
+          "value": "online",
+          "observedAt": 1793423782328
+        },
+        {
+          "receivedAt": 1793423782328,
+          "expiresAt": 1793425582328,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "DEMO-1793423771647",
+          "caseId": "DEMO-1793423771647",
+          "id": "DEMO-1793423771647-door",
+          "sourceId": "demo-door",
+          "kind": "door",
+          "value": "closed",
+          "observedAt": 1793423782328
+        },
+        {
+          "receivedAt": 1793423782328,
+          "expiresAt": 1793425582328,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "DEMO-1793423771647",
+          "caseId": "DEMO-1793423771647",
+          "id": "DEMO-1793423771647-voice",
+          "sourceId": "demo-response",
+          "kind": "reply",
+          "value": "no_answer",
+          "observedAt": 1793423782328
+        },
+        {
+          "receivedAt": 1793423782328,
+          "expiresAt": 1793425582328,
+          "authorized": true,
+          "quality": "valid",
+          "provenance": "observation",
+          "category": "synthetic",
+          "transport": "replay",
+          "datasetId": "care-demo-v2",
+          "sampleId": "DEMO-1793423771647",
+          "caseId": "DEMO-1793423771647",
+          "id": "DEMO-1793423771647-image",
+          "sourceId": "demo-camera",
+          "kind": "image",
+          "value": "person",
+          "observedAt": 1793423782328
+        }
+      ],
+      "excluded": [],
+      "missing": [
+        "门磁只能说明门的变化，是否外出仍需本人或家属确认"
+      ]
+    },
+    "agreement": {
+      "contact": "M003",
+      "nearbyContact": "M005",
+      "waitMinutes": 10,
+      "silenceMinutes": 90,
+      "timezone": "Asia/Shanghai",
+      "restWindows": []
+    },
+    "priority": "normal",
+    "history": [
+      {
+        "at": 1793423789204,
+        "actor": "子女 · 小林",
+        "title": "家人批准计划",
+        "detail": "确认第 1 版联系安排"
+      },
+      {
+        "at": 1793423789204,
+        "actor": "执行适配器",
+        "title": "收到设备步骤回执",
+        "detail": "演示适配器：提醒灯请求已模拟记录"
+      },
+      {
+        "at": 1793423789204,
+        "actor": "执行适配器",
+        "title": "已创建联系任务",
+        "detail": "演示家庭：联系任务已创建，等待接手"
+      },
+      {
+        "at": 1793423795513,
+        "actor": "联系人 · 小陈",
+        "title": "家人已接手",
+        "detail": "接手任务，尚未核实结果"
+      },
+      {
+        "at": 1793423800750,
+        "actor": "联系人 · 小陈",
+        "title": "还没有联系到",
+        "detail": "演示结果：暂未联系到，保留任务与等待期限"
+      },
+      {
+        "at": 1793423809831,
+        "actor": "联系人 · 小陈",
+        "title": "已明确核实平安",
+        "detail": "演示结果：已与家人电话核实，本次情况平安"
+      }
+    ],
+    "steps": [
+      {
+        "id": "device",
+        "title": "开启关怀提示灯，请家人核实回应",
+        "status": "done",
+        "detail": "演示适配器：提醒灯请求已模拟记录",
+        "at": 1793423789204
+      },
+      {
+        "id": "family",
+        "title": "请家人协助联系妈妈",
+        "status": "done",
+        "detail": "联系人 · 小陈已明确核实本次情况",
+        "at": 1793423809831,
+        "deliveredAt": 1793423795513,
+        "acceptedBy": "联系人 · 小陈"
+      },
+      {
+        "id": "nearby",
+        "title": "仍无回应时，请附近联系人核实",
+        "status": "skipped",
+        "detail": "已明确核实，取消尚未发出的联系",
+        "at": 1793423809831
+      }
+    ],
+    "approvedRevision": 1,
+    "approvedBy": "子女 · 小林",
+    "approvedAt": 1793423789204,
+    "nextCheckAt": 1793424389204,
+    "reply": "演示结果：已与家人电话核实，本次情况平安",
+    "outcome": {
+      "type": "safe_confirmed",
+      "remark": "演示结果：已与家人电话核实，本次情况平安",
+      "actor": "联系人 · 小陈",
+      "caseId": "DEMO-1793423771647",
+      "method": "phone",
+      "confirmed": true,
+      "at": 1793423809831
+    },
+    "resolvedAt": 1793423809831
+  },
+  "pose": {
+    "angle": 87.03141223090624,
+    "drop": 0.6267553031542425,
+    "frames": 27
+  },
+  "scope": "角色模拟、软件演示、原关键点回放；无实物或外部联系"
+}

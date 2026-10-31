@@ -1,0 +1,236 @@
+{
+  "date": "2026-10-31",
+  "checks": {
+    "slides": 14,
+    "pdfPages": 14,
+    "editableTextRuns": 211,
+    "nativeTables": 1,
+    "powerPointOpened": true,
+    "textOverflow": 0,
+    "videoEmbedded": true,
+    "videoSeconds": 60.466667,
+    "projectNamesInSlidesOrNotes": false,
+    "requiredFiles": [
+      "家有备_创客大赛_终版.pptx",
+      "家有备_创客大赛_终版.pdf",
+      "demo.mp4",
+      "演示启动指南.md",
+      "路演讲稿.md",
+      "答辩问题准备.md",
+      "开源组件与许可证.md",
+      "demo/index.html",
+      "demo/showcase.js",
+      "demo/showcase.css"
+    ]
+  },
+  "files": {
+    "demo.mp4": {
+      "bytes": 2568677,
+      "sha256": "0e650e40067e8b2b845feb64038433b161fe57e97a3d90eba3a245cf4f6f36a6"
+    },
+    "启动演示.cmd": {
+      "bytes": 44,
+      "sha256": "f4b761985f8c1960d75b414ee9b3ab5fb9aab00841be50330e20292d4c4bb9ec"
+    },
+    "家有备_创客大赛_终版.pdf": {
+      "bytes": 742578,
+      "sha256": "0eaa1f411dbdf7949d7f38040ca58f7a573d8a48268f499e4c6c643f522f3343"
+    },
+    "家有备_创客大赛_终版.pptx": {
+      "bytes": 3179430,
+      "sha256": "180bb399be1ef9e14c9d0ed1cf0774fa97a87573c2cf1b64a548d0915cc3b4c0"
+    },
+    "开源组件与许可证.md": {
+      "bytes": 79772,
+      "sha256": "49ebc7acac3592285895c3e533257681d9c7c720c609308454a940f6f81def7d"
+    },
+    "演示启动指南.md": {
+      "bytes": 2842,
+      "sha256": "3ba4661b21c5abf5ebeb243fe06984c2b637b0d82337d85fa381371cca1aeb47"
+    },
+    "演示预览.png": {
+      "bytes": 340812,
+      "sha256": "b313624e81f234c8fa51d622d06bbaae808e8667633d9de3a51afb2dc99edd1a"
+    },
+    "答辩问题准备.md": {
+      "bytes": 4570,
+      "sha256": "abd1d12d6573cf2dedf8781cb2830666fe2751697fa29e2b40b903389ec4cd28"
+    },
+    "路演讲稿.md": {
+      "bytes": 6068,
+      "sha256": "b458025e7edec8958a12aa266914e6777f774f0381687f0c4595706e16841cb4"
+    },
+    "demo/index.html": {
+      "bytes": 380,
+      "sha256": "6b25e7e18a3774c33d5b4f5cce10a4998c1c1c356b8e23ba4ebbf1bee6cbefb3"
+    },
+    "demo/showcase.css": {
+      "bytes": 29743,
+      "sha256": "2972d5a329beb2ccf9829b2b469728dc0e52bc96d55e07845cadc72c867c3399"
+    },
+    "demo/showcase.js": {
+      "bytes": 620917,
+      "sha256": "62a0b09c03871bdabde7369bd21bb287f571ce41d4e0fc3245b80d0d57118f53"
+    },
+    "demo_screenshots/01-家庭总览.png": {
+      "bytes": 218108,
+      "sha256": "9a88f545c73f3c6b74c6a4d026c163704a83c0ea2c921087cc9fe7d7d14ee48f"
+    },
+    "demo_screenshots/02-姿态感知.png": {
+      "bytes": 220819,
+      "sha256": "f83cd161b3625a50553b69cc457c6aa505aae18b850cc345fc8f08ebac275300"
+    },
+    "demo_screenshots/03-Agent形成计划.png": {
+      "bytes": 250847,
+      "sha256": "c68857cfeac331c03c2a4159e8f210f24a0acc2913e49e73d15a49169693d715"
+    },
+    "demo_screenshots/04-家人批准.png": {
+      "bytes": 249095,
+      "sha256": "c576103e28f64e8c277c7a45e416773b38daada6c8fb39680a399346867ecb50"
+    },
+    "demo_screenshots/05-联系人接手.png": {
+      "bytes": 257900,
+      "sha256": "240565f9dc190e1b9e0c4fcc7d61d796ff9203f808a7cc240a11365b6a1b5a09"
+    },
+    "demo_screenshots/06-未回应继续.png": {
+      "bytes": 258601,
+      "sha256": "c1ef2869fb104b5e6e8da38ed5d39145971bab7abb256fd168df66f17c2392a8"
+    },
+    "demo_screenshots/07-明确核实.png": {
+      "bytes": 251957,
+      "sha256": "0abc8fcb9fd49c583e08aa67f351be6517a5904cf9b9381548e5015c353b3163"
+    },
+    "demo_screenshots/08-事件审计.png": {
+      "bytes": 294291,
+      "sha256": "5c00932f5ac8c5d29ee61e9f2b50ad541513399431e709f7700430764eb033c2"
+    },
+    "demo_screenshots/09-高风险授权.png": {
+      "bytes": 188808,
+      "sha256": "33df6b4ce0477cdb211166633fa7a5e95e747d54b1a7d43df05ff0a76f03b30d"
+    },
+    "demo_screenshots/10-端侧姿态.png": {
+      "bytes": 89387,
+      "sha256": "53e07da5d98d06af9705443b0ffa11439396a278f21e2238f217f1ecb50e60fa"
+    },
+    "demo_screenshots/11-Agent工作流.png": {
+      "bytes": 24099,
+      "sha256": "a65d0364e672895d4082f83030a40a87d3ce004f623e7e5ed1c84071ec6aa5de"
+    },
+    "demo_screenshots/12-待批准安排.png": {
+      "bytes": 86497,
+      "sha256": "0c1cd6e4e7eadfa3436c706ebea8fde4efa6aab5361db95d164b92c281a4501c"
+    },
+    "demo_screenshots/13-协作任务.png": {
+      "bytes": 92942,
+      "sha256": "32dbbea679b30952271b718f47eda3fd193d38b8f330df5698e3e80934448932"
+    },
+    "demo_screenshots/14-处理审计.png": {
+      "bytes": 39605,
+      "sha256": "727aaf80fc248088c2ed75be1e454267950c2646283fb847c6260d39965d8152"
+    },
+    "demo_screenshots/15-全景核心区域.png": {
+      "bytes": 182971,
+      "sha256": "a80bb1d2fc34f68021028b0b780797ff9c9e982db1175e75701cb6e655680cf6"
+    },
+    "licenses/-xyflow-react-12.12.0-LICENSE.txt": {
+      "bytes": 1094,
+      "sha256": "61ae3064fc417e02fa6d5c66897c827933701ad5714aad3d8d56a0580fd902ab"
+    },
+    "licenses/-xyflow-system-0.0.83-LICENSE.txt": {
+      "bytes": 1094,
+      "sha256": "61ae3064fc417e02fa6d5c66897c827933701ad5714aad3d8d56a0580fd902ab"
+    },
+    "licenses/CC-BY-NC-SA-4.0.txt": {
+      "bytes": 21288,
+      "sha256": "616cfe2a42f376776d08de3c361320e0e10d27388495d331d586540d05a59f8e"
+    },
+    "licenses/classcat-5.0.5-LICENSE.md.txt": {
+      "bytes": 1087,
+      "sha256": "f7598c6b5304c1307ff141ffae79f48e89ff59df6b66e5f7a422769d168080ff"
+    },
+    "licenses/d3-color-3.1.0-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "6d0f25780b7b1a8463b010672a3419229875bf66888da9a457295343d9d8e091"
+    },
+    "licenses/d3-dispatch-3.0.1-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "e6f1c420da48b6f8f34f9471250e372048632f6fb70b16acc6f920aff1a11553"
+    },
+    "licenses/d3-drag-3.0.0-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "e6f1c420da48b6f8f34f9471250e372048632f6fb70b16acc6f920aff1a11553"
+    },
+    "licenses/d3-ease-3.0.1-LICENSE.txt": {
+      "bytes": 1532,
+      "sha256": "a9e9345968e97ed4c34e3489c389cda9fcb6aaf75412fa0ffc29552c9f86d9dc"
+    },
+    "licenses/d3-interpolate-3.0.1-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "e6f1c420da48b6f8f34f9471250e372048632f6fb70b16acc6f920aff1a11553"
+    },
+    "licenses/d3-selection-3.0.0-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "e6f1c420da48b6f8f34f9471250e372048632f6fb70b16acc6f920aff1a11553"
+    },
+    "licenses/d3-timer-3.0.1-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "e6f1c420da48b6f8f34f9471250e372048632f6fb70b16acc6f920aff1a11553"
+    },
+    "licenses/d3-transition-3.0.1-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "e6f1c420da48b6f8f34f9471250e372048632f6fb70b16acc6f920aff1a11553"
+    },
+    "licenses/d3-zoom-3.0.0-LICENSE.txt": {
+      "bytes": 744,
+      "sha256": "e6f1c420da48b6f8f34f9471250e372048632f6fb70b16acc6f920aff1a11553"
+    },
+    "licenses/lucide-react-1.34.0-LICENSE.txt": {
+      "bytes": 3251,
+      "sha256": "6fc5b7332939dd5c61af3a5f97450f7bc05d4a396dd0bc21ac341716b3b05096"
+    },
+    "licenses/MediaPipe-Apache-2.0.txt": {
+      "bytes": 12549,
+      "sha256": "364aafdc6c88e810a89323e46a2c50b7e5e2e67076c89d20eb9732031fa36a3b"
+    },
+    "licenses/pptxgenjs-4.0.1-LICENSE.txt": {
+      "bytes": 1102,
+      "sha256": "4f328db229e7238350d30f8d811d82157ed374d0bb1e86e4771389a3489f67e0"
+    },
+    "licenses/react-19.2.6-LICENSE.txt": {
+      "bytes": 1109,
+      "sha256": "63e8210e6bf3e8c032dc0c69b1d1d2e3ab72c14b02cabcc0dada2618bb188b97"
+    },
+    "licenses/react-dom-19.2.6-LICENSE.txt": {
+      "bytes": 1109,
+      "sha256": "63e8210e6bf3e8c032dc0c69b1d1d2e3ab72c14b02cabcc0dada2618bb188b97"
+    },
+    "licenses/scheduler-0.27.0-LICENSE.txt": {
+      "bytes": 1109,
+      "sha256": "63e8210e6bf3e8c032dc0c69b1d1d2e3ab72c14b02cabcc0dada2618bb188b97"
+    },
+    "licenses/use-sync-external-store-1.7.0-LICENSE.txt": {
+      "bytes": 1109,
+      "sha256": "63e8210e6bf3e8c032dc0c69b1d1d2e3ab72c14b02cabcc0dada2618bb188b97"
+    },
+    "licenses/zustand-4.5.7-LICENSE.txt": {
+      "bytes": 1091,
+      "sha256": "f0dcbb086850a46d51446679126b274b0752801d85ca1f6ddb067ed046ccc2e2"
+    },
+    "licenses/组件版本.json": {
+      "bytes": 1640,
+      "sha256": "5602303cabb03f4f652699e0fee6a46354cedf4dd3e246ef808c89f2ef9ea06f"
+    },
+    "运行记录/本次事件轨迹.json": {
+      "bytes": 11526,
+      "sha256": "2e094c428ef4875de43fdc8d0d1f61b9ed6477970ec30bdb65ff595b8d20c3be"
+    },
+    "运行记录/核心演示检查.json": {
+      "bytes": 1463,
+      "sha256": "5d49682ffe4a8c778091b122b7a68b226c0470f60cb800563171af3fbf96ed34"
+    },
+    "运行记录/模型与验证摘要.json": {
+      "bytes": 546,
+      "sha256": "be47bfaba82f36a8905990bd5619e5ded478fadc703dbec698bc71a2fdbae34b"
+    }
+  }
+}

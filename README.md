@@ -6,6 +6,20 @@
 
 核心边界：**AI 负责理解与规划，规则负责边界，人工负责关键确认。**
 
+## 11 月 1 日终版交付包
+
+比赛终版位于 [deliverables/](deliverables/)，包含真正的 PowerPoint、同版 PDF、约 60 秒 MP4、15 张运行截图、离线 Demo、启动指南、讲稿、答辩准备与许可。先打开 `deliverables/家有备_创客大赛_终版.pptx`；第 9 页已内嵌视频，也能跳转本地演示。直接双击 `deliverables/启动演示.cmd` 无需网络或开发服务器。
+
+核心演示为 `/showcase`，采用独立本地演示状态；原有 `/experience`、`/care`、`/cv` 与浅色 HTML 比赛稿继续保留。新深色视觉集中于比赛路径，未覆盖原家庭业务数据。
+
+```text
+npm run showcase:build
+npm run showcase:prove
+npm run deck:final
+```
+
+导出 PDF 与逐页图片见 `scripts/competition/export-final-powerpoint.ps1`，需要 Windows PowerPoint。上台仅需要交付文件，无需运行构建工具。
+
 ## 完整产品体验
 
 打开 `/experience`，或在“更多功能”选择“完整产品体验”。四个面板可依次操作：家庭动态 → 一句话安排 → 家庭对话 → 家人协作。动态提供日常照护、回家与到访、宠物与日常三种软件情景；原预览组件、时间线、分类与详情均实际运行。中文指令和家庭工具调用使用同一家庭后端，灯光与联系安排保留批准步骤。

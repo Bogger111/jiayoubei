@@ -780,3 +780,12 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
+
+
+## 2026-10-31 终版冲刺补充
+
+本轮在独立分支 sprint/competition-final-20261101 完成。实际研究 10 个 GitHub 候选，新增 React 兼容流程图，强化既有本地姿态模块，并使用 PptxGenJS 制作原生 PowerPoint。候选固定提交和选择见 docs/competition-final/候选研究.md；本轮随交付的完整许可与依赖版本见 deliverables/开源组件与许可证.md 和 deliverables/licenses/。
+
+新核心演示 /showcase 与 deliverables/demo/index.html 使用同一组件，独立本地演示状态。输入为公开动作样例的本次模型输出回放及构造家庭信号，角色为明确标识的演示角色。家人批准、接手、明确结果采用原计划程序，记录和工作流状态真实更新；不向外部家庭联系人或设备发送请求。
+
+衍生关键点、姿态曲线和包含它们的截图/录像遵循 URFD 的 CC BY-NC-SA 4.0，用于非商业学术竞赛展示，完整来源与改动在上述交付许可中。没有复制或伪造竞品实物演示，没有改变原上游版权声明。

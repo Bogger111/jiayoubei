@@ -2,3 +2,8 @@
 third_party/** -text -whitespace
 public/integrations/vendor/** -text -whitespace
 public/integrations/demos/** -text
+
+# Generated offline bundle and unmodified dependency license texts.
+deliverables/demo/showcase.js -text -whitespace
+public/showcase-offline/showcase.js -text -whitespace
+deliverables/licenses/** -text -whitespace

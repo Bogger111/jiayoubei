@@ -4,6 +4,7 @@ import "./refined.css";
 import "./competition.css";
 import "./quiet-glass.css";
 import "./experience.css";
+import "./showcase.css";
 
 export const metadata: Metadata = {
   title: "家有备｜多模态家庭协作中枢",

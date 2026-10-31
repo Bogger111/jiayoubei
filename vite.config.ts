@@ -54,9 +54,14 @@ export default defineConfig(async () => {
     cacheDir: process.env.VITE_USE_MOCK === "false"
       ? "node_modules/.vite-real"
       : "node_modules/.vite",
-    server: isCodexSeatbeltSandbox
-      ? { watch: { useFsEvents: false, usePolling: true } }
-      : undefined,
+    server: {
+      watch: {
+        // Office writes locked temporary files beside the deck on OneDrive.
+        // Generated deliverables do not participate in application hot reload.
+        ignored: ["**/deliverables/**", "**/test-results/**", "**/dist/**"],
+        ...(isCodexSeatbeltSandbox ? { useFsEvents: false, usePolling: true } : {}),
+      },
+    },
     plugins: [
       vinext(),
       sites(),
