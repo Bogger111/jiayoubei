@@ -1,0 +1,5 @@
+{
+  "source": "tests/zh-CN/HassTurnOn/name_only.yaml",
+  "originalDevice": "易来吸顶灯",
+  "templates": ["打开{device}", "把{device}打开", "把{device}开"]
+}

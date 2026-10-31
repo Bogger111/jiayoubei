@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-10-31T04:20:36.733Z",
+  "category": "synthetic",
+  "transport": "live",
+  "scope": "隔离D1与实际HTTP工具调用；演练情景和预置文本，不是ASR或硬件结果。",
+  "checks": [
+    {
+      "name": "首页菜单可打开完整体验，四个能力入口均可用",
+      "passed": true
+    },
+    {
+      "name": "原预览组件和时间线同时运行，同一家庭数据可见",
+      "passed": true
+    },
+    {
+      "name": "预览与时间线共用可打开的本地详情",
+      "passed": true
+    },
+    {
+      "name": "三个情景导入九条演练动态，快递、车辆和宠物可独立筛选",
+      "passed": true
+    },
+    {
+      "name": "四种原界面演示均完整可看，保持示例标签",
+      "passed": true
+    },
+    {
+      "name": "原中文句式用例适配家庭设备，批准后产生模拟结果",
+      "passed": true
+    },
+    {
+      "name": "体验页刷新后仍恢复同一份持久化安排",
+      "passed": true
+    },
+    {
+      "name": "对话实际运行初始化、工具发现与家庭时间线读取",
+      "passed": true
+    },
+    {
+      "name": "两种原终端提示音均在浏览器实际播放",
+      "passed": true
+    },
+    {
+      "name": "对话调用可准备灯光安排，仍等待管理员确认",
+      "passed": true
+    },
+    {
+      "name": "对话准备的联系计划可进入原关怀流程批准",
+      "passed": true
+    },
+    {
+      "name": "独立测试账号的两端协作录像可切换播放",
+      "passed": true
+    },
+    {
+      "name": "体验内容只呈现家庭能力，不展示第三方项目名称",
+      "passed": true
+    },
+    {
+      "name": "预览组件也按文本显示外部标题，不执行注入标记",
+      "passed": true
+    },
+    {
+      "name": "工具失败保留失败状态，重试真实成功后才显示回复",
+      "passed": true
+    },
+    {
+      "name": "320、390、768宽度的四个体验面板均无横向溢出",
+      "passed": true
+    },
+    {
+      "name": "完整体验无脚本错误与外部数据请求",
+      "passed": true
+    }
+  ],
+  "chapters": {
+    "vision": 1.392,
+    "intent": 4.856,
+    "terminal": 8.765,
+    "family": 16.977
+  },
+  "video": "home-experience-run.webm",
+  "errors": [],
+  "external": []
+}

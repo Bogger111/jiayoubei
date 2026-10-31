@@ -39,7 +39,8 @@
     "test:home:unit": "node --test tests/multimodal-core.test.mjs",
     "test:home:api": "node tests/multimodal-service-isolated.mjs",
     "home:prove": "node scripts/integrations/prove-home-agent.mjs",
-    "home:verify-vendor": "node scripts/integrations/verify-vendor.mjs"
+    "home:verify-vendor": "node scripts/integrations/verify-vendor.mjs",
+    "experience:prove": "node scripts/integrations/prove-experience.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",

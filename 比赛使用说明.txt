@@ -8,7 +8,7 @@
 
 二、讲述主线
 家有备是多模态家庭协作中枢。首先服务子女与父母分居的家庭，帮助他们在异常联系不上时，把关心落实为安排。
-第 6 页可先展示多模态中枢的实际软件录屏：回顾动态 → 中文整理灯光安排 → 家人确认 → 整理联系计划。第 14 页可切换两端协作录像，以及多事件时间线列表和详情示例。
+第 6 页播放完整产品体验：回顾动态 → 中文整理安排 → 家庭工具对话 → 家人协作。录像弹窗支持四个章节直接定位，还可播放开始/完成提示音。第 14 页可切换两端协作录像，以及事件列表、详情、近景预览和组合界面四种示例。
 从“妈妈怎么还没回应”进入：汇合活动、门磁、语音回应与授权图像，整理一份完整计划，家人批准后协同执行，跟进到回应。
 商业方案是子女按家庭订阅，接入兼容已有设备。试用、定价、渠道合作与用户认可需要通过后续真实使用验证；不要将计划人数说成已有用户。
 视觉检测保留为一个可选感知模块，主讲不需要展开模型或摔倒片段。
@@ -26,6 +26,7 @@
 首页可调整联系人与等待时间、批准计划、记录家人回应、查看事件进度。设备依据和授权图像在“查看依据”中查看。
 顶部“家庭 / 行动 / 设备 / 记忆”为常用入口；“更多功能”提供家庭事件、成员、联系人、授权、审计、视觉模块和比赛演示。
 Ctrl/Cmd + K 搜索事件、任务、家人和设备。手机端使用右上角菜单。
+完整产品体验地址为 http://localhost:3000/experience，四类能力均可点击操作；家庭动态提供照护、到访和宠物三种情景，合计九个去重事件。
 多模态中枢地址为 http://localhost:3000/home-agent，首页与更多菜单均有入口。点击“载入软件演练”即可使用；未配置实际设备时显示“设备连接待配置”。中枢动态、灯光安排与处理记录保存在本地 D1，刷新后仍在。
 默认首页的软件演练保存在当前页面会话；/care 工作台使用真实后端并持久化计划、任务和截止时间。真实成员协作的配置与启动见 docs/care-p0/启动与复现.md。
 
@@ -37,6 +38,7 @@ Ctrl/Cmd + K 搜索事件、任务、家人和设备。手机端使用右上角�
   npm run build
   npm run test:home:api
   npm run home:prove
+  npm run experience:prove
   npm run deck:family
   npm run test:deck:family
 浏览器检查会重新生成录屏和截图；构建器读取这些媒体及 JSON，再生成根目录与 public/competition/index.html 两份相同的离线文件。
@@ -48,7 +50,8 @@ Ctrl/Cmd + K 搜索事件、任务、家人和设备。手机端使用右上角�
 共享计划程序：lib/care-agent.ts。
 情景与执行约束结果：public/evidence/care-run.json。
 浏览器操作结果：public/evidence/care-browser-checks.json。
-中枢录屏：public/evidence/media/home-agent-run.webm。
+完整体验录屏：public/evidence/media/home-experience-run.webm，章节时间与检查见 public/evidence/experience-browser.json。
+原中枢录屏：public/evidence/media/home-agent-run.webm。
 双账号协作录屏：public/evidence/media/care-p0-family.webm 与 care-p0-admin.webm。
 原演练录屏：public/evidence/media/family-agent-run.webm。
 设计复核：design-qa.md。

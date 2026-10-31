@@ -38,6 +38,9 @@ test("production start serves the dashboard, household hub and pinned local demo
     const hub = await fetch(`http://localhost:${port}/home-agent`);
     assert.equal(hub.status, 200);
     assert.match(await hub.text(), /家有备/);
+    const experience = await fetch(`http://localhost:${port}/experience`);
+    assert.equal(experience.status, 200);
+    assert.match(await experience.text(), /家有备/);
     const manifest = JSON.parse(await readFile(new URL("../third_party/manifest.json", import.meta.url), "utf8"));
     for (const entry of manifest.flatMap((project) => project.files).filter((entry) => entry.local.startsWith("public/"))) {
       const asset = await fetch(`http://localhost:${port}/${entry.local.slice(7)}`);

@@ -1,5 +1,5 @@
 import { env } from 'cloudflare:workers';
-import { demoHomeTimeline,familyTools,interpretHomeRequest,normalizeTimelineEvent,type HomeObservation,type AgentIntent } from '@/lib/multimodal/core';
+import { demoHomeTimeline,homeScenarios,familyTools,interpretHomeRequest,normalizeTimelineEvent,type HomeObservation,type AgentIntent,type HomeScenario } from '@/lib/multimodal/core';
 import { readRuntimeEnv } from '@/lib/runtime-env';
 import { ProductInputError } from '@/lib/product-input';
 import { readProductState,ensureProductSchema,appendAudit } from './product-repo';
@@ -43,7 +43,8 @@ export async function homeCommand(user:SessionUser,input:Record<string,unknown>)
  await ensureProductSchema();const action=value(input.action,40);
  if(action==='load_demo'){
   if(!isFamilyAdmin(user))throw new ProductInputError('需要家庭管理员权限',403);
-  const events=demoHomeTimeline();await putEvents(user,events);return {events,detail:'已载入软件演练事件，未使用家庭摄像头。'};
+  const scenario=input.scenario??'care';if(!homeScenarios.some(s=>s.id===scenario))throw new ProductInputError('请选择已有的家庭演练情景',400);
+  const events=demoHomeTimeline(Date.now(),scenario as HomeScenario);await putEvents(user,events);return {events,detail:'已载入软件演练事件，未使用家庭摄像头。'};
  }
  if(action==='sync_timeline'){
   if(!isFamilyAdmin(user))throw new ProductInputError('需要家庭管理员权限',403);

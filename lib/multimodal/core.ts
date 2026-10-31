@@ -31,7 +31,20 @@ export function normalizeTimelineEvent(input:unknown,category:HomeObservation['e
  const uid=text('uid',100),start=text('start',60),end=text('end',60,start),camera=text('camera_name',120);if(!uid||!Number.isFinite(Date.parse(start))||!Number.isFinite(Date.parse(end))||Date.parse(end)<Date.parse(start)||!/^camera\.[a-z0-9_]+$/.test(camera))throw new Error('时间线标识或时间无效');
  return {uid,title:text('title',240),description:text('description',2000),start,end,camera_name:camera,category:text('category',40),label:text('label',40),key_frame:'',evidenceCategory:category,transport,origin:category==='synthetic'?'demo':'timeline'};
 }
-export function demoHomeTimeline(now=Date.now()):HomeObservation[]{return [
+export const homeScenarios=[{id:'care',title:'日常照护',detail:'公共区域活动与待确认的联系'},{id:'arrival',title:'回家与到访',detail:'车辆、门口停留与快递线索'},{id:'pets',title:'宠物与日常',detail:'宠物活动与家庭区域变化'}] as const;
+export type HomeScenario=typeof homeScenarios[number]['id'];
+export function demoHomeTimeline(now=Date.now(),scenario:HomeScenario='care'):HomeObservation[]{
+ if(scenario!=='care'){
+  const rows=scenario==='arrival'?
+   [{title:'门口有快递到访',description:'演练记录：门口出现携带包裹的访客，是否需要联系家人取件仍待确认。',camera_name:'camera.front_door',category:'delivery',label:'delivery'},
+    {title:'车库出现车辆',description:'演练记录：车辆驶入公共车库区域，不能仅据此确认具体家人已经回家。',camera_name:'camera.garage',category:'vehicle',label:'car'},
+    {title:'门口有人短暂停留',description:'演练记录：公共门口出现人物活动，身份未知。',camera_name:'camera.front_door',category:'person',label:'person'}]:
+   [{title:'宠物在门廊活动',description:'演练记录：门廊区域出现宠物活动，不代表人员状态或宠物健康结论。',camera_name:'camera.front_door',category:'animal',label:'dog'},
+    {title:'客厅出现宠物',description:'演练记录：客厅观察到宠物活动，可在时间线中回顾。',camera_name:'camera.living_room',category:'animal',label:'cat'},
+    {title:'公共区域暂未见人',description:'演练记录：区域内暂未见人，具体家人情况仍需联系确认。',camera_name:'camera.living_room',category:'entity',label:'sensor'}];
+  return rows.map((e,i)=>({...e,uid:scenario+'-'+i,key_frame:'',start:new Date(now-(i+1)*4*60000).toISOString(),end:new Date(now-(i+1)*4*60000+60000).toISOString(),evidenceCategory:'synthetic',transport:'replay',origin:'demo'}));
+ }
+ return [
  {uid:'family-room',title:'客厅出现活动',description:'公共区域观察到有人活动，不能据此确认具体家人的身份。',camera_name:'camera.living_room',category:'person',label:'person',key_frame:'',start:new Date(now-55*60000).toISOString(),end:new Date(now-54*60000).toISOString()},
  {uid:'door-visit',title:'门口有短暂停留',description:'门口出现一段停留记录，是否与家庭成员有关仍待确认。',camera_name:'camera.front_door',category:'person',label:'person',key_frame:'',start:new Date(now-35*60000).toISOString(),end:new Date(now-34*60000).toISOString()},
  {uid:'living-quiet',title:'客厅暂未见人',description:'本次示例画面为空，不能推断家人已经外出或发生危险。',camera_name:'camera.living_room',category:'activity',label:'none',key_frame:'/brand/living-room.png',start:new Date(now-5*60000).toISOString(),end:new Date(now-4*60000).toISOString()}

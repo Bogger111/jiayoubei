@@ -89,6 +89,35 @@ npm run test:deck:family
 
 真实硬件台架、自然家庭使用、独立识别评估和付费数据仍待采集；不引用竞品营销数字作为家有备成果。
 
+## 演示盘点与本轮补齐（2026-10-31）
+
+已逐一重读这四个固定提交的 README、资源树及实际用例。本轮不新增大型模型、音频云服务或设备烧录。
+
+| 项目 | 找到的原演示 | 实际纳入家有备 |
+| --- | --- | --- |
+| llmvision-card | 仓库内时间线、详情、预览、组合视图的 PNG；可运行的两种卡片 | 四张浅色原示例图全部可打开；预览卡与时间线组件均接入同一家庭数据。深色同内容变体不重复加入浅色展示 |
+| ha-llmvision | 公开说明中的外链图片、网站示例、事件汇总蓝图及时间线契约 | 延续授权时间线同步适配，新增照护/到访/宠物软件情景来运行组件。外链图片和网站视频未确认独立再分发授权，不搬运；没有运行其视觉模型服务 |
+| xiaozhi-esp32 | README 的两条 Bilibili 硬件演示、仓库内提示音及协议示例 | 原 popup/success 两个提示音；可实际初始化、发现工具、读取/准备安排的家庭对话界面。外部硬件视频不视为根目录 MIT 自动授权素材，未复制或替换品牌 |
+| home-assistant/intents | 无成品视频，提供大量语言测试用例 | 保存 name_only/name_area 原测试；只将 name_only 的三个灯光用例替换为当前家庭设备名，生成可点选的中文指令。门锁、阀门等用例没有接入执行 |
+
+### 原文件与适配
+
+- 新增 `assets/preview.png` → `public/integrations/demos/preview.png`、`assets/cards-hero-light.png` → 同目录同名文件，仍为原字节 Apache-2.0 素材。与既有两张浅色图构成四种可切换界面示例。
+- 新增 `main/assets/common/popup.ogg`、`success.ogg` → `terminal-popup.ogg`、`terminal-success.ogg`，采用同固定提交根目录 MIT；目录内未发现另行许可或署名要求。仅作开始/完成提示，不是语音识别或合成回复。
+- 新增 `tests/zh-CN/HassTurnOn/name_only.yaml`、`name_area.yaml` → `third_party/ha-intents/test-name-*.yaml`，保留原数据，CC BY 4.0。`lib/multimodal/intent-examples.json` 抽取三个灯光句式，`householdPhrases()` 仅替换设备名称，未采用其原“已打开”回复冒充动作结果。
+- 新增 `/experience`：四个可切换体验面板、三种演练情景、动态分类、原预览卡/时间线、本地详情、中文句式、家庭工具对话、原提示音与双账号协作录像。
+- 家庭对话输入明确标为预置语句。每次实际发送初始化、工具发现、工具调用请求；连接失败不显示完成。准备灯光和联系计划后仍走原管理员批准，记录保存在本地 D1。
+- 演练事件为 synthetic/replay；集成录像为软件实时操作 synthetic/live。图像示例与情景配图均不计为真实家庭采集或识别样本。
+- 新增六个原文件已加入 `third_party/manifest.json`，总计四个项目、24 个逐文件 SHA-256。上游代码、图片、声音与数据未编辑，适配器与体验交互由本项目新增。
+
+### 交付和复现
+
+- `public/evidence/media/home-experience-run.webm`：集成后的实际浏览器操作录像。
+- `public/evidence/media/home-experience-vision.jpg`、`-intent.jpg`、`-terminal.jpg`、`-family.jpg`：四个面板的实际运行截图。
+- `public/evidence/experience-browser.json`：逐项结果、原始章节时间、错误与外部请求记录。新检查使用独立 D1，不改原家庭记录。
+- `npm run experience:prove` 重新录制；再运行 `npm run deck:family`、`npm run test:deck:family`。
+- 比赛稿仍为 14 页，新增录像章节入口、四张示例切换和两个提示音，全部内嵌离线可用。PPT 正文、弹窗和讲稿不展示这些项目名、作者或仓库链接；本附录承担来源及许可记录。
+
 ## 随附许可与版权文本
 
 以下全文随附，保证展示稿与本附录一起分发时保留许可与声明。
