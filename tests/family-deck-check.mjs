@@ -24,6 +24,9 @@ try{
  assert.equal(await p.locator('#stage > :not(.slide)').count(),0,'No leftover content may appear between slides');
  await p.evaluate(()=>document.fonts.ready);
  assert.equal(await p.evaluate(()=>[...document.querySelectorAll('.slide')].slice(0,12).reduce((s,e)=>s+Number(e.dataset.seconds),0)),360);
+ await p.getByRole('button',{name:'下一页',exact:true}).click();await p.keyboard.press('ArrowRight');assert.equal(await p.locator('.slide.active').getAttribute('data-title'),'产品价值','Arrow navigation works after a control button has focus');await p.evaluate(()=>show(0));
+ await p.evaluate(()=>show(10));await p.getByRole('button',{name:'查看情景与运行记录',exact:false}).click();await p.getByRole('dialog',{name:'情景运行记录'}).waitFor();assert.equal(await p.locator('#evidence-rows tr').count(),5);await p.screenshot({path:'test-results/quiet/deck/results-dialog.png'});await p.keyboard.press('Escape');assert.equal(await p.locator('#results-modal').isVisible(),false);await p.evaluate(()=>show(0));
+ assert.equal(await p.locator('#proof-approved').textContent(),'任务已创建，等待联系人查看。');assert.equal(await p.locator('#proof-following').textContent(),'保留任务与等待期限。');assert.equal(await p.locator('#proof-resolved').textContent(),'结果已保存，停止后续未执行联系。');
  for(let i=0;i<14;i++){
   await p.evaluate(n=>show(n),i);
   await p.locator('.slide.active img').evaluateAll(imgs=>Promise.all(imgs.map(img=>img.decode())));

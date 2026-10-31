@@ -3,8 +3,9 @@ import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {ArrowRight,ArrowLeft,CheckCircle2} from 'lucide-react';
 import ts from 'typescript';
-const files={logo:'public/icon-192.png',house:'public/brand/quiet-house.png',family:'public/brand/family-care.png',room:'public/brand/living-room.png',home:'public/evidence/media/care-home.jpg'};
+const files={logo:'public/icon-192.png',house:'public/brand/quiet-house.png',family:'public/brand/family-care.png',room:'public/brand/living-room.png',home:'public/evidence/media/care-home.jpg',mother:'public/brand/mother.png',resolved:'public/evidence/media/care-p0-resolved.jpg'};
 let html=await readFile('presentations/family-agent.template.html','utf8');
+html=html.replace('__STYLE__',await readFile('presentations/family-agent.css','utf8'));
 if((html.match(/<aside class="slide-note">/g)||[]).length!==14)throw new Error('The template must contain exactly one speaker note per slide; remove stale slide fragments.');
 for(const [key,path] of Object.entries(files)){const mime=path.endsWith('.jpg')?'image/jpeg':'image/png';html=html.replaceAll('__ASSET:'+key+'__','data:'+mime+';base64,'+(await readFile(path)).toString('base64'))}
 for(const [key,Icon] of Object.entries({arrow:ArrowRight,left:ArrowLeft,check:CheckCircle2}))html=html.replaceAll('__ICON:'+key+'__',renderToStaticMarkup(createElement(Icon,{size:24,strokeWidth:1.7,'aria-hidden':true})));
@@ -16,7 +17,7 @@ const p0=JSON.parse(await readFile('public/evidence/care-p0-summary.json','utf8'
 html=html.replace('__P0_JSON__',JSON.stringify(p0).replaceAll('<',String.fromCharCode(92)+'u003c')).replace('__API_CHECKS__',String(p0.software.api?.checks.length??0)).replace('__HA_CHECKS__',String(p0.software.ha?.checks.length??0)).replace('__P0_BROWSER_CHECKS__',String(p0.software.browser?.checks.length??0));
 html=html.replace('__ENGINE__',engine).replace('__RUN_JSON__',JSON.stringify(run).replaceAll('<','\\u003c')).replace('__BROWSER_JSON__',JSON.stringify(checks).replaceAll('<','\\u003c')).replace('__RUN_COUNT__',String(run.scenarios.length)).replace('__GUARD_COUNT__',String(run.guards.length)).replace('__RUN_DATE__',run.generatedAt.slice(0,10)).replace('__VIDEO__','data:video/webm;base64,'+(await readFile('public/evidence/media/family-agent-run.webm')).toString('base64'));
 html=html.replaceAll('__P0_VIDEO__','data:video/webm;base64,'+(await readFile('public/evidence/media/care-p0-family.webm')).toString('base64')).replaceAll('__P0_ADMIN_VIDEO__','data:video/webm;base64,'+(await readFile('public/evidence/media/care-p0-admin.webm')).toString('base64'));
-if(/__(?:ASSET|ICON|RUN|VIDEO|ENGINE|BROWSER|P0|API_CHECKS|HA_CHECKS)/.test(html))throw new Error('Unresolved deck placeholder');
+if(/__(?:ASSET|ICON|RUN|VIDEO|ENGINE|BROWSER|P0|API_CHECKS|HA_CHECKS|STYLE)/.test(html))throw new Error('Unresolved deck placeholder');
 html=html.replace('</style>','[hidden]{display:none!important}</style>');
 await mkdir('public/competition',{recursive:true});
 await writeFile('public/competition/index.html',html);await writeFile('家有备-创客比赛.html',html);

@@ -129,7 +129,8 @@ VITE_API_BASE_URL=
 - 浅色克制的玻璃界面：首页聚焦家庭状态与处理计划；顶部“家庭、行动、设备、记忆”直达常用功能，更多菜单保留事件、成员、授权、审计与视觉模块。`Ctrl/Cmd + K` 全局搜索。
 - 应用运行时打开 `/competition/`；左右键翻页，`N` 讲稿，`O` 目录，`F` 全屏。第 6、13 页可播放实际浏览器录屏，第 14 页可导出运行记录。
 - `lib/care-agent.ts` 为应用与 PPT 共用的确定性编排程序。`public/evidence/care-run.json` 保存五种情景、六项执行约束与阶段记录；`care-browser-checks.json` 保存浏览器检查结果。输入是构造情景，设备回执是本地模拟，当前不代表多模态识别准确率、真实家庭试用或实物接入成果。
-- `npm run test:care:e2e` 在运行中的演示前端检查核心流程并录制媒体；随后 `npm run deck:family` 生成比赛文件，`npm run test:deck:family` 检查离线互动与版面。模板为 `presentations/family-agent.template.html`。
+- `npm run test:care:e2e` 在运行中的演示前端检查核心流程并录制媒体；随后 `npm run deck:family` 生成比赛文件，`npm run test:deck:family` 检查离线互动与版面。模板为 `presentations/family-agent.template.html`，样式为 `presentations/family-agent.css`（构建后内嵌，无外部样式依赖）。
+- 同类项目与展示定位见 [同类产品与比赛叙事](docs/同类产品与比赛叙事.md)，PPT 第 4、14 页列出官方参考；这些不是家有备已获得的用户或商业成果。
 - 视觉专项实测报告统一保存在 `public/evidence/index.html`，应用内通过 `/evidence/` 打开。URFD 素材许可见 `public/evidence/NOTICE.txt`。完整操作顺序见 `比赛使用说明.txt`。
 
 ### 关怀确认 P0 升级
