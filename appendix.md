@@ -789,3 +789,77 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 新核心演示 /showcase 与 deliverables/demo/index.html 使用同一组件，独立本地演示状态。输入为公开动作样例的本次模型输出回放及构造家庭信号，角色为明确标识的演示角色。家人批准、接手、明确结果采用原计划程序，记录和工作流状态真实更新；不向外部家庭联系人或设备发送请求。
 
 衍生关键点、姿态曲线和包含它们的截图/录像遵循 URFD 的 CC BY-NC-SA 4.0，用于非商业学术竞赛展示，完整来源与改动在上述交付许可中。没有复制或伪造竞品实物演示，没有改变原上游版权声明。
+
+
+## 2026-10-31 空间、照片搭建与记忆接入
+
+本轮分支为 `sprint/home-space-memory`。只扩展应用，不修改 PPT 或语音实现。
+
+| 项目 / 服务 | 固定版本或记录 | 用途与范围 |
+| --- | --- | --- |
+| [ha-diorama](https://github.com/CarlesRojas/ha-diorama) | `1c38e1943081b1fcb7aa867cff184dd1ce0e9f4b` / v1.8.29，MIT | 实际运行三维渲染器、家具库、编辑器与设备卡。增加中文、本应用身份与持久化适配。版权和完整许可在 `third_party/ha-diorama/LICENSE`，原始 / 修改后的 bundle SHA-256 在 manifest。 |
+| 同仓库 DEMO_FLAT、catalog、theme、constants、sofaSpecs | 同一固定提交，源文件以 `.source` 保存 | 家具目录、风格参考、软件示例与接口测试固定布局来源。示例房屋不是根据用户照片生成的结果。 |
+| [Depth Anything 3](https://github.com/ByteDance-Seed/Depth-Anything-3) / DA3-BASE | 源码 `3d835ec1a5802d64a8b8b15f817a1ab54809bfe4`；权重版本与 SHA-256 见 `services/home-engine/models.lock.json`，Apache-2.0 | 本机真实多视图几何恢复，输出观察到的表面及相机；不把它等同于整洁的参数化家居模型。 |
+| [Mask2Former 实例分割权重](https://huggingface.co/facebook/mask2former-swin-small-coco-instance) | 权重固定记录在 models.lock，HF 模型卡标记 `license: other` | 扫描中的家具候选分离，允许改名与调整。权重许可没有在此推定为 MIT/Apache；正式商业分发前需要核对其具体条款。 |
+| [BGE-small-zh-v1.5](https://huggingface.co/BAAI/bge-small-zh-v1.5) | 固定权重 / 校验值见 models.lock，MIT | 本机中文语义向量，与关键词检索结合，按家庭隔离。 |
+| [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) | 固定权重 / 校验值见 models.lock，Apache-2.0 | 可选本机记忆整理。引用格式不合格时使用检索记录摘录。 |
+| [DeepSeek 图像理解](https://api-docs.deepseek.com/zh-cn/guides/vision/) / [JSON Output](https://api-docs.deepseek.com/zh-cn/guides/json_mode/) | 官方 `deepseek-flash` 接口；截至本轮核查 | 用户自己的付费 API。读取所选照片并生成结构化布局，匹配上面的家具库。凭据与调用费用属于用户账号；代码不内置密钥，也不把固定响应测试当作实际云端推理。 |
+| [VGGT 官方演示空间的 room 照片](https://huggingface.co/spaces/facebook/vggt) | `26f484ea4b7247bbcaf57874a7138e4a6c4221d9`，8 张输入照片；详细路径见 `public/integrations/room-sample/source.json` | 公开测试输入，用于本次本机几何运行与上传界面验证。不是本团队自采家庭照片。来源许可按上游记录；商业上线的示例输入应换成自己拥有使用权的照片。 |
+| three.js | npm `0.186.0`，MIT | 真实扫描 GLB 查看、家具变换与 GLB 导出；原生家居引擎仍使用自身随包版本。 |
+
+`public/integrations/demo-media/` 的空气炸锅图片来自本项目此前已经记录的 MiniCPM 官方演示画面；`space.png` 是已接入的三维家居演示画面；`backyard.gif` 来自固定版本 ha-diorama 的软件示例摄像头素材。它们在家庭记忆中标为示例记录，不作真实家庭采集或识别效果的证据。
+
+固定 API 响应位于 `tests/fixtures/scene-provider.json`，来源于上述 MIT 家具示例。它只用于隔离测试。生产应用没有将其作为 AI 识图结果导入。真实本机几何与 RAG 检索记录在 `test-results/home-upgrade/verified-scan.json` 与 `verified-rag.json`，运行边界详见 `docs/照片搭建与家庭记忆.md`。
+
+
+## 2026-10-31 统一设备与 Agent 框架
+
+新增统一设备注册表、能力约束、房间/家具绑定、待批准多设备计划、执行租约、逐项回执与 MCP 设备工具，为本项目实现。Home Assistant 适配器依据其 [REST API 官方文档](https://contributors.home-assistant.io/core/internals/rest-api/)，通过 states、services 和实体回读接口对接。未引入新的第三方设备控制 bundle。
+
+本轮清空当前家庭此前的演示记忆，保留三维样例及其原有来源与许可。新设备浏览器检查采用隔离家庭的样例适配器，HTTP 对接检查采用本机契约网关；不将其标为真实 ESP32 或家庭实物演示。照片生成凭据由本机后台保存，产品页面不显示供应商或密钥入口，本轮未发起付费识图请求。实现及扩展方式见 `docs/统一设备与Agent框架.md`。
+
+## 2026-10-31 助手真实工具调用补充
+
+本次后续工作恢复原有顶部六项导航，以大对话框为助手主视觉，并接入真实模型函数调用。依据 [DeepSeek Function Calling 官方说明](https://api-docs.deepseek.com/guides/tool_calls/) 实现多轮工具请求、结果反馈及非思考模式；照片工具继续依据 [视觉输入官方说明](https://api-docs.deepseek.com/zh-cn/guides/vision/) 与 [JSON Output](https://api-docs.deepseek.com/zh-cn/guides/json_mode/) 生成结构化布局。模型只调用服务端登记工具，三维仍使用本文件已记录的 ha-diorama 渲染与家具库。
+
+与上节设备框架阶段不同，本次已完成真实付费模型验证：模型保存记忆并准备多设备计划；另读取上面已记录的 8 张公开 VGGT room 照片，生成 1 房间、15 家具草稿。原生编辑器新增办公椅后保存为 16 家具，并在同一对话应用。测试使用临时隔离家庭，设备为软件样例；未连接实物或改用他人的实物演示。第一次照片调用输出截断、第二次调整配置后成功的经过与成功记录详见 `docs/助手与工具实测.md`。
+
+真实云端记录为 `test-results/home-upgrade/assistant-live-result.json` 与 `assistant-live-photo-result.json`。固定模型响应测试、真实模型结果及已保存真实布局的视觉复查分别标明，不把它们混为同一种证据。服务商和私有配置只记在开发文档，产品页面没有凭据入口。
+
+## 2026-10-31 前端视觉升级与当前产品展示
+
+按用户指定，使用 [Anthropic frontend-design Skill](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md)，读取时 Skill 文件 blob SHA 为 `a5333457c414d20d625f307df945842c0952ecc3`。本次取其设计规划、约束审查、实际页面复查工作方法；具体纸白与松绿配色、组件、响应式排版为家有备项目实现。完整设计规范见 `docs/前端设计系统.md`。
+
+最新版 PPT 保留原 16 页结构，仅更新第 4、6、8、9、15 页的空间、记忆、助手、设备与照片建模展示。第 4 页原外部三维演示视频和第 6 页外部时间线图片已换成当前应用的实际画面；其他旧素材的出处、版本与许可仍保留在本附录和旧版备份中。语音页本轮未改动。
+
+新截图与 3 段录屏由 `scripts/design/capture-current-product.mjs` 在本机 Chrome 运行当前前端采集。使用临时隔离 D1/R2；真实模型内容读取此前保存的实际推理输出，在当前界面重新呈现。记忆保存与检索、设备计划准备/批准/回执、原生三维编辑与保存经过实际服务，没有改写当前演示家庭，也没有额外发起云端模型调用。输入的 8 张公开房间照片仍使用本文件已记录的 VGGT room 来源与许可。
+
+录屏分别是 `space-current`、`assistant-current`、`photo-model-current`，约 14.52、8.76、5.08 秒，已转换为 H.264 MP4 并实际嵌入 PPT。第 15 页视频封面是同一次生成布局的局部实际截图；播放内容展示完整应用。媒体记录在 `test-results/visual-upgrade/product/capture-provenance.json`。文字、模型来源、示例设备与真实设备边界沿用本附录的已有说明。
+
+旧交付包与历史产物归档位置、文件摘要和恢复方式见 `docs/整理与升级记录.md`。当前展示没有复制新的第三方实物录像，也没有将软件回执称为实物验证。
+
+## 2026-10-31 记忆编辑与整洁房间照片实测
+
+本次 PPT 以用户已手动调整的 15 页文件为基础：仅将当前第 6 页（原页码标为 15）完整换为家庭记忆界面，并将结束页页码从 16 校正为 15。其余 13 页的 PowerPoint 渲染图与输入逐字节相同。原有第 4、9 页视频保留并验证实际播放进度；照片页视频随该页内容替换移除。没有对输入文件做整份重绘或恢复用户已删除的页面。
+
+新增截图来自当前真实前端和隔离的 D1/R2 演示家庭。妈妈的联系偏好、爸爸的阅读习惯等是为演示录入的约定，不是真实试用家庭反馈。家庭动态及习惯约定均通过真实接口修改原记录、刷新读取和后续检索检查；记录身份保持不变，不以新增一条记录代替编辑。接口检查还覆盖过期修改冲突、家庭权限、照片归属和更新时间线检索。
+
+照片输入另选 [Mip-NeRF 360 原始项目](https://jonbarron.info/mipnerf360/) 中同一间起居室的 6 个拍摄视角，从 [YuanhaoXD/Mip-NeRF360 镜像](https://huggingface.co/datasets/YuanhaoXD/Mip-NeRF360/tree/main/room/images_4) 下载，文件、原路径和 SHA-256 位于 `public/integrations/tidy-room-sample/source.json`。镜像元数据标记 Apache-2.0，原项目主页未明确列出独立照片许可，本处不将镜像标签视为原摄影作品的完整授权。照片仅作本机公开样例验证，未加入本次 PPT；后续公开商业示例应替换为自有或授权素材。
+
+本次通过现有照片生成接口执行了一次真实云端识图请求，6 张照片 → 1 个房间、20 件家具，服务返回用时 8.76 秒。结果为视觉理解后匹配家具库的近似可编辑布局，不是测量级几何恢复。随后用实际原生编辑器新增办公椅，保存后刷新读取为 21 件、草稿版本 2。现用家庭的四房 66 件家具样例与版本 18 保持一致，没有自动应用新草稿。
+
+证据位于 `test-results/memory-room-upgrade/`：`tidy-room-live-result.json`、`space-browser-results.json`、`memory-browser-results.json`、实际界面截图，以及 `ppt-render/`。PPT 的结构、布局、原生溢出及视频播放结果在 `.care-local/memory-room-upgrade/`，本机私有配置未进入这些证据输出。复查步骤和本机入口见 `docs/记忆编辑与房间实测.md`。
+
+## 2026-10-31 后续：房间操作录屏与语音页配图
+
+按用户后续要求，在记忆页之后新增第 7 页照片搭建展示；当前 PPT 共 16 页。第 5 页在既有排版中补入当前助手界面截图，保留用户手动修改的“听见你的声音”等文字。原有两段视频随页序调整保留在第 4、10 页，视频文件内容逐字节一致。
+
+`scripts/design/record-real-room-flow.mjs` 在独立演示家庭的实际 D1/R2 与当前前端中录制，接入本机已有的真实照片生成服务。通过页面选择前文记录的 6 张同一间起居室公开照片，重新执行一次真实模型请求：生成 1 个房间、22 件家具，服务返回 8.72 秒；之后在原生编辑器新增办公椅，把宽度从 0.65 米调到 0.75 米、角度从 0° 调到 45°，保存草稿，再保存为家庭空间，最终整页刷新核对一致。完成后共 23 件家具。没有用固定模型返回、前端假进度或伪造保存结果替代这段操作。
+
+成片 `deliverables/照片生成与家具编辑.mp4` 为 H.264、1600×1000、41.533 秒。前段为上述连续实际操作；片尾用同一次运行保存的完整配置，在实际服务中重新载入查看，调整观察视角，以便看到完整房间。片尾没有重复调用生成模型，也没有改变生成的家具内容。两段录屏的边界与操作分别记录在 `recording-evidence.json`、`closing-view-evidence.json`。PPT 已内嵌完整成片，验证嵌入字节与独立 MP4 的 SHA-256 一致；PowerPoint 播放检查覆盖开始、中段 18 秒及结尾 35 秒。
+
+第 5 页配图来自当前应用实际助手页面，显示大对话框与既有麦克风入口。框内文字为尚未发送的输入草稿，图片不作为一次语音识别、环境声音检测或语音合成测试的结果。本次没有更改语音模块实现。
+
+这组公开房间照片及其重建结果现已按用户要求加入 PPT；其原始项目、下载镜像、文件摘要与此前许可核查情况仍见前一节和 `public/integrations/tidy-room-sample/source.json`。它们不是本团队自采家庭照片。幻灯片未新增第三方项目名称，来源统一保存在本附录。
+
+运行截图、录屏和实际结果在 `test-results/room-video-upgrade/`；最终结构、字体、布局、视频播放、内容对照及源文档快照检查在 `.care-local/room-video-upgrade/`。除语音页新增图片和新增房间演示页之外，保留的 14 页内容区渲染与源文档一致，后续页码随插页更新。用户在 PowerPoint 中尚未保存的编辑已先做快照，并完整纳入本轮更新；当前家庭四房样例与原有记忆未被录屏数据改写。

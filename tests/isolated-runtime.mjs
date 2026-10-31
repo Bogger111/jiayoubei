@@ -39,6 +39,7 @@ export async function createIsolatedAuthRuntime(options = {}) {
     },
     d1Databases: { DB: "isolated-auth" },
     d1Persist: root,
+    ...(options.r2Buckets ? {r2Buckets:options.r2Buckets,r2Persist:root} : {}),
     cf: false,
     serviceBindings: {
       ASSETS: () => new Response("Not found", { status: 404 }),

@@ -1,45 +1,6 @@
 import { env } from "cloudflare:workers";
 import type { FamilyMemory } from "./contracts";
-
-const defaultMemories = [
-  {
-    member: "林秀兰",
-    type: "profile",
-    content: "68 岁，独居，高血压，每日 08:00 服用降压药，对青霉素过敏。",
-    source: "家庭档案",
-    importance: 5,
-  },
-  {
-    member: "林秀兰",
-    type: "habit",
-    content: "通常在 13:00–14:30 午休，午休时偶尔会将手机调成静音。",
-    source: "家庭习惯",
-    importance: 4,
-  },
-  {
-    member: "林秀兰",
-    type: "habit",
-    content: "正常情况下，家人发消息后约 30 分钟内会回复。",
-    source: "联系习惯",
-    importance: 5,
-  },
-  {
-    member: "林秀兰",
-    type: "event",
-    content:
-      "上一次未接电话是因为午睡和手机静音，邻居王阿姨在 6 分钟内完成上门确认。",
-    source: "历史事件",
-    importance: 4,
-  },
-  {
-    member: "林家",
-    type: "preference",
-    content:
-      "低风险时先使用低打扰消息；联系邻居、共享健康信息和专业救援前必须由家庭管理员确认。",
-    source: "家庭授权",
-    importance: 5,
-  },
-] as const;
+import { ProductInputError } from "./product-input";
 
 function db(): D1Database {
   const binding = (env as unknown as { DB?: D1Database }).DB;
@@ -94,30 +55,7 @@ async function initializeSchema() {
       )
       .run();
   }
-  const demo = (env as unknown as { AUTH_MODE?: string }).AUTH_MODE !== "real";
-  if (demo) {
-    const count = await database
-      .prepare(
-        "SELECT COUNT(*) AS count FROM family_memories WHERE family_id = 'F001'",
-      )
-      .first<{ count: number }>();
-    if (Number(count?.count ?? 0) === 0)
-      await database.batch(
-        defaultMemories.map((memory) =>
-          database
-            .prepare(
-              "INSERT INTO family_memories (family_id, member, type, content, source, importance) VALUES ('F001', ?, ?, ?, ?, ?)",
-            )
-            .bind(
-              memory.member,
-              memory.type,
-              memory.content,
-              memory.source,
-              memory.importance,
-            ),
-        ),
-      );
-  }
+
 }
 let schemaReady: Promise<void> | null = null;
 export async function ensureProductSchema() {
@@ -162,6 +100,18 @@ export async function addMemory(
     .first<FamilyMemory>();
   if (!result) throw new Error("memory insert failed");
   return result;
+}
+
+export async function updateMemory(familyId: string, id: number, content: string, originalContent: string): Promise<FamilyMemory> {
+  await ensureProductSchema();
+  const current = await db().prepare('SELECT id FROM family_memories WHERE id=? AND family_id=?').bind(id, familyId).first();
+  if (!current) throw new ProductInputError('记忆不存在', 404);
+  const saved = await db().prepare(`UPDATE family_memories SET content=? WHERE id=? AND family_id=? AND content=?
+    RETURNING id, member, type, content, source, importance, created_at AS createdAt`)
+    .bind(content, id, familyId, originalContent).first<FamilyMemory>();
+  if (!saved) throw new ProductInputError('这条记忆已有更新，请关闭后刷新页面再编辑', 409);
+  // Retrieval hashes the current text, so a later search re-embeds changed content.
+  return saved;
 }
 
 function terms(text: string) {

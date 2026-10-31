@@ -1,0 +1,5 @@
+# Photo-to-layout generation needs no local GPU or geometry model.
+fastapi==0.162.0
+uvicorn==0.54.0
+pillow==13.0.0
+pillow_heif==1.8.1

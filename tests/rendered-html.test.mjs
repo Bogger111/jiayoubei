@@ -58,7 +58,7 @@ test("covers deep detail, history, risk filters and voice interaction", async ()
   assert.match(app, /可访问设备/);
   assert.match(await read("app/components/DeviceDetail.tsx"), /自动化规则/);
   assert.match(app, /风险级别/);
-  assert.match(app, /语音输入/);
+  assert.match(await read("app/components/AssistantHome.tsx"), /语音输入/);
 });
 
 test("routes state-changing actions through replaceable API adapters", async () => {
@@ -71,7 +71,7 @@ test("routes state-changing actions through replaceable API adapters", async () 
   assert.match(store, /taskApi\.update/);
   assert.match(store, /notificationApi\.markRead/);
   assert.match(store, /resetConversation\(\)/);
-  assert.match(app, /productStore\.resetConversation\(\)/);
+  assert.match(await read("app/components/AssistantHome.tsx"), /assistantRequest/);
 });
 
 test("routes assistant messages through the agent adapter with a safe fallback", async () => {

@@ -1,0 +1,893 @@
+{
+  "title": "固定家居布局（接口测试）",
+  "summary": "这是一份接口测试用的固定布局，用于验证三维家具显示、编辑与保存，不是云端识图生成结果。",
+  "rooms": [
+    {
+      "id": "living",
+      "name": "客厅",
+      "x": 0,
+      "y": 0,
+      "width": 4.2,
+      "depth": 3.05,
+      "floorMaterial": "wood"
+    },
+    {
+      "id": "kitchen",
+      "name": "厨房",
+      "x": 0,
+      "y": 3.05,
+      "width": 4.2,
+      "depth": 2.55,
+      "floorMaterial": "wood"
+    },
+    {
+      "id": "bedroom",
+      "name": "卧室",
+      "x": 4.2,
+      "y": 2.2,
+      "width": 3.5999999999999996,
+      "depth": 3.3999999999999995,
+      "floorMaterial": "carpet"
+    },
+    {
+      "id": "bathroom",
+      "name": "浴室",
+      "x": 4.2,
+      "y": 0,
+      "width": 3.5999999999999996,
+      "depth": 2.2,
+      "floorMaterial": "tiles"
+    }
+  ],
+  "furniture": [
+    {
+      "id": "sofa",
+      "kind": "sofa",
+      "name": "sofa",
+      "roomId": "living",
+      "x": 2,
+      "y": 2.5,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "block"
+    },
+    {
+      "id": "rug",
+      "kind": "rug",
+      "name": "rug",
+      "roomId": "living",
+      "x": 2,
+      "y": 1.4,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "kilim"
+    },
+    {
+      "id": "coffee_table",
+      "kind": "coffee_table",
+      "name": "coffee_table",
+      "roomId": "living",
+      "x": 2,
+      "y": 1.3,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "slatted"
+    },
+    {
+      "id": "books",
+      "kind": "books",
+      "name": "books",
+      "roomId": "living",
+      "x": 1.7,
+      "y": 1.25,
+      "rotation": 300,
+      "params": {},
+      "colors": {},
+      "on": "coffee_table"
+    },
+    {
+      "id": "coffee_plant",
+      "kind": "plant_small",
+      "name": "coffee_plant",
+      "roomId": "living",
+      "x": 2.3,
+      "y": 1.4,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "pilea",
+      "on": "coffee_table"
+    },
+    {
+      "id": "sideboard",
+      "kind": "sideboard",
+      "name": "sideboard",
+      "roomId": "living",
+      "x": 2,
+      "y": 0.2,
+      "rotation": 180,
+      "params": {},
+      "colors": {},
+      "variant": "oak"
+    },
+    {
+      "id": "tv",
+      "kind": "tv_wall",
+      "name": "tv",
+      "roomId": "living",
+      "x": 2,
+      "y": 0,
+      "rotation": 180,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "soundbar",
+      "kind": "soundbar",
+      "name": "soundbar",
+      "roomId": "living",
+      "x": 2,
+      "y": 0.2,
+      "rotation": 180,
+      "params": {},
+      "colors": {},
+      "variant": "bar",
+      "on": "sideboard"
+    },
+    {
+      "id": "living_plant",
+      "kind": "plant_large",
+      "name": "living_plant",
+      "roomId": "living",
+      "x": 0.4,
+      "y": 0.4,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "fiddle"
+    },
+    {
+      "id": "floor_lamp",
+      "kind": "light_floor",
+      "name": "floor_lamp",
+      "roomId": "living",
+      "x": 0.5,
+      "y": 2.45,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "tmm"
+    },
+    {
+      "id": "living_window",
+      "kind": "window",
+      "name": "living_window",
+      "roomId": "kitchen",
+      "x": 0,
+      "y": 1.25,
+      "rotation": 90,
+      "params": {
+        "height": 1.45,
+        "sill": 0.65
+      },
+      "colors": {},
+      "variant": "casement"
+    },
+    {
+      "id": "living_blind",
+      "kind": "blind",
+      "name": "living_blind",
+      "roomId": "kitchen",
+      "x": 0,
+      "y": 1.25,
+      "rotation": 90,
+      "params": {
+        "outside": 1
+      },
+      "colors": {},
+      "variant": "venetian"
+    },
+    {
+      "id": "front_door",
+      "kind": "door",
+      "name": "front_door",
+      "roomId": "living",
+      "x": 3.7,
+      "y": 0,
+      "rotation": 180,
+      "params": {},
+      "colors": {},
+      "variant": "panel"
+    },
+    {
+      "id": "front_lock",
+      "kind": "smart_lock",
+      "name": "front_lock",
+      "roomId": "living",
+      "x": 3.05,
+      "y": 0,
+      "rotation": 180,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "thermostat",
+      "kind": "thermostat",
+      "name": "thermostat",
+      "roomId": "kitchen",
+      "x": 4.2,
+      "y": 1.1000000000000005,
+      "rotation": 270,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "living_light",
+      "kind": "light_ceiling",
+      "name": "living_light",
+      "roomId": "living",
+      "x": 2.3,
+      "y": 1.8,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "vacuum",
+      "kind": "vacuum_robot",
+      "name": "vacuum",
+      "roomId": "bathroom",
+      "x": 3.3499999999999996,
+      "y": 0.35,
+      "rotation": 270,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "counter_a",
+      "kind": "kitchen_counter",
+      "name": "counter_a",
+      "roomId": "kitchen",
+      "x": 0.9,
+      "y": 2.25,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "run"
+    },
+    {
+      "id": "counter_b",
+      "kind": "kitchen_counter",
+      "name": "counter_b",
+      "roomId": "kitchen",
+      "x": 2.7,
+      "y": 2.25,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "run"
+    },
+    {
+      "id": "hob",
+      "kind": "hob",
+      "name": "hob",
+      "roomId": "kitchen",
+      "x": 0.9,
+      "y": 2.25,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "induction"
+    },
+    {
+      "id": "kettle",
+      "kind": "kettle",
+      "name": "kettle",
+      "roomId": "kitchen",
+      "x": 0.15,
+      "y": 2.4000000000000004,
+      "rotation": 0,
+      "params": {},
+      "colors": {
+        "body": "#7a7a7a",
+        "fittings": "#454545"
+      },
+      "variant": "jug",
+      "on": "counter_a"
+    },
+    {
+      "id": "coffee_machine",
+      "kind": "coffee_machine",
+      "name": "coffee_machine",
+      "roomId": "kitchen",
+      "x": 1.9,
+      "y": 2.4000000000000004,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "bambino",
+      "on": "counter_b"
+    },
+    {
+      "id": "sink",
+      "kind": "kitchen_sink",
+      "name": "sink",
+      "roomId": "kitchen",
+      "x": 2.9,
+      "y": 2.25,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "undermount",
+      "on": "counter_b"
+    },
+    {
+      "id": "toaster",
+      "kind": "toaster",
+      "name": "toaster",
+      "roomId": "kitchen",
+      "x": 1.55,
+      "y": 2.4000000000000004,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "retro",
+      "on": "counter_a"
+    },
+    {
+      "id": "cabinets_a",
+      "kind": "upper_cabinets",
+      "name": "cabinets_a",
+      "roomId": "kitchen",
+      "x": 0.9,
+      "y": 2.55,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "cabinets_b",
+      "kind": "upper_cabinets",
+      "name": "cabinets_b",
+      "roomId": "kitchen",
+      "x": 2.7,
+      "y": 2.55,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "fridge",
+      "kind": "fridge",
+      "name": "fridge",
+      "roomId": "kitchen",
+      "x": 3.9,
+      "y": 2.2199999999999998,
+      "rotation": 0,
+      "params": {
+        "flip": 1,
+        "height": 2.2
+      },
+      "colors": {
+        "body": "#9d9c9b",
+        "doors": "#acabaa"
+      },
+      "variant": "bespoke"
+    },
+    {
+      "id": "island",
+      "kind": "kitchen_counter",
+      "name": "island",
+      "roomId": "kitchen",
+      "x": 2.1,
+      "y": 1.0499999999999998,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "island"
+    },
+    {
+      "id": "island_vase",
+      "kind": "vase",
+      "name": "island_vase",
+      "roomId": "kitchen",
+      "x": 2.65,
+      "y": 1.1000000000000005,
+      "rotation": 0,
+      "params": {
+        "height": 0.21,
+        "size": 0.16
+      },
+      "colors": {},
+      "on": "island"
+    },
+    {
+      "id": "stool_a",
+      "kind": "stool",
+      "name": "stool_a",
+      "roomId": "kitchen",
+      "x": 1.7,
+      "y": 0.3500000000000001,
+      "rotation": 180,
+      "params": {},
+      "colors": {},
+      "variant": "lauta"
+    },
+    {
+      "id": "stool_b",
+      "kind": "stool",
+      "name": "stool_b",
+      "roomId": "kitchen",
+      "x": 2.5,
+      "y": 0.3500000000000001,
+      "rotation": 180,
+      "params": {},
+      "colors": {},
+      "variant": "lauta"
+    },
+    {
+      "id": "pendant_a",
+      "kind": "light_pendant",
+      "name": "pendant_a",
+      "roomId": "kitchen",
+      "x": 1.65,
+      "y": 1.0499999999999998,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "globo_cestita"
+    },
+    {
+      "id": "pendant_b",
+      "kind": "light_pendant",
+      "name": "pendant_b",
+      "roomId": "kitchen",
+      "x": 2.55,
+      "y": 1.0499999999999998,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "globo_cestita"
+    },
+    {
+      "id": "smoke",
+      "kind": "smoke_detector",
+      "name": "smoke",
+      "roomId": "kitchen",
+      "x": 0.9,
+      "y": 1.75,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "bed",
+      "kind": "bed_double",
+      "name": "bed",
+      "roomId": "bedroom",
+      "x": 1.7999999999999998,
+      "y": 2.0999999999999996,
+      "rotation": 0,
+      "params": {
+        "headboard": 0
+      },
+      "colors": {
+        "bedding": "#6e6e6e",
+        "pillows": "#6e6e6e",
+        "frame": "#b99c74"
+      },
+      "variant": "headboard"
+    },
+    {
+      "id": "nightstand_a",
+      "kind": "side_table",
+      "name": "nightstand_a",
+      "roomId": "bedroom",
+      "x": 0.75,
+      "y": 2.9699999999999998,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "nightstand"
+    },
+    {
+      "id": "nightstand_b",
+      "kind": "side_table",
+      "name": "nightstand_b",
+      "roomId": "bedroom",
+      "x": 2.8499999999999996,
+      "y": 2.9699999999999998,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "nightstand"
+    },
+    {
+      "id": "bedside_a",
+      "kind": "light_table",
+      "name": "bedside_a",
+      "roomId": "bedroom",
+      "x": 0.75,
+      "y": 2.9699999999999998,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "cestita",
+      "on": "nightstand_a"
+    },
+    {
+      "id": "bedside_b",
+      "kind": "light_table",
+      "name": "bedside_b",
+      "roomId": "bedroom",
+      "x": 2.8499999999999996,
+      "y": 2.9699999999999998,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "cestita",
+      "on": "nightstand_b"
+    },
+    {
+      "id": "bedroom_light",
+      "kind": "light_ceiling",
+      "name": "bedroom_light",
+      "roomId": "bedroom",
+      "x": 1.7999999999999998,
+      "y": 1.1999999999999997,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "bedroom_window",
+      "kind": "window",
+      "name": "bedroom_window",
+      "roomId": "bedroom",
+      "x": 3.5999999999999996,
+      "y": 2.25,
+      "rotation": 270,
+      "params": {
+        "height": 1.4,
+        "sill": 0.7,
+        "width": 0.75
+      },
+      "colors": {},
+      "variant": "casement"
+    },
+    {
+      "id": "dresser",
+      "kind": "dresser",
+      "name": "dresser",
+      "roomId": "bedroom",
+      "x": 3.3499999999999996,
+      "y": 0.8499999999999996,
+      "rotation": 270,
+      "params": {
+        "width": 1.35
+      },
+      "colors": {},
+      "variant": "oak"
+    },
+    {
+      "id": "dresser_plant",
+      "kind": "plant_small",
+      "name": "dresser_plant",
+      "roomId": "bedroom",
+      "x": 3.3499999999999996,
+      "y": 1.25,
+      "rotation": 0,
+      "params": {
+        "size": 0.39
+      },
+      "colors": {},
+      "variant": "pilea",
+      "on": "dresser"
+    },
+    {
+      "id": "bedroom_door",
+      "kind": "door",
+      "name": "bedroom_door",
+      "roomId": "bedroom",
+      "x": 0.0,
+      "y": 1.2999999999999998,
+      "rotation": 90,
+      "params": {},
+      "colors": {},
+      "variant": "flush"
+    },
+    {
+      "id": "shower",
+      "kind": "shower",
+      "name": "shower",
+      "roomId": "bathroom",
+      "x": 2.8999999999999995,
+      "y": 1.75,
+      "rotation": 0,
+      "params": {
+        "width": 1.4,
+        "depth": 0.9,
+        "flip": 0
+      },
+      "colors": {}
+    },
+    {
+      "id": "toilet",
+      "kind": "toilet",
+      "name": "toilet",
+      "roomId": "bathroom",
+      "x": 1.5999999999999996,
+      "y": 0.3,
+      "rotation": 180,
+      "params": {
+        "depth": 0.6
+      },
+      "colors": {},
+      "variant": "wall_hung"
+    },
+    {
+      "id": "basin",
+      "kind": "basin",
+      "name": "basin",
+      "roomId": "bathroom",
+      "x": 1.0499999999999998,
+      "y": 1.95,
+      "rotation": 0,
+      "params": {
+        "width": 1.55,
+        "depth": 0.5
+      },
+      "colors": {
+        "vanity": "#c5ab87"
+      },
+      "variant": "vanity"
+    },
+    {
+      "id": "basin_plant",
+      "kind": "plant_small",
+      "name": "basin_plant",
+      "roomId": "bathroom",
+      "x": 1.6499999999999995,
+      "y": 2.05,
+      "rotation": 0,
+      "params": {
+        "size": 0.23
+      },
+      "colors": {},
+      "variant": "snake",
+      "on": "basin"
+    },
+    {
+      "id": "bathroom_mirror",
+      "kind": "wall_mirror",
+      "name": "bathroom_mirror",
+      "roomId": "bathroom",
+      "x": 1.0499999999999998,
+      "y": 2.2,
+      "rotation": 0,
+      "params": {
+        "size": 0.85,
+        "height": 1.5
+      },
+      "colors": {
+        "frame": "#958a7e"
+      },
+      "variant": "square"
+    },
+    {
+      "id": "towel_rail",
+      "kind": "towel_rail",
+      "name": "towel_rail",
+      "roomId": "bathroom",
+      "x": 2.55,
+      "y": 0,
+      "rotation": 180,
+      "params": {},
+      "colors": {
+        "rail": "#353636"
+      },
+      "variant": "grouped"
+    },
+    {
+      "id": "bathroom_spot_a",
+      "kind": "light_ceiling",
+      "name": "bathroom_spot_a",
+      "roomId": "bathroom",
+      "x": 0.9500000000000002,
+      "y": 1,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "bathroom_spot_b",
+      "kind": "light_ceiling",
+      "name": "bathroom_spot_b",
+      "roomId": "bathroom",
+      "x": 1.9500000000000002,
+      "y": 1,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "bathroom_door",
+      "kind": "door",
+      "name": "bathroom_door",
+      "roomId": "bathroom",
+      "x": 0.0,
+      "y": 1.2,
+      "rotation": 90,
+      "params": {},
+      "colors": {},
+      "variant": "flush"
+    },
+    {
+      "id": "fan_ceiling-1",
+      "kind": "fan_ceiling",
+      "name": "fan_ceiling-1",
+      "roomId": "bedroom",
+      "x": 1.7999999999999998,
+      "y": 2.3,
+      "rotation": 0,
+      "params": {
+        "size": 0.95
+      },
+      "colors": {},
+      "variant": "classic"
+    },
+    {
+      "id": "half_wall",
+      "kind": "half_wall",
+      "name": "half_wall",
+      "roomId": "bedroom",
+      "x": 1.7999999999999998,
+      "y": 3.3,
+      "rotation": 0,
+      "params": {
+        "width": 3.6,
+        "depth": 0.2,
+        "height": 1
+      },
+      "colors": {}
+    },
+    {
+      "id": "projector",
+      "kind": "projector_portable",
+      "name": "projector",
+      "roomId": "bedroom",
+      "x": 1.7999999999999998,
+      "y": 3.3,
+      "rotation": 0,
+      "params": {
+        "throw": 3.2
+      },
+      "colors": {},
+      "on": "half_wall"
+    },
+    {
+      "id": "projector_screen",
+      "kind": "projector_screen",
+      "name": "projector_screen",
+      "roomId": "bedroom",
+      "x": 1.7999999999999998,
+      "y": 0.1499999999999999,
+      "rotation": 0,
+      "params": {
+        "inches": 130
+      },
+      "colors": {}
+    },
+    {
+      "id": "living_camera",
+      "kind": "camera",
+      "name": "living_camera",
+      "roomId": "living",
+      "x": 0,
+      "y": 1,
+      "rotation": 270,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "alarm",
+      "kind": "alarm_panel",
+      "name": "alarm",
+      "roomId": "living",
+      "x": 3.05,
+      "y": 0,
+      "rotation": 180,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "kitchen_strip",
+      "kind": "light_strip_wall",
+      "name": "kitchen_strip",
+      "roomId": "kitchen",
+      "x": 1.8,
+      "y": 2.55,
+      "rotation": 0,
+      "params": {
+        "length": 3,
+        "height": 1.45
+      },
+      "colors": {}
+    },
+    {
+      "id": "bedroom_speaker",
+      "kind": "speaker",
+      "name": "bedroom_speaker",
+      "roomId": "bedroom",
+      "x": 3.3499999999999996,
+      "y": 0.44999999999999973,
+      "rotation": 0,
+      "params": {},
+      "colors": {},
+      "variant": "pod",
+      "on": "dresser"
+    },
+    {
+      "id": "humidifier",
+      "kind": "humidifier",
+      "name": "humidifier",
+      "roomId": "bedroom",
+      "x": 3.3499999999999996,
+      "y": 2.95,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "water_heater",
+      "kind": "water_heater",
+      "name": "water_heater",
+      "roomId": "bathroom",
+      "x": 3.5999999999999996,
+      "y": 0.85,
+      "rotation": 270,
+      "params": {},
+      "colors": {},
+      "variant": "combi"
+    },
+    {
+      "id": "bathroom_leak",
+      "kind": "leak_sensor",
+      "name": "bathroom_leak",
+      "roomId": "bathroom",
+      "x": 2.0,
+      "y": 1.95,
+      "rotation": 0,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "bathroom_motion",
+      "kind": "motion_sensor",
+      "name": "bathroom_motion",
+      "roomId": "bathroom",
+      "x": 0.0,
+      "y": 1.8,
+      "rotation": 90,
+      "params": {},
+      "colors": {}
+    },
+    {
+      "id": "litter_box",
+      "kind": "litter_box",
+      "name": "litter_box",
+      "roomId": "bathroom",
+      "x": 0.35999999999999943,
+      "y": 0.32,
+      "rotation": 90,
+      "params": {},
+      "colors": {}
+    }
+  ],
+  "notes": [
+    "测试布局来源与许可记录在 third_party/ha-diorama 中。"
+  ]
+}

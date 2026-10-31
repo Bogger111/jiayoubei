@@ -5,6 +5,9 @@ import "./competition.css";
 import "./quiet-glass.css";
 import "./experience.css";
 import "./showcase.css";
+import "./family-design.css";
+import "./assistant-home.css";
+import "./design-system.css";
 
 export const metadata: Metadata = {
   title: "家有备｜多模态家庭协作中枢",

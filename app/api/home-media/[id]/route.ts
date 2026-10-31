@@ -1,0 +1,3 @@
+import {apiError,requireSession,unauthorized} from '@/lib/server/session';
+import {readHomeMedia} from '@/lib/server/home-media';
+export async function GET(request:Request,{params}:{params:Promise<{id:string}>}){try{const session=await requireSession(request);if(!session?.user)return unauthorized();const {id}=await params;const object=await readHomeMedia(session.user,id);return new Response(object.body,{headers:{'Content-Type':object.contentType,'Cache-Control':'private, no-store','Vary':'Cookie','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; sandbox"}});}catch(e){return apiError(e)}}

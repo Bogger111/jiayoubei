@@ -75,7 +75,7 @@ export function StatusBadge({
       ? eventStatusLabel[status as EventStatus]
       : taskStatusLabel[status as Task["status"]];
   return (
-    <span className="badge status">
+    <span className={`badge status status-${status}`}>
       <i />
       {label}
     </span>

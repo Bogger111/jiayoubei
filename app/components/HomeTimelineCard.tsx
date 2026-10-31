@@ -2,7 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {Eye} from 'lucide-react';
 import type {HomeObservation} from '@/lib/multimodal/core';
-type TimelineElement=HTMLElement&{setConfig:(x:Record<string,unknown>)=>void;hass:unknown;showPopup:(x:{eventId:string})=>void;formatDateLabel:(d:Date)=>string;resolveKeyFrame:(_h:unknown,key:string)=>Promise<string>;_lastFetch:number;_lastEventHash:string|null;};
+type TimelineElement=HTMLElement&{setConfig:(x:Record<string,unknown>)=>void;hass:unknown;showPopup:(x:{eventId:string})=>void;formatDateLabel:(d:Date)=>string;formatTime:(d:Date|string)=>string;resolveKeyFrame:(_h:unknown,key:string)=>Promise<string>;_lastFetch:number;_lastEventHash:string|null;};
 const escapeText=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 let runtime:Promise<unknown>|undefined;
 async function loadCard(){
@@ -11,18 +11,19 @@ async function loadCard(){
  if(customElements.get('llmvision-card'))return;
  runtime??=new Promise<void>((resolve,reject)=>{const script=document.createElement('script');script.type='module';script.src='/integrations/vendor/timeline/llmvision-card.js';script.onload=()=>resolve();script.onerror=()=>{script.remove();runtime=undefined;reject(new Error('时间线模块加载失败'))};document.head.appendChild(script)});await runtime;
 }
-export default function HomeTimelineCard({events,onSelect,variant='timeline'}:{events:HomeObservation[];onSelect:(e:HomeObservation)=>void;variant?:'timeline'|'preview'}){
+export default function HomeTimelineCard({events,onSelect,variant='timeline',timezone}:{events:(HomeObservation&{roomName?:string})[];onSelect:(e:HomeObservation)=>void;variant?:'timeline'|'preview';timezone?:string}){
  const root=useRef<HTMLDivElement>(null),[error,setError]=useState('');
  useEffect(()=>{let active=true;let card:TimelineElement|undefined;
  void loadCard().then(()=>{if(!active||!root.current)return;card=document.createElement(variant==='preview'?'llmvision-preview-card':'llmvision-card') as TimelineElement;
  card.setConfig({header:'',number_of_days:30,number_of_events:100,language:'en',time_format:'24h',filter_false_positives:false});
- card.formatDateLabel=d=>d.toLocaleDateString('zh-CN',{month:'long',day:'numeric'});
- card.resolveKeyFrame=async(_h,key)=>key==='/brand/living-room.png'?key:'';
+ card.formatDateLabel=d=>{const fmt=new Intl.DateTimeFormat('en-CA',{timeZone:timezone,year:'numeric',month:'2-digit',day:'2-digit'});const day=fmt.format(d);return day===fmt.format(new Date())?'今天':day===fmt.format(new Date(Date.now()-86400000))?'昨天':d.toLocaleDateString('zh-CN',{timeZone:timezone,month:'long',day:'numeric'});};
+ card.formatTime=d=>new Date(d).toLocaleTimeString('zh-CN',{timeZone:timezone,hour:'2-digit',minute:'2-digit',hour12:false});
+ card.resolveKeyFrame=async(_h,key)=>key==='/brand/living-room.png'||/^\/api\/home-media\/[a-zA-Z0-9_-]+$/.test(key)||/^\/integrations\/demo-media\/[a-zA-Z0-9_.-]+$/.test(key)?key:'';
  // The upstream popup can upload feedback. Our adapter opens only the local, read-only detail dialog.
  card.showPopup=({eventId})=>{const event=events.find(e=>e.uid===eventId);if(event)onSelect(event)};
  root.current.replaceChildren(card);
  card.hass={
-  states:Object.fromEntries(events.map(e=>[e.camera_name,{attributes:{friendly_name:e.camera_name.includes('front')?'门口':e.camera_name.includes('garage')?'车库':'客厅'}}])),
+  states:Object.fromEntries(events.map(e=>[e.camera_name,{attributes:{friendly_name:e.roomName??(e.camera_name.includes('kitchen')?'厨房':e.camera_name.includes('front')?'门廊':e.camera_name.includes('garage')?'车库':'客厅')}}])),
   callApi:async(method:string,path:string)=>{
    if(method!=='GET'||!path.startsWith('llmvision/timeline/events'))throw new Error('时间线仅允许读取');
    return {events:events.map(e=>{
@@ -33,7 +34,7 @@ export default function HomeTimelineCard({events,onSelect,variant='timeline'}:{e
   }
  };
  }).catch(()=>{if(active)setError('时间线暂时未加载，请刷新页面。')});return()=>{active=false;card?.remove()};
- },[events,onSelect,variant]);
- const noImage=variant==='preview'&&events[0]?.key_frame!=='/brand/living-room.png';
+ },[events,onSelect,variant,timezone]);
+ const noImage=variant==='preview'&&!events[0]?.key_frame;
  return <div className={'home-native-timeline'+(variant==='preview'?' home-native-preview':'')} data-no-image={noImage}><div ref={root}/>{noImage&&<span className="home-preview-empty"><Eye size={30}/>暂无关联画面<small>点击回顾事件线索</small></span>}{error&&<p role="alert">{error}</p>}</div>;
 }

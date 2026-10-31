@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/CarlesRojas/ha-diorama",
+  "commit": "1c38e1943081b1fcb7aa867cff184dd1ce0e9f4b",
+  "release": "v1.8.29",
+  "license": "MIT",
+  "bundle": "public/integrations/vendor/space/card.js",
+  "sha256": "2ae4bd1e09fede3be2dd333d06236852e0767eddd31f410b7a4c4066489e6f96",
+  "sample": "lib/space/demo-home.json",
+  "changes": [
+    "Translated sample room and entity labels to Chinese",
+    "Preserved source rendering and editing runtime",
+    "Chinese UI labels for the original widgets and editor",
+    "Constrain side-panel height to the host application stage"
+  ],
+  "upstreamBundleSha256": "9b3d69ffb7353c5ae7db4069c13b37e81b7612168d38e4c8193096e49ce2408e",
+  "derivedCatalog": {
+    "path": "lib/space/furniture-catalog.json",
+    "generator": "scripts/home/build-furniture-catalog.mjs",
+    "sha256": "f3da7a10213a98f8631f317895a9238590b3728068bca369bd22a218e9ac2675"
+  },
+  "sourceFiles": {
+    "catalog.ts.source": "4bdaed3e4c4c9fe7a0d041bde29cbe8793852659754b71916159471b4d10060c",
+    "constants.ts.source": "4d89956735f1862650f12d3d6826fafe7b5e94a904811826b90fe113c8a1e352",
+    "demoflat.plan.ts.source": "66f91ac682c136254966104b841139acfe85a6ef13ff92eca532cf1d77eaea34",
+    "sofaSpecs.ts.source": "22f9c93444e40fdd7c16db0fe64de85b8e20362f3471b68a77a5d5084507c0a0",
+    "theme.ts.source": "f91156fbfd12a6fd1ee125bb96871f9baff30b021cee91ea0fcf321167d985e5"
+  }
+}

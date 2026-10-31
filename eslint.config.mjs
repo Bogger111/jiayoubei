@@ -18,6 +18,8 @@ const eslintConfig = defineConfig([
     "deliverables/demo/showcase.js",
     "public/showcase-offline/showcase.js",
     "test-results/**",
+    ".care-local/**",
+    "third_party/**",
   ]),
 ]);
 

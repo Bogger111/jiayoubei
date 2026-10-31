@@ -4,6 +4,8 @@ import { apiError, requireSession, unauthorized } from "@/lib/server/session";
 import { inputText, readObjectBody } from "@/lib/server/request-body";
 import { readProductState } from "@/lib/server/product-repo";
 import { createAgentEvent } from "@/lib/server/agent-event";
+import {isHomeControlRequest,actionDescription} from '@/lib/home-control';
+import {prepareHomeControl} from '@/lib/server/home-control-service';
 
 export async function POST(request: Request) {
   try {
@@ -11,6 +13,10 @@ export async function POST(request: Request) {
     if (!session?.user) return unauthorized();
     const payload = await readObjectBody(request);
     const query = inputText(payload.query, "家庭情况描述", 4000);
+    if(isHomeControlRequest(query)){
+      const plan=await prepareHomeControl(session.user,{text:query.slice(0,1000),source:'agent'});
+      return privateJson({text:'已经整理好本次家庭调控计划：\n'+plan.steps.map((step,i)=>`${i+1}. ${actionDescription(step,step.deviceName)}`).join('\n')+'\n\n查看完整计划，确认后统一执行。',cardType:'device',relatedId:plan.id,analysis:{mode:'rules_fallback'},riskLevel:'normal',safetyNotice:''});
+    }
     const familyState = await readProductState(
       session.user.familyId,
       session.user,

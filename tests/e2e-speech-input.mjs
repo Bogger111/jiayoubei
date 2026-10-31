@@ -106,8 +106,8 @@ try {
   });
   await page.getByRole("button", { name: "语音输入", exact: true }).click();
   await page
-    .getByRole("link", { name: "家庭总览", exact: true })
-    .first()
+    .getByRole("navigation", { name: "主要功能", exact: true })
+    .getByRole("link", { name: "家庭", exact: true })
     .click();
   assert.equal(
     await page.evaluate(() => window.qaSpeech.instances.at(-1).aborts),

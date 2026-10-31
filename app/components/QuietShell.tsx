@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
-import { Bell, BookOpen, Camera, CheckCircle2, ChevronDown, CircleHelp, Home, Menu, Search, Settings, ShieldCheck, Users, Wifi, Activity, Presentation, Play, Sparkles, ScrollText } from "lucide-react";
+import { Bell, BookOpen, Box, Camera, CheckCircle2, ChevronDown, CircleHelp, Home, Menu, Search, Settings, ShieldCheck, Users, Wifi, Activity, Presentation, Play, Sparkles, ScrollText } from "lucide-react";
 import { productStore, useProductStore } from "@/lib/product-store";
 import { AppLink, navigate } from "./navigation";
 import { useRecordSync } from "./useRecordSync";
 import Dialog from "./Dialog";
 import GlobalSearch from "./GlobalSearch";
-const primary = [["/", "家庭", Home], ["/tasks", "行动", CheckCircle2], ["/devices", "设备", Wifi], ["/memory", "记忆", BookOpen]] as const;
-const more = [["/showcase", "比赛核心演示", Play], ["/experience", "完整产品体验", Play], ["/home-agent", "多模态家庭中枢", Sparkles], ["/care", "关怀确认", CheckCircle2], ["/events", "家庭事件", Activity], ["/ai", "和家有备聊聊", Sparkles], ["/members", "家庭成员", Users], ["/services", "附近联系人与服务", CircleHelp], ["/authorizations", "家庭授权", ShieldCheck], ["/audit", "操作记录", ScrollText], ["/cv", "视觉感知", Camera], ["/settings", "设置", Settings]] as const;
+const primary = [["/", "助手", Sparkles], ["/dashboard", "家庭", Home], ["/space", "空间", Box], ["/tasks", "行动", CheckCircle2], ["/devices", "设备", Wifi], ["/memory", "记忆", BookOpen]] as const;
+const more = [["/create-space", "照片搭建三维家居", Box], ["/showcase", "比赛核心演示", Play], ["/experience", "完整产品体验", Play], ["/home-agent", "多模态家庭中枢", Sparkles], ["/care", "关怀确认", CheckCircle2], ["/events", "家庭事件", Activity], ["/ai", "和家有备聊聊", Sparkles], ["/members", "家庭成员", Users], ["/services", "附近联系人与服务", CircleHelp], ["/authorizations", "家庭授权", ShieldCheck], ["/audit", "操作记录", ScrollText], ["/cv", "视觉感知", Camera], ["/settings", "设置", Settings]] as const;
 export default function QuietShell({ children, path }: { children: ReactNode; path: string }) {
   const state = useProductStore();
   useRecordSync(!state.demoMode && state.hydrationStatus === "ready");
@@ -29,11 +29,11 @@ export default function QuietShell({ children, path }: { children: ReactNode; pa
     const frame = requestAnimationFrame(() => { const heading = document.querySelector(".page-content h1"); if (heading?.textContent) document.title = `${heading.textContent} · 家有备`; if (!document.querySelector('[role="dialog"]')) document.getElementById("main-content")?.focus({ preventScroll: true }); });
     return () => cancelAnimationFrame(frame);
   }, [path]);
-  return <div className="quiet-shell">
+  return <div className={"quiet-shell"+((path==='/'||path==='/ai')?' assistant-page-shell':'')}>
     <a className="skip-link" href="#main-content">跳到主要内容</a>
     <header className="q-header">
       <AppLink className="q-brand" href="/" aria-label="家有备首页"><img src="/icon-192.png" alt="" width="46" height="46" /><strong>家有备</strong></AppLink>
-      <nav className="q-nav" aria-label="主要功能">{primary.map(([href, label, Icon]) => <AppLink key={href} href={href} aria-current={path === href || (href !== "/" && path.startsWith(href + "/")) ? "page" : undefined}><Icon size={20} strokeWidth={1.7} /><span>{label}</span></AppLink>)}</nav>
+      <nav className="q-nav" aria-label="主要功能">{primary.map(([href, label, Icon]) => <AppLink key={href} href={href} aria-current={path === href || (href==="/"&&path==="/ai") || (href==="/space"&&["/create-space","/reconstruct"].includes(path)) || (href !== "/" && path.startsWith(href + "/")) ? "page" : undefined}><Icon size={20} strokeWidth={1.7} /><span>{label}</span></AppLink>)}</nav>
       <div className="q-header-actions">
         <button className="q-icon q-search" aria-label="搜索家庭空间" title="搜索 · Ctrl K" onClick={() => setSearch(true)}><Search size={21} /></button>
         <button className="q-icon" aria-label={`通知${unread ? `，${unread} 条未读` : ""}`} onClick={() => navigate("/notifications")}><Bell size={22} />{unread > 0 && <i />}</button>

@@ -1,0 +1,30 @@
+{
+  "repository": "https://huggingface.co/datasets/YuanhaoXD/Mip-NeRF360",
+  "originalProject": "https://jonbarron.info/mipnerf360/",
+  "paths": [
+    "room/images_4/DSCF4667.JPG",
+    "room/images_4/DSCF4705.JPG",
+    "room/images_4/DSCF4743.JPG",
+    "room/images_4/DSCF4781.JPG",
+    "room/images_4/DSCF4819.JPG",
+    "room/images_4/DSCF4857.JPG"
+  ],
+  "files": [
+    "01.jpg",
+    "02.jpg",
+    "03.jpg",
+    "04.jpg",
+    "05.jpg",
+    "06.jpg"
+  ],
+  "sha256": {
+    "01.jpg": "7ed96da2b9f3be3ca4b8f754cef3b2fa998b7e32c82275324a70eb84b8278049",
+    "02.jpg": "656a742c45a938a83330390cd274ac0253a0f5f02488b4b5eae1e7b0c9fb342c",
+    "03.jpg": "0c755043f0a2f7c2cca480d88ee894ddad2e709e0e43bc32a8d56eb397dd1eb0",
+    "04.jpg": "2e2d5675b8f0f12910287b38a04772dfa3e75ecee3d57a6196d52d46c656f4a6",
+    "05.jpg": "0d6a893096afb292dd853b1635a7f13b2a517d05afeb1b8896c71b24396ce548",
+    "06.jpg": "9232f8c9a8079a30feee9ae4321a4c4629eace242b98ac02fd357456f3982475"
+  },
+  "description": "同一间起居室的六个真实拍摄视角，供照片整理三维布局的公开样例验证使用。",
+  "licenseNote": "镜像元数据标记 Apache-2.0；原始项目页面未明确独立照片许可，未加入路演 PPT。"
+}

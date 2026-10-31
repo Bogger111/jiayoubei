@@ -1,0 +1,10 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {validateScanEdits} from '../lib/space/reconstruction.ts';
+import {rankMemoryDocuments,isMemoryQuestion} from '../lib/home-memory.ts';
+const docs=[{id:'a',title:'厨房提醒',content:'空气炸锅响起，提醒取出食物。',occurredAt:1},{id:'b',title:'午休约定',content:'妈妈通常下午一点到两点午休。',occurredAt:2},{id:'c',title:'家庭布局',content:'客厅与厨房连接。',occurredAt:3}];
+test('memory questions retrieve a grounded record and exclude weak, incidental matches',()=>{const found=rankMemoryDocuments('厨房里刚才有什么提醒？',docs);assert.equal(found[0].id,'a');assert.equal(found.some(x=>x.id==='b'),false);assert.equal(found.some(x=>x.id==='c'),false);assert.equal(rankMemoryDocuments('飞机航班号',docs).length,0)});
+test('semantic retrieval recovers a paraphrase that has no shared words',()=>{const found=rankMemoryDocuments('母亲何时休息',docs,{query:[1,0],documents:{a:[0,1],b:[1,0],c:[0,1]}});assert.equal(found[0].id,'b')});
+test('memory intent does not reroute a reported emergency to retrospective search',()=>{assert.equal(isMemoryQuestion('记得妈妈午休的约定吗'),true);assert.equal(isMemoryQuestion('妈妈失联了，你记得她的约定吗'),false)});
+const manifest={objects:[{id:'chair',editable:true},{id:'wall',editable:false}]};
+const edits={version:0,objects:{chair:{position:[1,0,0],rotation:[0,20,0],scale:[1,1,1]}},metersPerUnit:1};
+test('furniture edits reject foreign nodes, room surfaces and non-finite transforms',()=>{assert.doesNotThrow(()=>validateScanEdits(edits,manifest));for(const id of ['foreign','wall'])assert.throws(()=>validateScanEdits({...edits,objects:{[id]:edits.objects.chair}},manifest));assert.throws(()=>validateScanEdits({...edits,objects:{chair:{...edits.objects.chair,position:[Infinity,0,0]}}},manifest));assert.throws(()=>validateScanEdits({...edits,objects:{chair:{...edits.objects.chair,scale:[0,1,1]}}},manifest))});

@@ -10,7 +10,7 @@
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json --local --show-interactive-dev-session=false",
     "test": "npm run build && npm run test:unit",
-    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs tests/care-report.test.mjs tests/multimodal-core.test.mjs tests/showcase.test.mjs",
+    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs tests/care-report.test.mjs tests/multimodal-core.test.mjs tests/showcase.test.mjs tests/home-space-memory.test.mjs tests/scene-plan.test.mjs tests/home-control.test.mjs tests/assistant-tools.test.mjs",
     "test:care:e2e": "node tests/e2e-family-agent.mjs",
     "deck:family": "node scripts/competition/run-care-evidence.mjs && node scripts/competition/build-family-deck.mjs",
     "test:deck:family": "node tests/family-deck-check.mjs",
@@ -43,7 +43,14 @@
     "experience:prove": "node scripts/integrations/prove-experience.mjs",
     "showcase:build": "node scripts/competition/build-showcase.mjs",
     "showcase:prove": "node scripts/competition/prove-showcase.mjs",
-    "deck:final": "node scripts/competition/build-final-pptx.mjs"
+    "deck:final": "node scripts/competition/build-final-pptx.mjs",
+    "test:space:api": "node tests/home-space-memory-api.mjs && node tests/scene-service-api.mjs",
+    "test:space:e2e": "node tests/e2e-photo-home.mjs",
+    "space:catalog": "node scripts/home/build-furniture-catalog.mjs",
+    "test:home-control:api": "node tests/home-control-api.mjs",
+    "test:home-control:e2e": "node tests/e2e-home-control.mjs",
+    "test:assistant:home": "node tests/e2e-assistant-home.mjs",
+    "test:assistant:api": "node tests/assistant-service-api.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",
@@ -53,6 +60,7 @@
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6",
+    "three": "0.186.0",
     "web-push": "^3.6.7"
   },
   "devDependencies": {
@@ -62,6 +70,7 @@
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@types/three": "0.186.0",
     "@types/web-push": "^3.6.4",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",

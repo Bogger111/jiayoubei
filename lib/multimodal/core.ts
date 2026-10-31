@@ -1,4 +1,5 @@
 import patterns from './intent-patterns.json' with {type:'json'};
+import {homeControlTools} from '../home-control.ts';
 export type HomeObservation = { uid:string; title:string; description:string; start:string; end:string; camera_name:string; category:string; label:string; key_frame:string; evidenceCategory:'synthetic'|'bench'|'reenactment'|'field'; transport:'live'|'replay'; origin:'timeline'|'demo'; };
 export type AgentIntent = { kind:'timeline'|'care'|'light_on'|'unsupported'; title:string; detail:string; deviceId?:string; subjectId?:string; };
 const literal=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
@@ -50,6 +51,7 @@ export function demoHomeTimeline(now=Date.now(),scenario:HomeScenario='care'):Ho
  {uid:'living-quiet',title:'客厅暂未见人',description:'本次示例画面为空，不能推断家人已经外出或发生危险。',camera_name:'camera.living_room',category:'activity',label:'none',key_frame:'/brand/living-room.png',start:new Date(now-5*60000).toISOString(),end:new Date(now-4*60000).toISOString()}
  ].map(e=>({...e,evidenceCategory:'synthetic' as const,transport:'replay' as const,origin:'demo' as const}));}
 export const familyTools=[
+ ...homeControlTools,
  {name:'home.timeline',description:'读取本家庭的事件时间线',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true}},
  {name:'home.light.prepare',description:'准备指定灯光的待批准操作',inputSchema:{type:'object',properties:{deviceId:{type:'string'}},required:['deviceId'],additionalProperties:false},annotations:{readOnlyHint:false}},
  {name:'home.care.prepare',description:'为本家庭成员整理待确认的联系计划',inputSchema:{type:'object',properties:{subjectId:{type:'string'}},required:['subjectId'],additionalProperties:false},annotations:{readOnlyHint:false}}

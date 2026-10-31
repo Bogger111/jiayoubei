@@ -1,0 +1,24 @@
+{
+  "repository": "https://huggingface.co/spaces/facebook/vggt",
+  "revision": "26f484ea4b7247bbcaf57874a7138e4a6c4221d9",
+  "paths": [
+    "examples/room/images/no_overlap_1.png",
+    "examples/room/images/no_overlap_2.jpg",
+    "examples/room/images/no_overlap_3.jpg",
+    "examples/room/images/no_overlap_4.jpg",
+    "examples/room/images/no_overlap_5.jpg",
+    "examples/room/images/no_overlap_6.jpg",
+    "examples/room/images/no_overlap_7.jpg",
+    "examples/room/images/no_overlap_8.jpg"
+  ],
+  "files": [
+    "00.png",
+    "01.jpg",
+    "02.jpg",
+    "03.jpg",
+    "04.jpg",
+    "05.jpg",
+    "06.jpg",
+    "07.jpg"
+  ]
+}

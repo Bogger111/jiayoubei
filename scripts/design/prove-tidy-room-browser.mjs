@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {chromium} from 'playwright-core';
+const output='test-results/memory-room-upgrade',evidence=JSON.parse(await readFile(output+'/tidy-room-live-result.json','utf8')),id=evidence.draft.id;
+const b=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true}),p=await b.newPage({viewport:{width:1536,height:1000}}),errors=[];p.on('pageerror',e=>errors.push(e.message));p.setDefaultTimeout(30000);
+try{
+ await p.goto('http://localhost:3000/create-space?id='+id,{waitUntil:'networkidle'});await p.locator('.photo-home-scene canvas').waitFor();await p.waitForTimeout(1200);await p.screenshot({path:output+'/tidy-room-page.png',fullPage:true});await p.locator('.photo-home-output').screenshot({path:output+'/tidy-room-result.png'});
+ const before=await p.evaluate(async id=>(await(await fetch('/api/scene-plans?id='+id)).json()).draft,id);
+ await p.getByRole('button',{name:'微调家具',exact:true}).click();await p.getByRole('button',{name:'Add 办公椅',exact:true}).waitFor();await p.screenshot({path:output+'/tidy-room-editor.png'});
+ await writeFile(output+'/tidy-room-editor-controls.json',JSON.stringify(await p.locator('dialog[open]').evaluate(el=>({text:el.innerText,inputs:[...el.querySelectorAll('input')].map(x=>({type:x.type,value:x.value,placeholder:x.placeholder,aria:x.getAttribute('aria-label')}))})),null,2));
+ // Add through the same native editor used by the app; this changes a real draft.
+ await p.getByRole('button',{name:'Add 办公椅',exact:true}).click();await p.getByRole('button',{name:'保存并返回',exact:true}).click();await p.locator('dialog[open]').waitFor({state:'detached'});await p.reload({waitUntil:'networkidle'});await p.locator('.photo-home-scene canvas').waitFor();
+ const after=await p.evaluate(async id=>(await(await fetch('/api/scene-plans?id='+id)).json()).draft,id);assert.equal(after.version,before.version+1);assert.equal(after.config.decorations.length,before.config.decorations.length+1);
+ const home=await p.evaluate(async()=>(await(await fetch('/api/home-space')).json()).space);assert.equal(home.version,evidence.request.before.version);assert.equal(home.config.rooms.length,4);
+ await p.waitForTimeout(900);await p.locator('.photo-home-output').screenshot({path:output+'/tidy-room-edited-result.png'});await p.setViewportSize({width:390,height:844});await p.reload({waitUntil:'networkidle'});await p.locator('.photo-home-scene canvas').waitFor();assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);await p.screenshot({path:output+'/tidy-room-mobile.png',fullPage:true});assert.deepEqual(errors,[]);
+ await writeFile(output+'/space-browser-results.json',JSON.stringify({at:new Date().toISOString(),id,method:'fresh real AI scene; actual native furniture editor; save and full-page reload; live home preserved',before:{version:before.version,furniture:before.config.decorations.length},after:{version:after.version,furniture:after.config.decorations.length},home:{rooms:home.config.rooms.length,version:home.version},errors},null,2));console.log('PASS actual photo generation renders; native furniture edit survives reload; mobile fits; original four-room home preserved');
+}catch(e){await p.screenshot({path:output+'/tidy-room-failure.png',fullPage:true});console.log((await p.locator('body').innerText()).slice(-1200));throw e;}finally{await b.close();}

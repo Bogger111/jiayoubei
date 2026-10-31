@@ -1,0 +1,4362 @@
+[
+  {
+    "id": "light_ceiling",
+    "name": "吸顶灯",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.1,
+        "min": 0.05,
+        "max": 0.7
+      }
+    ],
+    "colors": {
+      "focus": "#f4eee3",
+      "rim": "#d8b98e"
+    },
+    "variants": [
+      {
+        "id": "focus",
+        "name": "Recessed Spot"
+      },
+      {
+        "id": "dome",
+        "name": "Opal Dome"
+      },
+      {
+        "id": "drum",
+        "name": "Linen Drum"
+      },
+      {
+        "id": "spot",
+        "name": "Surface Spot"
+      }
+    ]
+  },
+  {
+    "id": "light_pendant",
+    "name": "吊灯",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.4,
+        "min": 0.05,
+        "max": 1.3
+      },
+      {
+        "id": "cord",
+        "default": 0.8,
+        "min": 0.2,
+        "max": 2.4
+      }
+    ],
+    "colors": {
+      "slats": "#e2c89c",
+      "threads": "#f2ede4",
+      "diffuser": "#f4eee3",
+      "cord": "#232426"
+    },
+    "variants": [
+      {
+        "id": "nagoya",
+        "name": "Slatted Lantern"
+      },
+      {
+        "id": "globo_cestita",
+        "name": "Opal Lantern"
+      },
+      {
+        "id": "headhat_bowl",
+        "name": "Ceramic Bowl"
+      },
+      {
+        "id": "cirio_simple",
+        "name": "Porcelain Candle"
+      }
+    ]
+  },
+  {
+    "id": "light_floor",
+    "name": "落地灯",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.5
+      },
+      {
+        "id": "height",
+        "default": 1.65,
+        "min": 0.4,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "shade": "#ecdfc0",
+      "stand": "#dfbb8f",
+      "fittings": "#232426",
+      "cable": "#232426"
+    },
+    "variants": [
+      {
+        "id": "tmm",
+        "name": "Beech Tripod Drum"
+      },
+      {
+        "id": "fad",
+        "name": "Adjustable Tripod"
+      },
+      {
+        "id": "lamina",
+        "name": "Tall Folded Sheet"
+      }
+    ]
+  },
+  {
+    "id": "light_table",
+    "name": "台灯",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.7
+      },
+      {
+        "id": "height",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.1
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "globe": "#f6f4ef",
+      "basket": "#b97a4a"
+    },
+    "variants": [
+      {
+        "id": "cestita",
+        "name": "Opal Globe Carrier"
+      },
+      {
+        "id": "sylvestrina",
+        "name": "Black Glass Candlestick"
+      },
+      {
+        "id": "maija",
+        "name": "Ringed Tripod"
+      },
+      {
+        "id": "basica_minima",
+        "name": "Parchment Drum"
+      },
+      {
+        "id": "iris",
+        "name": "Tilted Ring"
+      }
+    ]
+  },
+  {
+    "id": "light_desk",
+    "name": "Desk lamp",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.4,
+        "min": 0.1,
+        "max": 1.2
+      },
+      {
+        "id": "height",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.3
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "shade": "#ece8df",
+      "inside": "#f6f4ef",
+      "arms": "#232426",
+      "base": "#ece8df"
+    },
+    "variants": [
+      {
+        "id": "balanced_arm",
+        "name": "Balanced Arm"
+      },
+      {
+        "id": "banker",
+        "name": "Green Glass Banker"
+      }
+    ]
+  },
+  {
+    "id": "light_wall",
+    "name": "壁灯",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.6
+      },
+      {
+        "id": "depth",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.7
+      },
+      {
+        "id": "tall",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.6
+      },
+      {
+        "id": "height",
+        "default": 1.8,
+        "min": 0.45,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "shade": "#ecdfc0",
+      "channel": "#dfbb8f",
+      "fittings": "#232426"
+    },
+    "variants": [
+      {
+        "id": "tmm",
+        "name": "Parchment Wall Drum"
+      },
+      {
+        "id": "singular",
+        "name": "Linen Wall Sconce"
+      },
+      {
+        "id": "wally",
+        "name": "Black Arm Opal Globe"
+      }
+    ]
+  },
+  {
+    "id": "light_strip",
+    "name": "地面灯带",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "length",
+        "default": 1,
+        "min": 0.2,
+        "max": 10
+      },
+      {
+        "id": "height",
+        "default": 0,
+        "min": 0,
+        "max": 2.6
+      }
+    ],
+    "colors": {
+      "diffuser": "#f4eee3",
+      "channel": "#d8b98e"
+    },
+    "variants": []
+  },
+  {
+    "id": "light_strip_ceiling",
+    "name": "顶面灯带",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "length",
+        "default": 1.6,
+        "min": 0.2,
+        "max": 10
+      }
+    ],
+    "colors": {
+      "diffuser": "#f4eee3",
+      "channel": "#d8b98e"
+    },
+    "variants": []
+  },
+  {
+    "id": "light_strip_wall",
+    "name": "墙面灯带",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "length",
+        "default": 1.6,
+        "min": 0.2,
+        "max": 10
+      },
+      {
+        "id": "height",
+        "default": 1.9,
+        "min": 0.1,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "diffuser": "#f4eee3",
+      "channel": "#d8b98e"
+    },
+    "variants": []
+  },
+  {
+    "id": "sofa",
+    "name": "沙发",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 2.3,
+        "min": 0.55,
+        "max": 6.9
+      },
+      {
+        "id": "depth",
+        "default": 1,
+        "min": 0.2,
+        "max": 2.95
+      },
+      {
+        "id": "chaise",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      },
+      {
+        "id": "reach",
+        "default": 1.7,
+        "min": 0.4,
+        "max": 5.1
+      },
+      {
+        "id": "flip",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "upholstery": "#e4ded4",
+      "cushions": "#e4ded4",
+      "legs": "#3d3530"
+    },
+    "variants": [
+      {
+        "id": "dresde",
+        "name": "Pillow Arm"
+      },
+      {
+        "id": "block",
+        "name": "Plinth Block"
+      },
+      {
+        "id": "rail",
+        "name": "Teak Rail"
+      }
+    ]
+  },
+  {
+    "id": "dining_chair",
+    "name": "餐椅",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "depth",
+        "default": 0.55,
+        "min": 0.1,
+        "max": 1.7
+      },
+      {
+        "id": "height",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "shell": "#45403d",
+      "legs": "#45403d"
+    },
+    "variants": [
+      {
+        "id": "oia",
+        "name": "Molded Slab"
+      },
+      {
+        "id": "sura",
+        "name": "Cord Seat Teak"
+      },
+      {
+        "id": "varma",
+        "name": "Padded Walnut"
+      }
+    ]
+  },
+  {
+    "id": "office_chair",
+    "name": "办公椅",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.65,
+        "min": 0.15,
+        "max": 2
+      },
+      {
+        "id": "depth",
+        "default": 0.65,
+        "min": 0.15,
+        "max": 2
+      },
+      {
+        "id": "height",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "seat": "#252527",
+      "back": "#1c1c1e",
+      "frame": "#202022",
+      "base": "#c9ccd0",
+      "castors": "#1b1b1c"
+    },
+    "variants": [
+      {
+        "id": "teck",
+        "name": "Mesh Task Chair"
+      },
+      {
+        "id": "sling",
+        "name": "Sling Rib"
+      },
+      {
+        "id": "racer",
+        "name": "Bucket Racer"
+      }
+    ]
+  },
+  {
+    "id": "sim_rig",
+    "name": "Sim racing cockpit",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.55,
+        "min": 0.1,
+        "max": 1.65
+      },
+      {
+        "id": "depth",
+        "default": 1.4,
+        "min": 0.3,
+        "max": 4.15
+      }
+    ],
+    "colors": {
+      "frame": "#1f2022",
+      "seat": "#232426",
+      "trim": "#b3262c",
+      "wheel": "#1b1c1e",
+      "pedals": "#8a8f92"
+    },
+    "variants": [
+      {
+        "id": "tube",
+        "name": "Tube Cockpit"
+      },
+      {
+        "id": "profile",
+        "name": "Aluminium Profile"
+      }
+    ]
+  },
+  {
+    "id": "stool",
+    "name": "凳子",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "depth",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.05
+      },
+      {
+        "id": "height",
+        "default": 0.7,
+        "min": 0.15,
+        "max": 2.05
+      }
+    ],
+    "colors": {
+      "legs": "#e0b584",
+      "seat": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "lauta",
+        "name": "Cord Seat Oak"
+      },
+      {
+        "id": "dean",
+        "name": "Rattan Back Teak"
+      },
+      {
+        "id": "keula",
+        "name": "Horseshoe Back Oak"
+      }
+    ]
+  },
+  {
+    "id": "bench",
+    "name": "长凳",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.3,
+        "min": 0.3,
+        "max": 3.9
+      },
+      {
+        "id": "depth",
+        "default": 0.4,
+        "min": 0.1,
+        "max": 1.3
+      },
+      {
+        "id": "height",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      }
+    ],
+    "colors": {
+      "legs": "#e0b584",
+      "seat": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "lauta",
+        "name": "Cord Seat Oak Bench"
+      },
+      {
+        "id": "angle",
+        "name": "Teak with Drawers"
+      }
+    ]
+  },
+  {
+    "id": "pouf",
+    "name": "软凳",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.8,
+        "min": 0.2,
+        "max": 2.4
+      },
+      {
+        "id": "height",
+        "default": 0.4,
+        "min": 0.1,
+        "max": 1.3
+      }
+    ],
+    "colors": {
+      "cover": "#e4ded4",
+      "legs": "#3d3530"
+    },
+    "variants": [
+      {
+        "id": "dresde",
+        "name": "Pillow Arm"
+      },
+      {
+        "id": "block",
+        "name": "Plinth Block"
+      },
+      {
+        "id": "rail",
+        "name": "Teak Rail"
+      }
+    ]
+  },
+  {
+    "id": "dining_table",
+    "name": "餐桌",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.6,
+        "min": 0.4,
+        "max": 4.8
+      },
+      {
+        "id": "depth",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "height",
+        "default": 0.75,
+        "min": 0.15,
+        "max": 2.3
+      }
+    ],
+    "colors": {
+      "top": "#dbbf98",
+      "frame": "#5a5b5d"
+    },
+    "variants": [
+      {
+        "id": "viok",
+        "name": "Oak on Steel Angles"
+      },
+      {
+        "id": "deva",
+        "name": "Porcelain in Teak"
+      },
+      {
+        "id": "spider",
+        "name": "Crossed Teak Trestles"
+      }
+    ]
+  },
+  {
+    "id": "coffee_table",
+    "name": "茶几",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.1,
+        "min": 0.25,
+        "max": 3.3
+      },
+      {
+        "id": "depth",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "height",
+        "default": 0.4,
+        "min": 0.1,
+        "max": 1.2
+      }
+    ],
+    "colors": {
+      "top": "#dcc3a0",
+      "legs": "#dcc3a0",
+      "shelf": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "slatted",
+        "name": "Oak Slatted"
+      },
+      {
+        "id": "lack",
+        "name": "Block Lakka"
+      },
+      {
+        "id": "tulip",
+        "name": "Oval Tulpa"
+      },
+      {
+        "id": "frame",
+        "name": "Steel Square"
+      }
+    ]
+  },
+  {
+    "id": "side_table",
+    "name": "边几",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "depth",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "height",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "top": "#dcc3a0",
+      "legs": "#dcc3a0",
+      "shelf": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "shelf",
+        "name": "Oak Tier"
+      },
+      {
+        "id": "nightstand",
+        "name": "Drawer Natta"
+      },
+      {
+        "id": "tray",
+        "name": "Tray Glada"
+      }
+    ]
+  },
+  {
+    "id": "desk",
+    "name": "书桌",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.4,
+        "min": 0.35,
+        "max": 4.2
+      },
+      {
+        "id": "depth",
+        "default": 0.7,
+        "min": 0.15,
+        "max": 2.1
+      },
+      {
+        "id": "height",
+        "default": 0.75,
+        "min": 0.15,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "top": "#dcc3a0",
+      "legs": "#dcc3a0",
+      "drawer": "#f2efe9",
+      "handle": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "writing",
+        "name": "Writing desk"
+      },
+      {
+        "id": "office_table",
+        "name": "Office table"
+      },
+      {
+        "id": "pedestal",
+        "name": "Mikka Pedestal"
+      }
+    ]
+  },
+  {
+    "id": "bookshelf",
+    "name": "书架",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "depth",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 1
+      },
+      {
+        "id": "height",
+        "default": 1.8,
+        "min": 0.45,
+        "max": 3
+      },
+      {
+        "id": "shelves",
+        "default": 0,
+        "min": -10,
+        "max": 10
+      }
+    ],
+    "colors": {
+      "cabinet": "#dcc3a0",
+      "shelves": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "billy",
+        "name": "Birch Bilbo"
+      },
+      {
+        "id": "kallax",
+        "name": "Cube Kalla"
+      },
+      {
+        "id": "string",
+        "name": "Wire Strand"
+      }
+    ]
+  },
+  {
+    "id": "sideboard",
+    "name": "餐边柜",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.6,
+        "min": 0.4,
+        "max": 4.8
+      },
+      {
+        "id": "depth",
+        "default": 0.4,
+        "min": 0.1,
+        "max": 1.3
+      },
+      {
+        "id": "height",
+        "default": 0.75,
+        "min": 0.15,
+        "max": 2.25
+      },
+      {
+        "id": "wall",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      },
+      {
+        "id": "base",
+        "default": 0.4,
+        "min": 0.05,
+        "max": 1.6
+      }
+    ],
+    "colors": {
+      "cabinet": "#dcc3a0",
+      "fronts": "#f2efe9",
+      "handles": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "oak",
+        "name": "Oak Board"
+      },
+      {
+        "id": "credenza",
+        "name": "Slide Credenza"
+      },
+      {
+        "id": "besta",
+        "name": "Push Bessa"
+      }
+    ]
+  },
+  {
+    "id": "wardrobe",
+    "name": "衣柜",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.2,
+        "min": 0.3,
+        "max": 3.6
+      },
+      {
+        "id": "depth",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "height",
+        "default": 2.1,
+        "min": 0.5,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "cabinet": "#f2efe9",
+      "fronts": "#dcc3a0",
+      "handles": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "hinged",
+        "name": "Oak Doors"
+      },
+      {
+        "id": "sliding",
+        "name": "Sliding Paxa"
+      },
+      {
+        "id": "rail",
+        "name": "Open Rail"
+      }
+    ]
+  },
+  {
+    "id": "dresser",
+    "name": "斗柜",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1,
+        "min": 0.25,
+        "max": 3
+      },
+      {
+        "id": "depth",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "height",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "cabinet": "#dcc3a0",
+      "fronts": "#f2efe9",
+      "handles": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "oak",
+        "name": "Oak Chest"
+      },
+      {
+        "id": "malm",
+        "name": "Plain Malma"
+      },
+      {
+        "id": "hemnes",
+        "name": "Painted Hemma"
+      }
+    ]
+  },
+  {
+    "id": "shoe_rack",
+    "name": "鞋架",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.8,
+        "min": 0.2,
+        "max": 2.4
+      },
+      {
+        "id": "depth",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.9
+      },
+      {
+        "id": "height",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "frame": "#dcc3a0",
+      "rails": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "rungs",
+        "name": "Oak Rungs"
+      },
+      {
+        "id": "cabinet",
+        "name": "Tilt Hemma"
+      },
+      {
+        "id": "bench",
+        "name": "Seat Tjusa"
+      }
+    ]
+  },
+  {
+    "id": "wall_shelf",
+    "name": "壁架",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "depth",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.75
+      },
+      {
+        "id": "height",
+        "default": 1.5,
+        "min": 0.35,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "shelf": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "floating",
+        "name": "Floating Lakka"
+      },
+      {
+        "id": "ledge",
+        "name": "Lipped Ledge"
+      },
+      {
+        "id": "string",
+        "name": "Wire Pocket"
+      }
+    ]
+  },
+  {
+    "id": "bed_double",
+    "name": "床",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.6,
+        "min": 0.4,
+        "max": 4.8
+      },
+      {
+        "id": "length",
+        "default": 2.05,
+        "min": 0.5,
+        "max": 6.15
+      },
+      {
+        "id": "headboard",
+        "default": 1,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "frame": "#dcc3a0",
+      "bedding": "#f2efe9",
+      "pillows": "#e6ded1"
+    },
+    "variants": [
+      {
+        "id": "headboard",
+        "name": "Splay Oak"
+      },
+      {
+        "id": "upholstered",
+        "name": "Channel Rest"
+      },
+      {
+        "id": "low",
+        "name": "Ledge Low"
+      }
+    ]
+  },
+  {
+    "id": "kitchen_counter",
+    "name": "橱柜台面",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.8,
+        "min": 0.45,
+        "max": 5.4
+      },
+      {
+        "id": "depth",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.9
+      },
+      {
+        "id": "height",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "wide",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      },
+      {
+        "id": "grow",
+        "default": 0,
+        "min": 0,
+        "max": 99
+      }
+    ],
+    "colors": {
+      "worktop": "#ece6da",
+      "cabinets": "#dcc3a0",
+      "fronts": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "run",
+        "name": "Wall Run"
+      },
+      {
+        "id": "island",
+        "name": "Island"
+      }
+    ]
+  },
+  {
+    "id": "upper_cabinets",
+    "name": "吊柜",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.8,
+        "min": 0.45,
+        "max": 5.4
+      },
+      {
+        "id": "depth",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.05
+      },
+      {
+        "id": "height",
+        "default": 2.2,
+        "min": 0.55,
+        "max": 3
+      },
+      {
+        "id": "wide",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      },
+      {
+        "id": "grow",
+        "default": 0,
+        "min": 0,
+        "max": 99
+      }
+    ],
+    "colors": {
+      "cabinets": "#dcc3a0",
+      "doors": "#dcc3a0",
+      "handles": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "fridge",
+    "name": "冰箱",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.65,
+        "min": 0.15,
+        "max": 2
+      },
+      {
+        "id": "height",
+        "default": 2.05,
+        "min": 0.5,
+        "max": 3
+      },
+      {
+        "id": "base",
+        "default": 0,
+        "min": 0.05,
+        "max": 1.6
+      },
+      {
+        "id": "flip",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "doors": "#f2efe9",
+      "handles": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "bespoke",
+        "name": "Pocket Grip"
+      },
+      {
+        "id": "side_by_side",
+        "name": "Twin Tower"
+      }
+    ]
+  },
+  {
+    "id": "oven",
+    "name": "烤箱",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.55,
+        "min": 0.1,
+        "max": 1.65
+      },
+      {
+        "id": "height",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "base",
+        "default": 0,
+        "min": 0.05,
+        "max": 1.6
+      }
+    ],
+    "colors": {
+      "body": "#34383b",
+      "glass": "#111416",
+      "handle": "#b9bdbf",
+      "display": "#16191b"
+    },
+    "variants": []
+  },
+  {
+    "id": "hob",
+    "name": "炉灶",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.6
+      },
+      {
+        "id": "lift",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "glass": "#15181a",
+      "zones": "#6c7175"
+    },
+    "variants": [
+      {
+        "id": "induction",
+        "name": "Black Flux"
+      },
+      {
+        "id": "gas",
+        "name": "Iron Crown"
+      }
+    ]
+  },
+  {
+    "id": "extractor_hood",
+    "name": "抽油烟机",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "canopy": "#c4c7c8",
+      "chimney": "#c4c7c8",
+      "filter": "#9a9fa2",
+      "controls": "#1c1f21"
+    },
+    "variants": []
+  },
+  {
+    "id": "ceiling_extractor",
+    "name": "Ceiling extractor",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.65
+      },
+      {
+        "id": "depth",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.55
+      }
+    ],
+    "colors": {
+      "panel": "#f2efe9",
+      "grille": "#2e3133"
+    },
+    "variants": []
+  },
+  {
+    "id": "dishwasher",
+    "name": "洗碗机",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "height",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      },
+      {
+        "id": "base",
+        "default": 0,
+        "min": 0.05,
+        "max": 1.6
+      }
+    ],
+    "colors": {
+      "body": "#b9bdbf",
+      "top": "#3a3d40",
+      "door": "#c9cccd",
+      "controls": "#1c1f21"
+    },
+    "variants": []
+  },
+  {
+    "id": "kitchen_sink",
+    "name": "水槽",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.55,
+        "min": 0.1,
+        "max": 1.65
+      },
+      {
+        "id": "depth",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "lift",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "bowl": "#b9bdbf",
+      "tap": "#c4c7c8"
+    },
+    "variants": [
+      {
+        "id": "undermount",
+        "name": "Steel Andor"
+      },
+      {
+        "id": "belfast",
+        "name": "Fireclay Hollin"
+      },
+      {
+        "id": "inset",
+        "name": "Granite Marra"
+      }
+    ]
+  },
+  {
+    "id": "microwave",
+    "name": "微波炉",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "depth",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.05
+      },
+      {
+        "id": "height",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.8
+      },
+      {
+        "id": "lift",
+        "default": 1.2,
+        "min": 0,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#c4c7c8",
+      "door": "#1c1f21",
+      "glass": "#111416",
+      "knobs": "#8f9497"
+    },
+    "variants": []
+  },
+  {
+    "id": "coffee_machine",
+    "name": "咖啡机",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.1
+      },
+      {
+        "id": "depth",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      },
+      {
+        "id": "height",
+        "default": 0.4,
+        "min": 0.05,
+        "max": 1.15
+      },
+      {
+        "id": "lift",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.8
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "steel": "#c4c7c8",
+      "wood": "#a8845c"
+    },
+    "variants": [
+      {
+        "id": "bambino",
+        "name": "Compact Bambu"
+      },
+      {
+        "id": "linea",
+        "name": "Steel Lineo"
+      },
+      {
+        "id": "pod",
+        "name": "Pod Nib"
+      }
+    ]
+  },
+  {
+    "id": "kettle",
+    "name": "水壶",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.15,
+        "min": 0.05,
+        "max": 0.45
+      },
+      {
+        "id": "lift",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.8
+      }
+    ],
+    "colors": {
+      "body": "#f2f2f0",
+      "fittings": "#8a8f92"
+    },
+    "variants": [
+      {
+        "id": "jug",
+        "name": "Chalk Jug"
+      },
+      {
+        "id": "gooseneck",
+        "name": "Matte Swan"
+      }
+    ]
+  },
+  {
+    "id": "toaster",
+    "name": "烤面包机",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.95
+      },
+      {
+        "id": "depth",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.6
+      },
+      {
+        "id": "lift",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.8
+      }
+    ],
+    "colors": {
+      "body": "#e8e3d8",
+      "trim": "#c4c7c8"
+    },
+    "variants": [
+      {
+        "id": "retro",
+        "name": "Twin Loaf"
+      },
+      {
+        "id": "long",
+        "name": "Long Slot"
+      }
+    ]
+  },
+  {
+    "id": "cooking_robot",
+    "name": "Cooking robot",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1
+      },
+      {
+        "id": "lift",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.8
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "jug": "#c4c7c8",
+      "lid": "#8a8f92",
+      "display": "#16191b"
+    },
+    "variants": [
+      {
+        "id": "jug",
+        "name": "Mix Chef"
+      },
+      {
+        "id": "bowl",
+        "name": "Dome Cook"
+      }
+    ]
+  },
+  {
+    "id": "air_fryer",
+    "name": "空气炸锅",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.85
+      },
+      {
+        "id": "lift",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.8
+      }
+    ],
+    "colors": {
+      "body": "#2b2e31",
+      "handle": "#1c1d1f",
+      "display": "#16191b"
+    },
+    "variants": [
+      {
+        "id": "basket",
+        "name": "Crisp Cube"
+      },
+      {
+        "id": "dual",
+        "name": "Twin Drawer"
+      }
+    ]
+  },
+  {
+    "id": "washing_machine",
+    "name": "洗衣机",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "height",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      },
+      {
+        "id": "base",
+        "default": 0,
+        "min": 0.05,
+        "max": 1.6
+      }
+    ],
+    "colors": {
+      "body": "#f4f4f2",
+      "door": "#c4c7c8",
+      "controls": "#e6e7e6"
+    },
+    "variants": []
+  },
+  {
+    "id": "dryer",
+    "name": "烘干机",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "height",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      },
+      {
+        "id": "base",
+        "default": 0,
+        "min": 0.05,
+        "max": 1.6
+      }
+    ],
+    "colors": {
+      "body": "#f4f4f2",
+      "door": "#3d4144",
+      "controls": "#e6e7e6"
+    },
+    "variants": []
+  },
+  {
+    "id": "toilet",
+    "name": "马桶",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.15
+      },
+      {
+        "id": "depth",
+        "default": 0.55,
+        "min": 0.1,
+        "max": 1.75
+      }
+    ],
+    "colors": {
+      "pan": "#f4f3ef",
+      "seat": "#f4f3ef",
+      "flush": "#c4c7c8"
+    },
+    "variants": [
+      {
+        "id": "arc",
+        "name": "Arc Pair"
+      },
+      {
+        "id": "wall_hung",
+        "name": "Vela Hung"
+      },
+      {
+        "id": "close_coupled",
+        "name": "Oda Pair"
+      },
+      {
+        "id": "square",
+        "name": "Kant Pair"
+      }
+    ]
+  },
+  {
+    "id": "basin",
+    "name": "洗手盆",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "depth",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.4
+      },
+      {
+        "id": "height",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      }
+    ],
+    "colors": {
+      "bowl": "#f4f3ef",
+      "tap": "#c4c7c8"
+    },
+    "variants": [
+      {
+        "id": "vanity",
+        "name": "Lumen Console"
+      },
+      {
+        "id": "wall_hung",
+        "name": "Pell Hung"
+      },
+      {
+        "id": "pedestal",
+        "name": "Stave Pedestal"
+      }
+    ]
+  },
+  {
+    "id": "bathtub",
+    "name": "浴缸",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.8,
+        "min": 0.2,
+        "max": 2.4
+      },
+      {
+        "id": "length",
+        "default": 1.7,
+        "min": 0.4,
+        "max": 5.1
+      }
+    ],
+    "colors": {
+      "tub": "#f4f3ef",
+      "tap": "#c4c7c8"
+    },
+    "variants": [
+      {
+        "id": "freestanding",
+        "name": "Isle Shell"
+      },
+      {
+        "id": "built_in",
+        "name": "Inlet Steel"
+      },
+      {
+        "id": "roll_top",
+        "name": "Foundry Roll"
+      }
+    ]
+  },
+  {
+    "id": "shower",
+    "name": "淋浴",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "depth",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "height",
+        "default": 2,
+        "min": 0.5,
+        "max": 3
+      },
+      {
+        "id": "glass",
+        "default": 2,
+        "min": 0,
+        "max": 3
+      },
+      {
+        "id": "flip",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "tray": "#f2efe9",
+      "glass": "#dbe6e9",
+      "frame": "#9aa3a8",
+      "tap": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "towel_rail",
+    "name": "毛巾架",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "height",
+        "default": 1.05,
+        "min": 0.25,
+        "max": 3
+      },
+      {
+        "id": "sill",
+        "default": 0.65,
+        "min": 0,
+        "max": 1.95
+      }
+    ],
+    "colors": {
+      "rail": "#9aa3a8",
+      "towel": "#e6ded1"
+    },
+    "variants": [
+      {
+        "id": "grouped",
+        "name": "Quad Tier"
+      },
+      {
+        "id": "ladder",
+        "name": "Bow Ladder"
+      }
+    ]
+  },
+  {
+    "id": "half_wall",
+    "name": "半墙",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 2,
+        "min": 0.4,
+        "max": 8
+      },
+      {
+        "id": "depth",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.6
+      },
+      {
+        "id": "height",
+        "default": 1,
+        "min": 0.25,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "wall": "#f2efe9"
+    },
+    "variants": []
+  },
+  {
+    "id": "railing",
+    "name": "Railing",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.2,
+        "min": 0.3,
+        "max": 6
+      },
+      {
+        "id": "height",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "rail": "#2b2c2d",
+      "balusters": "#2b2c2d"
+    },
+    "variants": [
+      {
+        "id": "steel",
+        "name": "Steel Balusters"
+      },
+      {
+        "id": "glass",
+        "name": "Glass Panel"
+      },
+      {
+        "id": "spindle",
+        "name": "Oak Spindle"
+      }
+    ]
+  },
+  {
+    "id": "rug",
+    "name": "地毯",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 2,
+        "min": 0.5,
+        "max": 6
+      },
+      {
+        "id": "depth",
+        "default": 1.4,
+        "min": 0.35,
+        "max": 4.2
+      },
+      {
+        "id": "plain",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "field": "#e6ded1",
+      "border": "#cfa08a"
+    },
+    "variants": [
+      {
+        "id": "shag",
+        "name": "Plain Pile"
+      },
+      {
+        "id": "border",
+        "name": "Nord Border"
+      },
+      {
+        "id": "kilim",
+        "name": "Kilim Stripe"
+      },
+      {
+        "id": "round",
+        "name": "Round Loop"
+      }
+    ]
+  },
+  {
+    "id": "plant_large",
+    "name": "落地绿植",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.8,
+        "min": 0.2,
+        "max": 2.4
+      },
+      {
+        "id": "height",
+        "default": 1.6,
+        "min": 0.4,
+        "max": 3
+      },
+      {
+        "id": "dry",
+        "default": 20,
+        "min": 5,
+        "max": 60
+      }
+    ],
+    "colors": {
+      "pot": "#f2efe9",
+      "soil": "#3c332b",
+      "stems": "#7a6a58",
+      "leaves": "#4f7d3c"
+    },
+    "variants": [
+      {
+        "id": "fiddle",
+        "name": "Fiddle leaf fig"
+      },
+      {
+        "id": "monstera",
+        "name": "Monstera"
+      },
+      {
+        "id": "kentia",
+        "name": "Kentia palm"
+      },
+      {
+        "id": "mango",
+        "name": "Mango plant"
+      },
+      {
+        "id": "bird",
+        "name": "Bird of paradise"
+      },
+      {
+        "id": "bamboo",
+        "name": "Golden bamboo"
+      },
+      {
+        "id": "ficus",
+        "name": "Weeping fig"
+      }
+    ]
+  },
+  {
+    "id": "plant_small",
+    "name": "盆栽",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.9
+      },
+      {
+        "id": "height",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.9
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      },
+      {
+        "id": "trail",
+        "default": 0.6,
+        "min": 0.1,
+        "max": 1.8
+      },
+      {
+        "id": "dry",
+        "default": 20,
+        "min": 5,
+        "max": 60
+      }
+    ],
+    "colors": {
+      "pot": "#f2efe9",
+      "soil": "#3c332b",
+      "stems": "#7aa648",
+      "leaves": "#5a9440",
+      "markings": "#e3d268"
+    },
+    "variants": [
+      {
+        "id": "pothos",
+        "name": "Golden pothos"
+      },
+      {
+        "id": "pilea",
+        "name": "Chinese money plant"
+      },
+      {
+        "id": "snake",
+        "name": "Snake plant"
+      }
+    ]
+  },
+  {
+    "id": "plant_wall",
+    "name": "挂墙绿植",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.9
+      },
+      {
+        "id": "height",
+        "default": 1.6,
+        "min": 0.4,
+        "max": 3
+      },
+      {
+        "id": "trail",
+        "default": 0.6,
+        "min": 0.1,
+        "max": 1.8
+      },
+      {
+        "id": "dry",
+        "default": 20,
+        "min": 5,
+        "max": 60
+      }
+    ],
+    "colors": {
+      "pot": "#f2efe9",
+      "soil": "#3c332b",
+      "stems": "#7aa648",
+      "leaves": "#5a9440",
+      "markings": "#e3d268"
+    },
+    "variants": [
+      {
+        "id": "pothos",
+        "name": "Golden pothos"
+      },
+      {
+        "id": "pearls",
+        "name": "String of pearls"
+      },
+      {
+        "id": "boston",
+        "name": "Boston fern"
+      }
+    ]
+  },
+  {
+    "id": "wall_mirror",
+    "name": "壁镜",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.7,
+        "min": 0.15,
+        "max": 2.1
+      },
+      {
+        "id": "height",
+        "default": 1.6,
+        "min": 0.4,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "frame": "#dcc3a0",
+      "glass": "#cdd6d8"
+    },
+    "variants": [
+      {
+        "id": "round",
+        "name": "Halo Round"
+      },
+      {
+        "id": "square",
+        "name": "Frame Square"
+      }
+    ]
+  },
+  {
+    "id": "wall_clock",
+    "name": "挂钟",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.9
+      },
+      {
+        "id": "height",
+        "default": 1.9,
+        "min": 0.45,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "rim": "#dcc3a0",
+      "face": "#f2efe9",
+      "hands": "#4a4f52",
+      "accent": "#c8553d"
+    },
+    "variants": [
+      {
+        "id": "oak",
+        "name": "Oak Ring"
+      },
+      {
+        "id": "digital",
+        "name": "Glow Digit"
+      },
+      {
+        "id": "ball",
+        "name": "Ball Nelo"
+      }
+    ]
+  },
+  {
+    "id": "piano",
+    "name": "Piano",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.5,
+        "min": 0.35,
+        "max": 4.5
+      },
+      {
+        "id": "depth",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 2.2
+      },
+      {
+        "id": "height",
+        "default": 1.25,
+        "min": 0.3,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "case": "#dcc3a0",
+      "keys": "#f4f1ea",
+      "sharps": "#1d1e20",
+      "fittings": "#c8ad72"
+    },
+    "variants": [
+      {
+        "id": "upright",
+        "name": "Oak Upright"
+      },
+      {
+        "id": "grand",
+        "name": "Black Baby Grand"
+      },
+      {
+        "id": "digital",
+        "name": "Slim Digital"
+      }
+    ]
+  },
+  {
+    "id": "vase",
+    "name": "花瓶",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.55
+      },
+      {
+        "id": "height",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.9
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "vase": "#cdd6d8",
+      "stems": "#7f9c6d",
+      "flowers": "#7f9c6d"
+    },
+    "variants": []
+  },
+  {
+    "id": "books",
+    "name": "书籍",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.8
+      },
+      {
+        "id": "height",
+        "default": 0.15,
+        "min": 0,
+        "max": 0.45
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "first": "#2f4a5c",
+      "second": "#c47a52",
+      "third": "#d8c9a8",
+      "pages": "#f1ebdd"
+    },
+    "variants": []
+  },
+  {
+    "id": "curtain",
+    "name": "窗帘",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.4,
+        "min": 0.35,
+        "max": 4.2
+      },
+      {
+        "id": "height",
+        "default": 2.3,
+        "min": 0.55,
+        "max": 3
+      },
+      {
+        "id": "hem",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      },
+      {
+        "id": "single",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      },
+      {
+        "id": "left",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "fabric": "#f4f1ea",
+      "rail": "#e9e7e2"
+    },
+    "variants": [
+      {
+        "id": "eyelet",
+        "name": "Velvet Eyelet"
+      },
+      {
+        "id": "wave",
+        "name": "Sheer Wave"
+      }
+    ]
+  },
+  {
+    "id": "tv",
+    "name": "电视",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "inches",
+        "default": 60,
+        "min": 24,
+        "max": 110
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "bezel": "#2b2e31",
+      "screen": "#16191b",
+      "stand": "#b4b8bb"
+    },
+    "variants": []
+  },
+  {
+    "id": "tv_wall",
+    "name": "壁挂电视",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "inches",
+        "default": 60,
+        "min": 24,
+        "max": 110
+      },
+      {
+        "id": "height",
+        "default": 1.3,
+        "min": 0.3,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "bezel": "#2b2e31",
+      "screen": "#16191b"
+    },
+    "variants": []
+  },
+  {
+    "id": "wall_tablet",
+    "name": "Wall tablet",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.75
+      },
+      {
+        "id": "height",
+        "default": 1.45,
+        "min": 0.35,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "frame": "#f3f1ec",
+      "bezel": "#1c1d1f",
+      "screen": "#16191b"
+    },
+    "variants": [
+      {
+        "id": "frame",
+        "name": "Flush Frame"
+      },
+      {
+        "id": "portrait",
+        "name": "Slim Portrait"
+      }
+    ]
+  },
+  {
+    "id": "soundbar",
+    "name": "回音壁",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "height",
+        "default": 0.1,
+        "min": 0,
+        "max": 0.25
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "grille": "#e6ded1",
+      "caps": "#4a4f52"
+    },
+    "variants": [
+      {
+        "id": "bar",
+        "name": "Linen Bar"
+      },
+      {
+        "id": "arc",
+        "name": "Pebble Arc"
+      }
+    ]
+  },
+  {
+    "id": "speaker",
+    "name": "音箱",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.15,
+        "min": 0.05,
+        "max": 0.45
+      },
+      {
+        "id": "height",
+        "default": 0.15,
+        "min": 0,
+        "max": 0.55
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "mesh": "#e6e4df",
+      "top": "#2a2c2e"
+    },
+    "variants": [
+      {
+        "id": "pod",
+        "name": "Round Pomo"
+      },
+      {
+        "id": "mini",
+        "name": "Orb Pomo"
+      },
+      {
+        "id": "drum",
+        "name": "Linen Drum"
+      }
+    ]
+  },
+  {
+    "id": "floor_speaker",
+    "name": "落地音箱",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.7
+      },
+      {
+        "id": "height",
+        "default": 1,
+        "min": 0.25,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "cabinet": "#dcc3a0",
+      "drivers": "#1d1e20",
+      "trim": "#b4b8bb"
+    },
+    "variants": [
+      {
+        "id": "tower",
+        "name": "Oak Stave"
+      },
+      {
+        "id": "column",
+        "name": "Linen Pillar"
+      }
+    ]
+  },
+  {
+    "id": "monitor",
+    "name": "显示器",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      },
+      {
+        "id": "ratio",
+        "default": 0.6,
+        "min": 0.14,
+        "max": 1.8
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "bezel": "#2b2e31",
+      "screen": "#16191b",
+      "stand": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "game_console",
+    "name": "游戏主机",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.85
+      },
+      {
+        "id": "height",
+        "default": 0.05,
+        "min": 0,
+        "max": 0.45
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "panel": "#4a4f52"
+    },
+    "variants": [
+      {
+        "id": "slim",
+        "name": "Slab S"
+      },
+      {
+        "id": "tower",
+        "name": "Monolith X"
+      },
+      {
+        "id": "wing",
+        "name": "Nimbus"
+      }
+    ]
+  },
+  {
+    "id": "pc_tower",
+    "name": "电脑主机",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.7
+      },
+      {
+        "id": "depth",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.4
+      },
+      {
+        "id": "height",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.45
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "case": "#1c1d1f",
+      "glass": "#3a4046",
+      "accent": "#5b7cff"
+    },
+    "variants": [
+      {
+        "id": "glass",
+        "name": "Prism Tower"
+      },
+      {
+        "id": "lattice",
+        "name": "Lattice Tower"
+      }
+    ]
+  },
+  {
+    "id": "laptop",
+    "name": "笔记本电脑",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.95
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "body": "#c9ccce",
+      "keys": "#2b2e31",
+      "screen": "#16191b"
+    },
+    "variants": [
+      {
+        "id": "slim",
+        "name": "Slate Air"
+      },
+      {
+        "id": "gaming",
+        "name": "Raptor Pro"
+      }
+    ]
+  },
+  {
+    "id": "wireless_charger",
+    "name": "Wireless charger",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.1,
+        "min": 0.05,
+        "max": 0.3
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "pad": "#2b2e31",
+      "device": "#1c1d1f",
+      "ring": "#ffffff"
+    },
+    "variants": [
+      {
+        "id": "phone",
+        "name": "Halo Pad"
+      },
+      {
+        "id": "watch",
+        "name": "Watch Puck"
+      },
+      {
+        "id": "earbuds",
+        "name": "Bud Dock"
+      },
+      {
+        "id": "tablet",
+        "name": "Tablet Easel"
+      }
+    ]
+  },
+  {
+    "id": "projector",
+    "name": "投影仪",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.8
+      },
+      {
+        "id": "throw",
+        "default": 3,
+        "min": 0.75,
+        "max": 9
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "lens": "#2f3336",
+      "mount": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "projector_portable",
+    "name": "Portable projector",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.1,
+        "min": 0.05,
+        "max": 0.3
+      },
+      {
+        "id": "throw",
+        "default": 2,
+        "min": 0.5,
+        "max": 6
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "body": "#e9e8e4",
+      "cradle": "#b9bab8",
+      "lens": "#2f3336"
+    },
+    "variants": []
+  },
+  {
+    "id": "projector_ust",
+    "name": "Short throw projector",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "inches",
+        "default": 100,
+        "min": 70,
+        "max": 150
+      },
+      {
+        "id": "lift",
+        "default": 0.45,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "body": "#e9e8e4",
+      "grille": "#b9bab8",
+      "lens": "#2f3336"
+    },
+    "variants": [
+      {
+        "id": "box",
+        "name": "Wall Beam"
+      }
+    ]
+  },
+  {
+    "id": "projector_screen",
+    "name": "Projector screen",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "inches",
+        "default": 100,
+        "min": 60,
+        "max": 160
+      }
+    ],
+    "colors": {
+      "case": "#2b2e31",
+      "screen": "#f4f3ef"
+    },
+    "variants": []
+  },
+  {
+    "id": "radiator",
+    "name": "Radiator",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "height",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 2
+      },
+      {
+        "id": "base",
+        "default": 0.15,
+        "min": 0.05,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "panel": "#f2efe9",
+      "valve": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "panel",
+        "name": "Flat Plane"
+      },
+      {
+        "id": "column",
+        "name": "Iron Column"
+      },
+      {
+        "id": "tube",
+        "name": "Reed Bar"
+      }
+    ]
+  },
+  {
+    "id": "ac_unit",
+    "name": "空调",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "height",
+        "default": 2.1,
+        "min": 0.5,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "grille": "#cdd6d8",
+      "display": "#20262a"
+    },
+    "variants": [
+      {
+        "id": "split",
+        "name": "Cloud Split"
+      },
+      {
+        "id": "duct",
+        "name": "Slot Vent"
+      }
+    ]
+  },
+  {
+    "id": "fan_ceiling",
+    "name": "吊扇",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "size",
+        "default": 1.1,
+        "min": 0.25,
+        "max": 3.3
+      },
+      {
+        "id": "drop",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.05
+      }
+    ],
+    "colors": {
+      "housing": "#f2efe9",
+      "blades": "#dcc3a0"
+    },
+    "variants": [
+      {
+        "id": "classic",
+        "name": "Bowl Five"
+      },
+      {
+        "id": "haiku",
+        "name": "Aero Trio"
+      },
+      {
+        "id": "loft",
+        "name": "Iron Loft"
+      }
+    ]
+  },
+  {
+    "id": "fan_floor",
+    "name": "落地风扇",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.4,
+        "min": 0.1,
+        "max": 1.2
+      },
+      {
+        "id": "height",
+        "default": 1.2,
+        "min": 0.3,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "stand": "#f2efe9",
+      "blades": "#cdd6d8",
+      "guard": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "pedestal",
+        "name": "Breeze Stand"
+      },
+      {
+        "id": "disc",
+        "name": "Calm Disc"
+      }
+    ]
+  },
+  {
+    "id": "fireplace",
+    "name": "Fireplace",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.2,
+        "min": 0.3,
+        "max": 3.6
+      },
+      {
+        "id": "height",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "body": "#2b2e31",
+      "hearth": "#8d8a85",
+      "logs": "#cfc8bd"
+    },
+    "variants": [
+      {
+        "id": "linear",
+        "name": "Ribbon Flame"
+      },
+      {
+        "id": "stove",
+        "name": "Iron Stove"
+      }
+    ]
+  },
+  {
+    "id": "air_purifier",
+    "name": "空气净化器",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.85
+      },
+      {
+        "id": "height",
+        "default": 0.6,
+        "min": 0.15,
+        "max": 1.8
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "filter": "#e6ded1",
+      "grille": "#2f3336",
+      "display": "#20262a"
+    },
+    "variants": []
+  },
+  {
+    "id": "humidifier",
+    "name": "加湿器",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.6
+      },
+      {
+        "id": "height",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 1
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "collar": "#cdd6d8",
+      "nozzle": "#2f3336"
+    },
+    "variants": []
+  },
+  {
+    "id": "thermostat",
+    "name": "温控器",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.1,
+        "min": 0.05,
+        "max": 0.35
+      },
+      {
+        "id": "height",
+        "default": 1.45,
+        "min": 0.35,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "ring": "#f2efe9",
+      "back": "#f2efe9",
+      "face": "#4a4f52"
+    },
+    "variants": []
+  },
+  {
+    "id": "blind",
+    "name": "百叶窗",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.2,
+        "min": 0.3,
+        "max": 3.6
+      },
+      {
+        "id": "height",
+        "default": 2.1,
+        "min": 0.5,
+        "max": 3
+      },
+      {
+        "id": "drop",
+        "default": 1.4,
+        "min": 0.3,
+        "max": 3
+      },
+      {
+        "id": "outside",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "slats": "#e6ded1",
+      "rail": "#9aa3a8",
+      "ladder": "#e6ded1"
+    },
+    "variants": [
+      {
+        "id": "venetian",
+        "name": "Ladder Slat"
+      },
+      {
+        "id": "shutter",
+        "name": "Roll Guard"
+      }
+    ]
+  },
+  {
+    "id": "window",
+    "name": "窗",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.2,
+        "min": 0.3,
+        "max": 3.6
+      },
+      {
+        "id": "height",
+        "default": 1.2,
+        "min": 0.3,
+        "max": 3
+      },
+      {
+        "id": "sill",
+        "default": 0.9,
+        "min": 0,
+        "max": 2.7
+      },
+      {
+        "id": "flip",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "frame": "#f2efe9",
+      "glass": "#cdd6d8"
+    },
+    "variants": [
+      {
+        "id": "casement",
+        "name": "Twin Casement"
+      },
+      {
+        "id": "sash",
+        "name": "Box Sash"
+      },
+      {
+        "id": "slider",
+        "name": "Glide Pane"
+      },
+      {
+        "id": "steel",
+        "name": "Iron Grid"
+      }
+    ]
+  },
+  {
+    "id": "door",
+    "name": "门",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      },
+      {
+        "id": "height",
+        "default": 2.05,
+        "min": 0.5,
+        "max": 3
+      },
+      {
+        "id": "flip",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "frame": "#f2efe9",
+      "panel": "#f2efe9",
+      "handle": "#4a4f52"
+    },
+    "variants": [
+      {
+        "id": "flush",
+        "name": "Plain Leaf"
+      },
+      {
+        "id": "panel",
+        "name": "Regent Four"
+      },
+      {
+        "id": "glazed",
+        "name": "Garden Lite"
+      },
+      {
+        "id": "terrace",
+        "name": "Terrace Pair"
+      }
+    ]
+  },
+  {
+    "id": "sliding_door",
+    "name": "Sliding door",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.8,
+        "min": 0.45,
+        "max": 6
+      },
+      {
+        "id": "height",
+        "default": 2.1,
+        "min": 0.5,
+        "max": 3
+      },
+      {
+        "id": "panels",
+        "default": 2,
+        "min": 1,
+        "max": 5
+      },
+      {
+        "id": "flip",
+        "default": 0,
+        "min": 0,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "frame": "#9aa3a8",
+      "panel": "#f2efe9"
+    },
+    "variants": [
+      {
+        "id": "panel",
+        "name": "Panel Track"
+      },
+      {
+        "id": "glass",
+        "name": "Glass Track"
+      }
+    ]
+  },
+  {
+    "id": "christmas_tree",
+    "name": "Christmas tree",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 1.1,
+        "min": 0.25,
+        "max": 3.3
+      },
+      {
+        "id": "height",
+        "default": 1.9,
+        "min": 0.45,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "needles": "#2f5a3a",
+      "trunk": "#6b4a32",
+      "stand": "#b0864f"
+    },
+    "variants": [
+      {
+        "id": "fir",
+        "name": "Nordic Fir"
+      },
+      {
+        "id": "bare",
+        "name": "Winter Birch"
+      }
+    ]
+  },
+  {
+    "id": "camera",
+    "name": "摄像头",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.1,
+        "min": 0.05,
+        "max": 0.3
+      },
+      {
+        "id": "height",
+        "default": 2.2,
+        "min": 0.55,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "lens": "#4a4f52",
+      "mount": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "doorbell",
+    "name": "Doorbell",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.05,
+        "min": 0.05,
+        "max": 0.25
+      },
+      {
+        "id": "height",
+        "default": 1.4,
+        "min": 0.35,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#9aa3a8",
+      "lens": "#4a4f52",
+      "button": "#4a4f52"
+    },
+    "variants": []
+  },
+  {
+    "id": "motion_sensor",
+    "name": "Motion sensor",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.05,
+        "min": 0.05,
+        "max": 0.25
+      },
+      {
+        "id": "height",
+        "default": 2.3,
+        "min": 0.55,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "accent": "#ffffff"
+    },
+    "variants": []
+  },
+  {
+    "id": "smoke_detector",
+    "name": "Smoke detector",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.15,
+        "min": 0.05,
+        "max": 0.45
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "vents": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "leak_sensor",
+    "name": "Leak sensor",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.05,
+        "min": 0.05,
+        "max": 0.2
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "probes": "#b8bcc0"
+    },
+    "variants": []
+  },
+  {
+    "id": "alarm_panel",
+    "name": "Alarm panel",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.15,
+        "min": 0.05,
+        "max": 0.5
+      },
+      {
+        "id": "height",
+        "default": 1.5,
+        "min": 0.35,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "glass": "#4a4f52",
+      "screen": "#cdd6d8",
+      "keys": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "smart_lock",
+    "name": "Smart lock",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.1,
+        "min": 0.05,
+        "max": 0.3
+      },
+      {
+        "id": "height",
+        "default": 1.05,
+        "min": 0.25,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#9aa3a8",
+      "turn": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "air_quality",
+    "name": "Air quality sensor",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.1,
+        "min": 0.05,
+        "max": 0.3
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "screen": "#cdd6d8",
+      "vents": "#9aa3a8"
+    },
+    "variants": []
+  },
+  {
+    "id": "vacuum_robot",
+    "name": "Robot vacuum",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.05
+      }
+    ],
+    "colors": {
+      "body": "#575a5c",
+      "bumper": "#818283",
+      "brushes": "#2b2e31"
+    },
+    "variants": []
+  },
+  {
+    "id": "pet_feeder",
+    "name": "Pet feeder",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.2,
+        "min": 0.05,
+        "max": 0.7
+      },
+      {
+        "id": "height",
+        "default": 0.4,
+        "min": 0.05,
+        "max": 1.15
+      },
+      {
+        "id": "lift",
+        "default": 0,
+        "min": 0,
+        "max": 1.5
+      }
+    ],
+    "colors": {
+      "body": "#3c3f42",
+      "food": "#9a6a3c",
+      "bowl": "#c9ced2"
+    },
+    "variants": [
+      {
+        "id": "food",
+        "name": "Kibble Tower"
+      },
+      {
+        "id": "fountain",
+        "name": "Flow Bowl"
+      }
+    ]
+  },
+  {
+    "id": "water_heater",
+    "name": "Water heater",
+    "mount": "wall",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.4,
+        "min": 0.1,
+        "max": 1.3
+      },
+      {
+        "id": "height",
+        "default": 1.9,
+        "min": 0.45,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "trim": "#d9d7d2",
+      "pipes": "#b87333"
+    },
+    "variants": [
+      {
+        "id": "combi",
+        "name": "Wall Combi"
+      },
+      {
+        "id": "tank",
+        "name": "Tall Cylinder"
+      }
+    ]
+  },
+  {
+    "id": "router",
+    "name": "Router",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 0.8
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "body": "#2b2d30",
+      "antennas": "#2b2d30"
+    },
+    "variants": [
+      {
+        "id": "antenna",
+        "name": "Four Antenna"
+      },
+      {
+        "id": "mesh",
+        "name": "Mesh Puck"
+      }
+    ]
+  },
+  {
+    "id": "hot_tub",
+    "name": "Hot tub",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 2,
+        "min": 0.5,
+        "max": 6
+      },
+      {
+        "id": "height",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "cabinet": "#5a4a3c",
+      "shell": "#e9ecee"
+    },
+    "variants": [
+      {
+        "id": "spa",
+        "name": "Square Spa"
+      },
+      {
+        "id": "barrel",
+        "name": "Cedar Round"
+      }
+    ]
+  },
+  {
+    "id": "sauna",
+    "name": "Sauna",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 2,
+        "min": 0.5,
+        "max": 6
+      },
+      {
+        "id": "depth",
+        "default": 2.2,
+        "min": 0.55,
+        "max": 6.6
+      },
+      {
+        "id": "height",
+        "default": 2.1,
+        "min": 0.5,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "wood": "#b88a5e",
+      "roof": "#3a3d40",
+      "glass": "#8a9aa0"
+    },
+    "variants": [
+      {
+        "id": "barrel",
+        "name": "Cedar Cask"
+      },
+      {
+        "id": "cabin",
+        "name": "Nordic Cabin"
+      }
+    ]
+  },
+  {
+    "id": "sprinkler",
+    "name": "Sprinkler",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 3,
+        "min": 0.5,
+        "max": 9
+      }
+    ],
+    "colors": {
+      "body": "#2f3133",
+      "nozzle": "#c9a23a"
+    },
+    "variants": [
+      {
+        "id": "rotor",
+        "name": "Pop Rotor"
+      },
+      {
+        "id": "oscillating",
+        "name": "Arc Bar"
+      },
+      {
+        "id": "drip",
+        "name": "Drip Line"
+      }
+    ]
+  },
+  {
+    "id": "crib",
+    "name": "Crib",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.25,
+        "min": 0.3,
+        "max": 3.8
+      },
+      {
+        "id": "depth",
+        "default": 0.65,
+        "min": 0.15,
+        "max": 2
+      },
+      {
+        "id": "height",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      }
+    ],
+    "colors": {
+      "frame": "#dcc3a0",
+      "mattress": "#f4f1ea"
+    },
+    "variants": [
+      {
+        "id": "slatted",
+        "name": "Oak Slatted"
+      },
+      {
+        "id": "panel",
+        "name": "White Panel"
+      },
+      {
+        "id": "house",
+        "name": "Montessori House"
+      }
+    ]
+  },
+  {
+    "id": "bassinet",
+    "name": "Bassinet",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      },
+      {
+        "id": "depth",
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.5
+      },
+      {
+        "id": "height",
+        "default": 0.8,
+        "min": 0.2,
+        "max": 2.5
+      }
+    ],
+    "colors": {
+      "basket": "#d9c39b",
+      "stand": "#a8845c",
+      "mattress": "#f4f1ea"
+    },
+    "variants": [
+      {
+        "id": "woven",
+        "name": "Woven Moses"
+      },
+      {
+        "id": "bedside",
+        "name": "Bedside Sleeper"
+      },
+      {
+        "id": "cradle",
+        "name": "Rocking Cradle"
+      }
+    ]
+  },
+  {
+    "id": "loft_bed",
+    "name": "Loft bed",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 2.05,
+        "min": 0.5,
+        "max": 6.25
+      },
+      {
+        "id": "depth",
+        "default": 0.95,
+        "min": 0.2,
+        "max": 2.95
+      },
+      {
+        "id": "height",
+        "default": 1.8,
+        "min": 0.45,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "frame": "#e3c99a",
+      "mattress": "#e6ded1",
+      "desk": "#e3c99a"
+    },
+    "variants": [
+      {
+        "id": "pine",
+        "name": "Pine Loft"
+      },
+      {
+        "id": "desk",
+        "name": "Loft With Desk"
+      }
+    ]
+  },
+  {
+    "id": "kids_sofa",
+    "name": "Kids sofa",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 1.5,
+        "min": 0.35,
+        "max": 4.5
+      },
+      {
+        "id": "depth",
+        "default": 0.7,
+        "min": 0.15,
+        "max": 2.05
+      },
+      {
+        "id": "height",
+        "default": 0.45,
+        "min": 0.1,
+        "max": 1.35
+      }
+    ],
+    "colors": {
+      "base": "#7fa3b8",
+      "cushions": "#e8b77a"
+    },
+    "variants": [
+      {
+        "id": "blocks",
+        "name": "Play Couch"
+      },
+      {
+        "id": "mini",
+        "name": "Little Sofa"
+      },
+      {
+        "id": "bean",
+        "name": "Kids Beanbag"
+      }
+    ]
+  },
+  {
+    "id": "rocking_chair",
+    "name": "Rocking chair",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.65,
+        "min": 0.15,
+        "max": 1.95
+      },
+      {
+        "id": "depth",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      },
+      {
+        "id": "height",
+        "default": 1.05,
+        "min": 0.25,
+        "max": 3
+      }
+    ],
+    "colors": {
+      "frame": "#dcc3a0",
+      "seat": "#e6ded1"
+    },
+    "variants": [
+      {
+        "id": "windsor",
+        "name": "Windsor Rocker"
+      },
+      {
+        "id": "glider",
+        "name": "Nursery Glider"
+      },
+      {
+        "id": "recliner",
+        "name": "Wingback Recliner"
+      }
+    ]
+  },
+  {
+    "id": "sound_machine",
+    "name": "Sound machine",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.15,
+        "min": 0.05,
+        "max": 0.45
+      },
+      {
+        "id": "lift",
+        "default": 0.75,
+        "min": 0,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "body": "#f2efe9",
+      "top": "#f6e7cf"
+    },
+    "variants": [
+      {
+        "id": "nightlight",
+        "name": "Glow Dome"
+      },
+      {
+        "id": "pixel",
+        "name": "Pixel Player"
+      },
+      {
+        "id": "cube",
+        "name": "Story Cube"
+      }
+    ]
+  },
+  {
+    "id": "light_string",
+    "name": "String lights",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "length",
+        "default": 3,
+        "min": 0.5,
+        "max": 10
+      },
+      {
+        "id": "height",
+        "default": 2.2,
+        "min": 0.5,
+        "max": 3
+      },
+      {
+        "id": "sag",
+        "default": 0.25,
+        "min": 0.05,
+        "max": 1
+      }
+    ],
+    "colors": {
+      "cable": "#2b2c2d",
+      "bulbs": "#fff4dc"
+    },
+    "variants": [
+      {
+        "id": "festoon",
+        "name": "Festoon Posts"
+      },
+      {
+        "id": "fairy",
+        "name": "Fairy Wire"
+      },
+      {
+        "id": "globes",
+        "name": "Paper Globes"
+      }
+    ]
+  },
+  {
+    "id": "light_fan",
+    "name": "Ceiling fan light",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "size",
+        "default": 1.1,
+        "min": 0.25,
+        "max": 3.3
+      },
+      {
+        "id": "drop",
+        "default": 0.35,
+        "min": 0.05,
+        "max": 1.05
+      }
+    ],
+    "colors": {
+      "housing": "#f2efe9",
+      "blades": "#dcc3a0",
+      "light": "#f4eee3"
+    },
+    "variants": [
+      {
+        "id": "bowl",
+        "name": "Bowl Light"
+      },
+      {
+        "id": "disc",
+        "name": "LED Disc"
+      },
+      {
+        "id": "globe",
+        "name": "Loft Globe"
+      }
+    ]
+  },
+  {
+    "id": "bath_fan",
+    "name": "Bathroom fan",
+    "mount": "ceiling",
+    "params": [
+      {
+        "id": "size",
+        "default": 0.3,
+        "min": 0.05,
+        "max": 0.9
+      }
+    ],
+    "colors": {
+      "grille": "#f4f3ef",
+      "light": "#f4eee3"
+    },
+    "variants": [
+      {
+        "id": "grille",
+        "name": "Square Grille"
+      },
+      {
+        "id": "light",
+        "name": "Grille With Light"
+      },
+      {
+        "id": "round",
+        "name": "Round LED Ring"
+      }
+    ]
+  },
+  {
+    "id": "chest_freezer",
+    "name": "Chest freezer",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "depth",
+        "default": 0.65,
+        "min": 0.15,
+        "max": 1.95
+      },
+      {
+        "id": "height",
+        "default": 0.85,
+        "min": 0.2,
+        "max": 2.55
+      }
+    ],
+    "colors": {
+      "body": "#f4f3ef",
+      "lid": "#f4f3ef",
+      "handle": "#9aa3a8"
+    },
+    "variants": [
+      {
+        "id": "white",
+        "name": "Classic Chest"
+      },
+      {
+        "id": "compact",
+        "name": "Compact Steel"
+      }
+    ]
+  },
+  {
+    "id": "dog_kennel",
+    "name": "Dog kennel",
+    "mount": "floor",
+    "params": [
+      {
+        "id": "width",
+        "default": 0.7,
+        "min": 0.15,
+        "max": 2.1
+      },
+      {
+        "id": "depth",
+        "default": 0.9,
+        "min": 0.2,
+        "max": 2.7
+      },
+      {
+        "id": "height",
+        "default": 0.75,
+        "min": 0.15,
+        "max": 2.25
+      }
+    ],
+    "colors": {
+      "body": "#dcc3a0",
+      "roof": "#7d8a8f"
+    },
+    "variants": [
+      {
+        "id": "house",
+        "name": "Wooden House"
+      },
+      {
+        "id": "crate",
+        "name": "Wire Crate"
+      },
+      {
+        "id": "table",
+        "name": "Crate Table"
+      }
+    ]
+  }
+]

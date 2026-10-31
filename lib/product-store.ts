@@ -1351,7 +1351,7 @@ class ProductStore {
     try {
       const result = await agentApi.analyze(value);
       if (session !== this.sessionVersion) return;
-      if (apiConfig.useMock && result.cardType) {
+      if (apiConfig.useMock && result.cardType && !["device","memory","space"].includes(result.cardType)) {
         const eventId = `E_LOCAL_${++sequence}`;
         const taskId = `T_LOCAL_${++sequence}`;
         const authId =

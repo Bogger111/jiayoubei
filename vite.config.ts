@@ -28,14 +28,13 @@ const localBindingConfig = {
         },
       ]
     : [],
-  r2_buckets: r2
-    ? [
+  r2_buckets: [
+        ...(r2 && r2 !== "HOME_MEDIA" ? [{binding:r2,bucket_name:"site-creator-r2"}] : []),
         {
-          binding: r2,
-          bucket_name: "site-creator-r2",
+          binding: "HOME_MEDIA",
+          bucket_name: "jiayoubei-home-media",
         },
-      ]
-    : [],
+      ],
 };
 
 export default defineConfig(async () => {
@@ -55,10 +54,13 @@ export default defineConfig(async () => {
       ? "node_modules/.vite-real"
       : "node_modules/.vite",
     server: {
+      host: process.env.JIAYOUBEI_WEB_HOST ?? "127.0.0.1",
+      port: Number(process.env.JIAYOUBEI_WEB_PORT ?? 3000),
+      strictPort: true,
       watch: {
         // Office writes locked temporary files beside the deck on OneDrive.
         // Generated deliverables do not participate in application hot reload.
-        ignored: ["**/deliverables/**", "**/test-results/**", "**/dist/**"],
+        ignored: [/[/\\](?:deliverables|test-results|dist|\.care-local)(?:[/\\]|$)/],
         ...(isCodexSeatbeltSandbox ? { useFsEvents: false, usePolling: true } : {}),
       },
     },

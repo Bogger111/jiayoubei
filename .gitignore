@@ -22,6 +22,9 @@ dist/
 *.log
 .DS_Store
 Thumbs.db
+~$*
 /tmp/
 test-results/
 .care-local/
+__pycache__/
+*.pyc

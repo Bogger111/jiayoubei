@@ -166,7 +166,7 @@ export type AIMessage = {
   role: "user" | "assistant";
   text: string;
   createdAt: string;
-  cardType?: "event" | "task" | "risk" | "device" | "authorization";
+  cardType?: "event" | "task" | "risk" | "device" | "authorization" | "memory" | "space";
   relatedId?: string;
   analysisMode?: "demo" | "live_model" | "rules_fallback";
 };

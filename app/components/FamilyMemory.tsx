@@ -1,48 +1,42 @@
 "use client";
-import { useEffect, useState } from "react";
-import { BookOpen, Plus, Search } from "lucide-react";
-import { useProductStore } from "@/lib/product-store";
-import { apiRequest } from "@/src/api/apiClient";
-import Dialog from "./Dialog";
-import { PageHeader } from "./ui";
-type Memory = { id: number; member: string; content: string; type: string; source: string };
-let demoMemories: Memory[] = [
-  { id: 1, member: "妈妈", content: "通常午后会休息一会儿，手机有时会调成静音。", type: "habit", source: "演示家庭 · 生活习惯" },
-  { id: 2, member: "家庭", content: "需要确认情况时，先语音联系，再由家人协助。附近联系人只在必要时参与。", type: "preference", source: "演示家庭 · 联系偏好" },
-  { id: 3, member: "王阿姨", content: "住在同楼，可协助上门确认。联系前由家人确认本次安排。", type: "profile", source: "演示家庭 · 联系人" },
-];
-export default function FamilyMemory() {
-  const state = useProductStore();
-  const [entries, setEntries] = useState<Memory[]>(state.demoMode ? demoMemories : []);
-  const [query, setQuery] = useState("");
-  const [open, setOpen] = useState(false);
-  const [draft, setDraft] = useState("");
-  const [error, setError] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [loading, setLoading] = useState(!state.demoMode);
-  useEffect(() => {
-    if (state.demoMode) return;
-    const controller = new AbortController();
-    void apiRequest<{ memories: Memory[] }>("/api/memory", { signal: controller.signal }).then(result => { if (!controller.signal.aborted) setEntries(result.memories); }).catch(issue => { if (!controller.signal.aborted) setError(issue.message); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
-    return () => controller.abort();
-  }, [state.demoMode, state.family.id]);
-  const canEdit = state.demoMode || ["家庭管理员", "admin"].includes(state.user.role);
-  const save = async () => {
-    if (!draft.trim() || busy || !canEdit) return;
-    setBusy(true); setError("");
-    try {
-      const payload = { member: "家庭", content: draft.trim(), type: "preference", source: "家庭成员补充", importance: 3 };
-      const memory = state.demoMode ? { ...payload, id: Date.now() } : (await apiRequest<{ memory: Memory }>("/api/memory", { method: "POST", body: JSON.stringify(payload) })).memory;
-      if (state.demoMode) demoMemories = [memory, ...demoMemories];
-      setEntries(items => [memory, ...items]); setDraft(""); setOpen(false);
-    } catch (issue) { setError(issue instanceof Error ? issue.message : "暂时无法保存，请重试。"); }
-    finally { setBusy(false); }
-  };
-  const shown = entries.filter(entry => `${entry.member}${entry.content}`.includes(query.trim()));
-  return <div><PageHeader eyebrow="更懂这个家" title="家庭记忆" description="记住生活习惯与联系偏好，让每次安排更贴合家人。" action={canEdit ? <button className="btn primary" onClick={() => setOpen(true)}><Plus size={17} />补充记忆</button> : undefined} />
-    <div className="memory-tools"><label className="search-box"><Search size={17} /><input aria-label="搜索家庭记忆" placeholder="搜索习惯、偏好或家人…" value={query} onChange={event => setQuery(event.target.value)} /></label><span>{shown.length} 条记忆</span></div>
-    {error && !open && <p role="alert" className="care-error">{error}</p>}
-    {loading ? <p role="status">正在读取家庭记忆…</p> : <div className="memory-list">{shown.map(entry => <article className="memory-item" key={entry.id}><header><strong><BookOpen size={15} style={{ display: "inline", marginRight: 8 }} />{entry.member}</strong><span>{entry.source}</span></header><p>{entry.content}</p></article>)}{shown.length === 0 && <p className="care-subtle">没有找到对应的记忆，可以添加一条家庭习惯。</p>}</div>}
-    {open && <Dialog title="让家有备多了解一点" onClose={() => setOpen(false)} busy={busy}><form className="memory-create" onSubmit={event => { event.preventDefault(); void save(); }}><label htmlFor="memory-content">家里的习惯或联系偏好</label><textarea id="memory-content" value={draft} onChange={event => setDraft(event.target.value)} placeholder="例如：妈妈午后通常会休息，优先用语音留言联系。" rows={5} maxLength={4000} required />{error && <p role="alert">{error}</p>}<button className="care-primary" type="submit" disabled={busy || !draft.trim()}>{busy ? "正在保存…" : "保存这条记忆"}</button></form></Dialog>}
+/* eslint-disable @next/next/no-img-element -- Blob previews and authenticated family media must bypass public image optimization. */
+import {useCallback,useEffect,useMemo,useRef,useState,type FormEvent} from 'react';
+import {ArrowRight,BookOpen,Camera,Check,Clock3,ImagePlus,LoaderCircle,Pencil,Plus,Search,Sparkles,Trash2,X} from 'lucide-react';
+import {useProductStore} from '@/lib/product-store';
+import type {JournalEntry,MemorySearchResult} from '@/lib/home-memory';
+import type {HomeObservation} from '@/lib/multimodal/core';
+import HomeTimelineCard from './HomeTimelineCard';
+import FamilyProfiles from './FamilyProfiles';
+import Dialog from './Dialog';
+
+async function memoryRequest<T>(body?:Record<string,unknown>,signal?:AbortSignal):Promise<T>{const r=await fetch('/api/home-memory',{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:undefined,body:body?JSON.stringify(body):undefined,signal});const data=await r.json() as T&{error?:string};if(!r.ok)throw new Error(data.error??'暂时无法读取家庭记忆');return data;}
+export default function FamilyMemory(){
+  const state=useProductStore(),[entries,setEntries]=useState<JournalEntry[]>([]),[selected,setSelected]=useState<JournalEntry>(),[filter,setFilter]=useState('all'),[tab,setTab]=useState('journal'),[error,setError]=useState(''),[loading,setLoading]=useState(true),[query,setQuery]=useState(''),[searching,setSearching]=useState(false),[result,setResult]=useState<MemorySearchResult>(),[open,setOpen]=useState(false),[title,setTitle]=useState(''),[description,setDescription]=useState(''),[room,setRoom]=useState(''),[file,setFile]=useState<File>(),[saving,setSaving]=useState(false),[removing,setRemoving]=useState(false),[detail,setDetail]=useState<JournalEntry>(),[editing,setEditing]=useState<JournalEntry>();
+  const mounted=useRef(true),searchAbort=useRef<AbortController|undefined>(undefined);
+  useEffect(()=>{mounted.current=true;const c=new AbortController();void memoryRequest<{entries:JournalEntry[]}>(undefined,c.signal).then(data=>{if(!c.signal.aborted){setEntries(data.entries);setSelected(data.entries[0]);}}).catch(e=>{if(!c.signal.aborted)setError(e.message)}).finally(()=>{if(!c.signal.aborted)setLoading(false)});return()=>{mounted.current=false;c.abort();searchAbort.current?.abort()};},[state.family.id,state.user.id,state.demoMode]);
+  const shown=useMemo(()=>entries.filter(e=>filter==='all'||e.category===filter),[entries,filter]);
+  const events=useMemo(()=>shown.map(e=>({uid:e.id,title:e.title,description:e.description,start:new Date(e.occurredAt).toISOString(),end:new Date(e.occurredAt).toISOString(),roomName:e.room||'家庭',camera_name:'camera.journal_'+e.id,category:e.category==='pet'?'animal':e.category==='delivery'?'delivery':e.category==='activity'?'person':'entity',label:e.category==='pet'?'cat':e.category==='delivery'?'delivery':e.category==='activity'?'person':'sensor',key_frame:e.mediaUrl,evidenceCategory:e.sample?'synthetic':'field',transport:e.sample?'replay':'live',origin:e.sample?'demo':'timeline'} as HomeObservation&{roomName:string})),[shown]);
+  const choose=useCallback((event:HomeObservation)=>{const e=entries.find(x=>x.id===event.uid);if(e)setSelected(e);},[entries]);
+  const ask=async(e:FormEvent)=>{e.preventDefault();if(!query.trim())return;searchAbort.current?.abort();const c=new AbortController();searchAbort.current=c;setSearching(true);setError('');try{const r=await memoryRequest<MemorySearchResult>({operation:'query',query:query.trim()},c.signal);if(!c.signal.aborted){setResult(r);setTab('journal');}}catch(e){if(!c.signal.aborted)setError(e instanceof Error?e.message:'检索失败，请重试')}finally{if(!c.signal.aborted)setSearching(false)}};
+  const closeEditor=()=>{setOpen(false);setEditing(undefined);setTitle('');setDescription('');setRoom('');setFile(undefined);setError('')};
+  const beginCreate=()=>{closeEditor();setOpen(true)};
+  const beginEdit=(entry:JournalEntry)=>{setEditing(entry);setTitle(entry.title);setDescription(entry.description);setRoom(entry.room);setFile(undefined);setError('');setDetail(undefined);setOpen(true)};
+  const add=async(e:FormEvent)=>{e.preventDefault();if(!description.trim()||saving)return;setSaving(true);setError('');try{let mediaId='';if(file){const form=new FormData();form.append('file',file);const r=await fetch('/api/home-media',{method:'POST',body:form});const d=await r.json() as {error?:string;media:{id:string}};if(!r.ok)throw new Error(d.error??'图片上传失败');mediaId=d.media.id;}const d=await memoryRequest<{entry:JournalEntry}>({operation:editing?'update':'add',...(editing?{id:editing.id,version:editing.version??0}:{}),title:title.trim()||description.trim().slice(0,26),description:description.trim(),room:room.trim(),...(mediaId?{mediaId}:{}),category:'note'});if(mounted.current){setEntries(old=>editing?old.map(item=>item.id===d.entry.id?d.entry:item):[d.entry,...old]);setSelected(d.entry);setTitle('');setDescription('');setRoom('');setFile(undefined);setOpen(false);setEditing(undefined);setResult(undefined);}}catch(e){if(mounted.current)setError(e instanceof Error?e.message:'记忆保存失败')}finally{if(mounted.current)setSaving(false)}};
+  const remove=async(entry:JournalEntry)=>{if(removing)return;setRemoving(true);try{await memoryRequest({operation:'remove',id:entry.id});if(mounted.current){setEntries(old=>old.filter(x=>x.id!==entry.id));setSelected(undefined);setDetail(undefined);setResult(undefined);}}catch(e){if(mounted.current)setError(e instanceof Error?e.message:'删除失败')}finally{if(mounted.current)setRemoving(false)}};
+  const timestamp=(n:number)=>new Date(n).toLocaleString('zh-CN',{timeZone:state.family.timezone,month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  const canManage=state.demoMode||['家庭管理员','admin'].includes(state.user.role);
+  return <div className="family-memory-page">
+    <header className="family-page-heading"><div><p className="family-eyebrow">把日常，留在家的时间里</p><h1>家庭记忆</h1><p>回看发生的事，也记得家人的习惯和约定。</p></div><button className="family-button" onClick={beginCreate}><Plus size={18}/>补充记忆</button></header>
+    <div className="memory-workspace-toolbar"><div className="memory-view-tabs"><button aria-pressed={tab==='journal'} onClick={()=>setTab('journal')}>家庭动态</button><button aria-pressed={tab==='profiles'} onClick={()=>setTab('profiles')}>习惯与约定</button></div><form className="memory-question-form" onSubmit={e=>void ask(e)}><Search size={17}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="问问家有备，家里发生过什么…" aria-label="搜索或询问家庭记忆" maxLength={600}/><button type="submit" disabled={searching||!query.trim()} aria-label="检索家庭记忆">{searching?<LoaderCircle size={17} className="spin"/>:<ArrowRight size={17}/>}</button></form></div>
+    {error&&!open&&<p className="family-inline-error" role="alert">{error}<button onClick={()=>setError('')} aria-label="关闭提示"><X size={16}/></button></p>}
+    {tab==='profiles'?<div className="profiles-panel"><FamilyProfiles/></div>:<>
+      <div className="memory-category-filters">{[['all','全部'],['activity','家庭活动'],['pet','宠物'],['space','空间'],['note','家人补充']].map(([id,label])=><button key={id} aria-pressed={filter===id} onClick={()=>setFilter(id)}>{label}</button>)}<span>{shown.length} 条记录</span></div>
+      {result&&<section className="memory-grounded-answer" aria-live="polite"><header><span><Sparkles size={18}/>从家庭记忆中找到</span><button onClick={()=>setResult(undefined)} aria-label="关闭检索结果"><X size={17}/></button></header><p>{result.answer}</p><div className="memory-citations">{result.citations.map((c,i)=><button key={c.id} onClick={()=>{const e=entries.find(x=>'journal:'+x.id===c.id);if(e){setSelected(e);setDetail(e)}}}><span>{i+1}</span>{c.title}<ArrowRight size={12}/></button>)}</div><details><summary>查看本次检索依据</summary><p>{result.mode==='hybrid'?'语义与关键词共同检索':'关键词检索'} · {result.generation==='local_model'?'本地模型整理':'原始记录摘录'} · {result.citations.length} 条相关来源</p></details></section>}
+      <div className={'memory-journal-layout'+(!selected?' is-empty':'')}><section className="memory-timeline-shell" aria-label="家庭事件时间线">{loading?<div className="memory-empty" role="status"><LoaderCircle size={27} className="spin"/><p>正在整理家庭记忆…</p></div>:events.length?<HomeTimelineCard events={events} onSelect={choose} timezone={state.family.timezone}/>:<div className="memory-empty"><BookOpen size={32}/><h3>把家的第一段记忆留在这里</h3><p>记录一次日常，或添加一张家庭照片。</p><button className="family-button" onClick={beginCreate}><Plus size={17}/>补充记忆</button></div>}</section>
+        <section className="memory-preview-column" aria-label="记忆预览">{selected?<><button className="memory-photo-preview" onClick={()=>setDetail(selected)}>{selected.mediaUrl?<img src={selected.mediaUrl} alt={selected.title}/>:<div className="memory-note-preview"><BookOpen size={38}/><p>{selected.description}</p></div>}<div className="memory-photo-title"><BookOpen size={18}/><strong>{selected.title}</strong></div><span className="memory-photo-time">{timestamp(selected.occurredAt)}{selected.room?' · '+selected.room:''}</span></button><div className="memory-preview-description"><div><span className="memory-source-label">{selected.source}</span>{selected.confirmed&&<span><Check size={13}/>家人确认</span>}</div><h2>{selected.title}</h2><p>{selected.description}</p><div className="memory-preview-actions"><button onClick={()=>setDetail(selected)}>回顾这段记忆 <ArrowRight size={15}/></button>{canManage&&<button onClick={()=>beginEdit(selected)}><Pencil size={14}/>编辑记忆</button>}</div></div></>:<div className="memory-preview-placeholder"><Camera size={31}/><p>选择一条记忆，看看当时的画面。</p></div>}</section>
+      </div>
+    </>}
+    {open&&<Dialog title={editing?"编辑家庭记忆":"补充一段家庭记忆"} onClose={closeEditor} busy={saving}><form className="memory-entry-form" onSubmit={e=>void add(e)}><label>标题<input value={title} onChange={e=>setTitle(e.target.value)} placeholder="给这段记忆起个名字" maxLength={160}/></label><label>发生了什么<textarea aria-label="发生了什么" value={description} onChange={e=>setDescription(e.target.value)} placeholder="记录家里的日常，也可以留下一条重要约定。" rows={5} maxLength={4000} required/></label><label>房间或位置<input value={room} onChange={e=>setRoom(e.target.value)} placeholder="例如：厨房、门口" maxLength={80}/></label><label className="memory-upload"><ImagePlus size={22}/><span>{file?file.name:editing?.mediaUrl?'更换照片（保留现有照片）':'添加一张照片'}</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>setFile(e.target.files?.[0])}/></label>{error&&<p className="family-inline-error" role="alert">{error}</p>}<button className="family-button primary" disabled={saving||!description.trim()}>{saving?<LoaderCircle size={17} className="spin"/>:<Check size={17}/>}{editing?'保存修改':'保存这段记忆'}</button></form></Dialog>}
+    {detail&&<Dialog title={detail.title} onClose={()=>setDetail(undefined)}>{detail.mediaUrl&&<img className="memory-detail-image" src={detail.mediaUrl} alt={detail.title}/>}<p className="memory-detail-meta"><Clock3 size={15}/>{timestamp(detail.occurredAt)} · {detail.room||'家庭'} · {detail.source}</p><p className="memory-detail-copy">{detail.description}</p>{canManage&&<div className="memory-detail-actions"><button className="family-button" disabled={removing} onClick={()=>beginEdit(detail)}><Pencil size={15}/>编辑记忆</button><button className="memory-delete-button" disabled={removing} onClick={()=>void remove(detail)}><Trash2 size={15}/>删除这段记忆</button></div>}</Dialog>}
   </div>;
 }

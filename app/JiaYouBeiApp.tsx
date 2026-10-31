@@ -1,9 +1,14 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import HomeDeviceHub from './components/HomeDeviceHub';
+import AssistantHome from './components/AssistantHome';
+import { FormEvent, useEffect, useState } from "react";
 import CvFallMonitor from "./CvFallMonitor";
 import AppShell from "./components/QuietShell";
-import Dashboard from "./components/CareHome";
+import Dashboard from "./components/FamilyDashboard";
+import HomeSpace from "./components/HomeSpace";
+import ReconstructionPage from "./components/ReconstructionPage";
+import PhotoHomeBuilder from "./components/PhotoHomeBuilder";
 import FamilyMemory from "./components/FamilyMemory";
 import MultimodalHome from "./components/MultimodalHome";
 import MultimodalExperience from "./components/MultimodalExperience";
@@ -31,7 +36,6 @@ import { isTaskOverdue } from "@/lib/task-deadline";
 import { useCurrentTime } from "./components/useCurrentTime";
 import { AppLink, navigate, usePath } from "./components/navigation";
 import { useDialogFocusTrap } from "./components/useDialogFocus";
-import { useSpeechInput } from "./components/useSpeechInput";
 import {
   Icon,
   RiskBadge,
@@ -59,10 +63,8 @@ import {
   ChevronRight,
   CircleHelp,
   Clock3,
-  DoorOpen,
   Home,
   LockKeyhole,
-  Mic,
   Plus,
   RefreshCw,
   Search,
@@ -191,7 +193,7 @@ function TasksPage() {
       <PageHeader
         eyebrow="协同执行"
         title="家庭任务"
-        description="每个异常都有责任人、截止时间和完成证据。"
+        description="把家庭事务交给合适的人，进展和结果都有记录。"
         action={
           <Button
             disabled={
@@ -652,344 +654,7 @@ function RiskConfirmDialog({
 }
 
 function Assistant() {
-  const state = useProductStore();
-  const [input, setInput] = useState("");
-  const [thinking, setThinking] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
-  const streamRef = useRef<HTMLDivElement>(null);
-  const followLatestRef = useRef(true);
-  const [following, setFollowing] = useState(true);
-  const showLatest = () => {
-    followLatestRef.current = true;
-    setFollowing(true);
-    const stream = streamRef.current;
-    if (stream) stream.scrollTop = stream.scrollHeight;
-  };
-  useEffect(() => {
-    const stream = streamRef.current;
-    if (stream && followLatestRef.current)
-      stream.scrollTop = stream.scrollHeight;
-  }, [state.aiMessages.length, thinking]);
-  const { listening, voiceError, startVoice } = useSpeechInput((text) => {
-    const combined = input.trim() ? `${input}\n${text}` : text;
-    if (combined.length > 4000) return false;
-    setInput(combined);
-    return true;
-  });
-  const send = async (e?: FormEvent) => {
-    e?.preventDefault();
-    const value = input.trim();
-    if (!value || thinking || state.busy) return;
-    showLatest();
-    setInput("");
-    setThinking(true);
-    try {
-      await productStore.sendMessage(value);
-    } finally {
-      setThinking(false);
-    }
-  };
-  return (
-    <>
-      <PageHeader
-        eyebrow="家庭安全协同"
-        title="AI 助手"
-        description="先理解情况，再给出行动；重要操作不会静默执行。"
-        action={
-          <Button
-            variant="secondary"
-            disabled={thinking || Boolean(state.busy)}
-            onClick={() => {
-              showLatest();
-              productStore.resetConversation();
-            }}
-          >
-            <RefreshCw size={15} /> 新对话
-          </Button>
-        }
-      />
-      {state.lastError && (
-        <Panel className="error-state">
-          <AlertTriangle size={19} />
-          <div>
-            <strong>AI 服务暂时不可用</strong>
-            <p>{state.lastError}</p>
-          </div>
-          <Button variant="secondary" onClick={() => productStore.clearError()}>
-            关闭提示
-          </Button>
-          {!state.demoMode && (
-            <Button
-              variant="quiet"
-              onClick={() => void productStore.refreshRecords()}
-            >
-              核对家庭记录
-            </Button>
-          )}
-        </Panel>
-      )}
-      <div className="assistant-layout">
-        <Panel className="chat-panel">
-          <div className="chat-head">
-            <div className="agent-avatar">
-              <Bot size={20} />
-            </div>
-            <div>
-              <strong>家有备 Agent</strong>
-              <p>
-                <i className="online-dot" />{" "}
-                {state.demoMode
-                  ? "示例家庭 · 情景演示"
-                  : "使用当前家庭的授权信息"}
-              </p>
-            </div>
-            <span className="model-tag">规则复核开启</span>
-          </div>
-          <div
-            className="chat-stream"
-            ref={streamRef}
-            onScroll={() => {
-              const stream = streamRef.current;
-              if (!stream) return;
-              const latest =
-                stream.scrollHeight - stream.clientHeight - stream.scrollTop <
-                60;
-              followLatestRef.current = latest;
-              setFollowing(latest);
-            }}
-          >
-            {state.aiMessages.map((m) => (
-              <div className={`message ${m.role}`} key={m.id}>
-                {m.role === "assistant" && (
-                  <div className="message-avatar">
-                    <Bot size={15} />
-                  </div>
-                )}
-                <div className="bubble">
-                  <p>{m.text}</p>
-                  {m.cardType === "authorization" && (
-                    <div className="ai-card risk-card">
-                      <div>
-                        <LockKeyhole size={16} />
-                        <strong>高风险操作需要确认</strong>
-                      </div>
-                      <p>
-                        AI 无权直接打开入户门锁。请前往授权中心查看原因和后果。
-                      </p>
-                      <button onClick={() => navigate("/authorizations")}>
-                        查看授权请求 <ArrowRight size={14} />
-                      </button>
-                    </div>
-                  )}
-                  {m.cardType === "task" && (
-                    <div className="ai-card">
-                      {(() => {
-                        const rt = state.tasks.find(
-                          (t) => t.id === m.relatedId,
-                        );
-                        return (
-                          <>
-                            <div>
-                              <Check size={16} />
-                              <strong>
-                                {m.analysisMode === "demo"
-                                  ? "已创建演示核实任务"
-                                  : "已创建家庭任务"}
-                              </strong>
-                            </div>
-                            <p>
-                              {rt
-                                ? `${rt.title} · 责任人：${state.members.find((x) => x.id === rt.assignee)?.name ?? rt.assignee} · ${rt.status === "to_receive" ? "等待接受" : rt.status === "in_progress" ? "执行中" : "待确认"}`
-                                : "任务已创建，请前往任务中心查看"}
-                            </p>
-                            <button
-                              onClick={() =>
-                                navigate(rt ? `/tasks/${rt.id}` : "/tasks")
-                              }
-                            >
-                              查看任务 <ArrowRight size={14} />
-                            </button>
-                          </>
-                        );
-                      })()}
-                    </div>
-                  )}
-                  <small>
-                    {m.createdAt}
-                    {m.analysisMode
-                      ? ` · ${m.analysisMode === "demo" ? "演示分析" : m.analysisMode === "live_model" ? "模型分析" : "规则分析"}`
-                      : ""}
-                  </small>
-                </div>
-                {m.role === "user" && (
-                  <Avatar
-                    member={state.members.find(
-                      (x) =>
-                        x.id === state.user.id || x.name === state.user.name,
-                    )}
-                    size="sm"
-                  />
-                )}
-              </div>
-            ))}
-            {thinking && (
-              <div className="message assistant">
-                <div className="message-avatar">
-                  <Bot size={15} />
-                </div>
-                <div className="bubble thinking">
-                  <i />
-                  <i />
-                  <i /> 正在读取家庭上下文…
-                </div>
-              </div>
-            )}
-          </div>
-          {!following && (
-            <div className="chat-latest">
-              <Button variant="quiet" onClick={showLatest}>
-                查看最新消息
-              </Button>
-            </div>
-          )}
-          <form className="composer" onSubmit={send}>
-            {voiceError && (
-              <p className="voice-error" role="alert">
-                {voiceError}
-              </p>
-            )}
-            <div className="quick-prompts">
-              <button
-                type="button"
-                onClick={() =>
-                  setInput("我爸今天晚上还没回家，帮我看看有没有异常")
-                }
-              >
-                老人长时间未活动
-              </button>
-              <button
-                type="button"
-                onClick={() => setInput("门口有个陌生人请求开门")}
-              >
-                陌生人请求开门
-              </button>
-              <button
-                type="button"
-                onClick={() => setInput("厨房闻到燃气味，传感器也在报警")}
-              >
-                烟雾 / 燃气告警
-              </button>
-            </div>
-            <div className="composer-box">
-              <button
-                type="button"
-                className={`voice-button ${listening ? "listening" : ""}`}
-                aria-label={listening ? "停止语音输入" : "语音输入"}
-                aria-pressed={listening}
-                onClick={startVoice}
-              >
-                <Mic size={17} />
-              </button>
-              <textarea
-                name="family-situation"
-                aria-label="描述家庭情况"
-                autoComplete="off"
-                value={input}
-                maxLength={4000}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="告诉家有备发生了什么…"
-                rows={1}
-              />
-              <button
-                className="send-button"
-                type="submit"
-                aria-label="发送消息"
-                disabled={thinking || Boolean(state.busy) || !input.trim()}
-              >
-                <ArrowRight size={17} />
-              </button>
-            </div>
-            <small>AI 输出仅用于协同建议，不构成医疗或消防专业判断。</small>
-          </form>
-        </Panel>
-        <aside className="assistant-aside">
-          <Panel>
-            <SectionTitle title="本轮上下文" detail="仅使用已授权信息" />
-            <div className="context-row">
-              <Avatar member={state.members[0]} />
-              <div>
-                <strong>
-                  {state.family.name} · {state.members.length} 位成员
-                </strong>
-                <p>{state.family.address || "家庭地址未填写"}</p>
-              </div>
-              <Check size={15} />
-            </div>
-            <div className="context-row">
-              <span className="context-icon">
-                <DoorOpen size={16} />
-              </span>
-              <div>
-                <strong>{state.devices.length} 个设备记录</strong>
-                <p>
-                  {state.demoMode
-                    ? "当前使用示例设备状态"
-                    : "服务端分析会读取可用设备信号"}
-                </p>
-              </div>
-              <Check size={15} />
-            </div>
-            <div className="context-row">
-              <span className="context-icon amber">
-                <ShieldCheck size={16} />
-              </span>
-              <div>
-                <strong>关键动作需确认</strong>
-                <p>门锁与摄像头始终不自动执行</p>
-              </div>
-              <Check size={15} />
-            </div>
-          </Panel>
-          <Panel>
-            <SectionTitle
-              title="历史对话"
-              action={
-                <button
-                  className="link-button"
-                  onClick={() => setShowHistory(true)}
-                >
-                  查看全部
-                </button>
-              }
-            />
-            <p className="setting-description">
-              当前会话共{" "}
-              {
-                state.aiMessages.filter((message) => message.role === "user")
-                  .length
-              }{" "}
-              条提问。对话保存在当前页面会话中。
-            </p>
-          </Panel>
-        </aside>
-      </div>
-      {showHistory && (
-        <Dialog title="本次会话记录" onClose={() => setShowHistory(false)}>
-          <div className="history-dialog-list">
-            {state.aiMessages.map((message) => (
-              <div key={message.id}>
-                <strong>{message.role === "user" ? "你" : "家有备 AI"}</strong>
-                <p>{message.text}</p>
-              </div>
-            ))}
-          </div>
-          <div className="dialog-actions">
-            <Button onClick={() => setShowHistory(false)}>关闭记录</Button>
-          </div>
-        </Dialog>
-      )}
-    </>
-  );
+  return <AssistantHome />;
 }
 
 function AddItemDialog({
@@ -2517,10 +2182,14 @@ function AppRouter({ initialPath }: { initialPath: string }) {
   if (state.hydrationStatus === "unauthorized")
     return <Login onSuccess={() => productStore.retryHydrate()} />;
   let content: React.ReactNode;
-  if (path === "/" || path === "/dashboard") content = <Dashboard />;
+  if (path === "/") content = <Assistant key={`${state.family.id}-${state.user.id}`} />;
+  else if (path === "/dashboard") content = <Dashboard />;
+  else if (path === "/space") content = <HomeSpace key={`${state.family.id}-${state.user.id}`} />;
+  else if (path === "/reconstruct") content = <ReconstructionPage key={`${state.family.id}-${state.user.id}`} />;
+  else if (path === "/create-space") content = <PhotoHomeBuilder key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/welcome") content = <Welcome />;
   else if (path === "/onboarding") content = <Onboarding />;
-  else if (path === "/ai") content = <Assistant />;
+  else if (path === "/ai") content = <Assistant key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/memory") content = <FamilyMemory key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/home-agent") content = <MultimodalHome key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/showcase") content = <CompetitionShowcase />;
@@ -2538,7 +2207,7 @@ function AppRouter({ initialPath }: { initialPath: string }) {
   else if (path === "/members") content = <MembersPage />;
   else if (path.startsWith("/members/"))
     content = <MembersPage id={path.split("/")[2]} />;
-  else if (path === "/devices") content = <DevicesPage />;
+  else if (path === "/devices") content = <HomeDeviceHub key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/cv") content = <CvFallMonitor />;
   else if (path.startsWith("/devices/"))
     content = <DevicesPage id={path.split("/")[2]} />;

@@ -1,5 +1,5 @@
 import { privateJson } from "@/lib/server/json-response";
-import { addMemory, listMemories, retrieveMemories } from "@/lib/memory-store";
+import { addMemory, listMemories, retrieveMemories, updateMemory } from "@/lib/memory-store";
 import type { FamilyMemory } from "@/lib/contracts";
 import {
   apiError,
@@ -56,4 +56,18 @@ export async function POST(request: Request) {
   } catch (error) {
     return apiError(error);
   }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const session = await requireSession(request);
+    if (!session?.user) return unauthorized();
+    if (!isFamilyAdmin(session.user)) throw new ProductInputError('修改家庭记忆需要管理员权限', 403);
+    const payload = await readObjectBody(request);
+    if (!Number.isSafeInteger(payload.id) || Number(payload.id) < 1) throw new ProductInputError('请选择一条记忆');
+    const content = inputText(payload.content, '记忆内容', 4000);
+    if (typeof payload.originalContent !== 'string' || payload.originalContent.length > 4000) throw new ProductInputError('请刷新页面后重新编辑');
+    const memory = await updateMemory(session.user.familyId, Number(payload.id), content, payload.originalContent);
+    return privateJson({ memory });
+  } catch (error) { return apiError(error); }
 }

@@ -7,6 +7,8 @@ import { isFamilyAdmin,type SessionUser } from './session';
 import { controlFamilyDevice } from './device-control';
 import { careCommand,readCareWorkspace } from './care-service';
 import { ingestCareEvidence } from './care-service';
+import {prepareHomeControl,readHomeDevices} from './home-control-service';
+import {capabilityRanges} from '@/lib/home-control';
 const db=()=>(env as unknown as {DB:D1Database}).DB;
 export type HomeProposal={id:string;version:number;intent:AgentIntent;status:'draft'|'dispatching'|'api_accepted'|'simulated'|'failed'|'unknown'|'prepared';createdAt:number;expiresAt:number;detail:string;dispatchAt?:number;caseId?:string};
 const value=(x:unknown,max=240)=>{if(typeof x!=='string'||!x.trim()||x.length>max)throw new ProductInputError('请检查请求内容',400);return x.trim()};
@@ -89,7 +91,9 @@ export async function handleFamilyMcp(user:SessionUser,input:Record<string,unkno
   else if(rpc.method==='tools/call'){
    const params=rpc.params as {name?:string;arguments?:Record<string,unknown>};if(!params||!familyTools.some(t=>t.name===params.name))throw new ProductInputError('不支持的家庭工具',400);
    const state=await readProductState(user.familyId,user);let content:unknown;
-   if(params.name==='home.timeline')content={events:await observations(user)};
+   if(params.name==='home.devices'){const w=await readHomeDevices(user);content={devices:w.devices,parameterRanges:capabilityRanges};}
+   else if(params.name==='home.control.prepare')content=await prepareHomeControl(user,{...params.arguments,source:'agent'});
+   else if(params.name==='home.timeline')content={events:await observations(user)};
    else if(params.name==='home.light.prepare'){const device=state.devices.find(d=>d.id===params.arguments?.deviceId&&d.kind==='lighting');if(!device)throw new ProductInputError('请选择本家庭的灯光设备',400);content=await prepare(user,{kind:'light_on',deviceId:device.id,title:'开启'+device.name,detail:'需要家人在页面确认本次安排后发送。'});}
    else content=await prepare(user,{kind:'care',subjectId:value(params.arguments?.subjectId,100),title:'确认家人的情况',detail:'整理家庭联系安排。'});
    result={content:[{type:'text',text:JSON.stringify(content)}],isError:false};
