@@ -2,10 +2,13 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 import { processCareDue } from "../lib/server/care-service";
+import { publicDemoGate } from "./demo-access";
 
 interface Env {
   ASSETS: Fetcher;
   DB: D1Database;
+  PUBLIC_DEMO_MODE?: string;
+  PUBLIC_DEMO_SIGNING_KEY?: string;
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -31,6 +34,8 @@ const worker = {
     ctx.waitUntil(processCareDue());
   },
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const gated = await publicDemoGate(request, env);
+    if (gated) return gated;
     const url = new URL(request.url);
 
     if (url.pathname === "/_vinext/image") {
@@ -42,6 +47,13 @@ const worker = {
           return result.response();
         },
       }, allowedWidths);
+    }
+
+    // Keep public assets behind the same access gate when it is enabled.
+    // Unknown paths still belong to the application router.
+    if (request.method === "GET" || request.method === "HEAD") {
+      const asset = await env.ASSETS.fetch(request);
+      if (asset.status !== 404) return asset;
     }
 
     return handler.fetch(request, env, ctx);

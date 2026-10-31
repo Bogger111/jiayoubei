@@ -50,7 +50,8 @@
     "test:home-control:api": "node tests/home-control-api.mjs",
     "test:home-control:e2e": "node tests/e2e-home-control.mjs",
     "test:assistant:home": "node tests/e2e-assistant-home.mjs",
-    "test:assistant:api": "node tests/assistant-service-api.mjs"
+    "test:assistant:api": "node tests/assistant-service-api.mjs",
+    "test:demo:access": "node tests/public-demo-access.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",
