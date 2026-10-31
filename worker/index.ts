@@ -49,8 +49,9 @@ const worker = {
       }, allowedWidths);
     }
 
-    // Keep public assets behind the same access gate when it is enabled.
-    // Unknown paths still belong to the application router.
+    // When the hosting platform routes assets through the Worker, apply the
+    // same gate. Some platforms serve public assets directly; keep public/
+    // free of private data. Unknown paths belong to the application router.
     if (request.method === "GET" || request.method === "HEAD") {
       const asset = await env.ASSETS.fetch(request);
       if (asset.status !== 404) return asset;
