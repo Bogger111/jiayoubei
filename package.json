@@ -10,7 +10,7 @@
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json --local --show-interactive-dev-session=false",
     "test": "npm run build && npm run test:unit",
-    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs tests/care-report.test.mjs",
+    "test:unit": "node --test tests/product-policy.test.mjs tests/product-selectors.test.mjs tests/product-bootstrap.test.mjs tests/rendered-html.test.mjs tests/fall-detector.test.mjs tests/vision-evidence.test.mjs tests/task-validation.test.mjs tests/analysis-guards.test.mjs tests/db-migrations.test.mjs tests/care-agent.test.mjs tests/care-report.test.mjs tests/multimodal-core.test.mjs",
     "test:care:e2e": "node tests/e2e-family-agent.mjs",
     "deck:family": "node scripts/competition/run-care-evidence.mjs && node scripts/competition/build-family-deck.mjs",
     "test:deck:family": "node tests/family-deck-check.mjs",
@@ -35,7 +35,11 @@
     "care:prove": "node scripts/care/prove-p0-browser.mjs",
     "care:report": "node scripts/care/build-evidence-report.mjs",
     "test:care:bridge": "node tests/care-ha-bridge.mjs",
-    "test:care:p0": "npm run build && npm run test:care:unit && npm run test:care:api && npm run test:care:ha && npm run test:care:bridge && npm run care:replay && node --test tests/care-report.test.mjs"
+    "test:care:p0": "npm run build && npm run test:care:unit && npm run test:care:api && npm run test:care:ha && npm run test:care:bridge && npm run care:replay && node --test tests/care-report.test.mjs",
+    "test:home:unit": "node --test tests/multimodal-core.test.mjs",
+    "test:home:api": "node tests/multimodal-service-isolated.mjs",
+    "home:prove": "node scripts/integrations/prove-home-agent.mjs",
+    "home:verify-vendor": "node scripts/integrations/verify-vendor.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",

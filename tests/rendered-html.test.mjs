@@ -99,7 +99,7 @@ test("ships the approved offline competition deck with an identical standalone c
   const deck = await read("public/competition/index.html");
   const slides = deck.match(/<section class="slide/g) ?? [];
   assert.equal(slides.length, 14);
-  assert.match(deck, /多模态家庭协作 Agent/);
+  assert.match(deck, /多模态家庭协作中枢/);
   assert.match(deck, /data-title="家庭订阅"/);
   assert.match(deck, /data:video\/webm;base64,/);
   assert.equal(deck, await read("家有备-创客比赛.html"));

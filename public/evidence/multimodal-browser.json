@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-10-31T03:54:07.635Z",
+  "category": "synthetic",
+  "transport": "live",
+  "scope": "隔离D1、软件演练输入、原时间线组件实际渲染、中文意图与工具协议；未进行ASR或实物联调。",
+  "checks": [
+    {
+      "name": "实际时间线组件呈现三个家庭演练事件",
+      "passed": true
+    },
+    {
+      "name": "时间线可筛选与打开本地详情，不发送外部反馈",
+      "passed": true
+    },
+    {
+      "name": "许可内的多事件演示素材可在应用查看",
+      "passed": true
+    },
+    {
+      "name": "自然语言读取同一个家庭的事件时间线",
+      "passed": true
+    },
+    {
+      "name": "中文设备意图先生成安排，批准后才执行模拟适配器",
+      "passed": true
+    },
+    {
+      "name": "刷新后恢复持久化的安排与处理记录",
+      "passed": true
+    },
+    {
+      "name": "语音终端封装与工具读取通过实际HTTP接口完成",
+      "passed": true
+    },
+    {
+      "name": "新入口生成的联系计划可在原关怀流程继续批准",
+      "passed": true
+    },
+    {
+      "name": "外部事件标题作为文本显示，不执行注入标记",
+      "passed": true
+    },
+    {
+      "name": "390px 中枢页面没有横向溢出",
+      "passed": true
+    },
+    {
+      "name": "所有演练没有脚本错误或外部数据请求",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "video": "home-agent-run.webm"
+}

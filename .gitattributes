@@ -1,0 +1,4 @@
+# Preserve exact upstream bytes so pinned SHA-256 verification survives Windows checkout.
+third_party/** -text -whitespace
+public/integrations/vendor/** -text -whitespace
+public/integrations/demos/** -text

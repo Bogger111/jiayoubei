@@ -28,6 +28,7 @@ import { env } from "cloudflare:workers";
 import { and, eq, getTableColumns, sql } from "drizzle-orm";
 import { validateTaskPatch } from "@/lib/task-validation";
 import { ProductInputError } from "@/lib/product-input";
+import { MULTIMODAL_DDL } from "./multimodal-schema";
 import { CARE_DDL } from "./care-schema";
 
 const parseJson = <T>(value: string | null | undefined, fallback: T): T => {
@@ -151,7 +152,7 @@ async function initializeProductSchema() {
   const binding = (env as unknown as { DB?: D1Database }).DB;
   if (!binding) throw new Error("D1 binding DB is unavailable");
   await binding.batch(
-    [...PRODUCT_DDL, ...CARE_DDL].map((statement) => binding.prepare(statement)),
+    [...PRODUCT_DDL, ...CARE_DDL, ...MULTIMODAL_DDL].map((statement) => binding.prepare(statement)),
   );
   // 已有部署的增量迁移：users 表补充登录相关列（列已存在时忽略错误）
   const usersColumns = await binding

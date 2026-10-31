@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "public/cv/wasm/**",
     "public/cv/vision_bundle.js",
+    "public/integrations/vendor/**",
     "test-results/**",
   ]),
 ]);

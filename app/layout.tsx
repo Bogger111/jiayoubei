@@ -5,9 +5,9 @@ import "./competition.css";
 import "./quiet-glass.css";
 
 export const metadata: Metadata = {
-  title: "家有备｜多模态家庭协作助手",
+  title: "家有备｜多模态家庭协作中枢",
   description:
-    "让远方的关心，变成行动。理解家庭情况，安排家人和设备，持续跟进每一份牵挂。",
+    "看见家里，听懂家人，协同全家。把视觉事件、自然表达、家人与设备的安排放到同一个家庭空间。",
   icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
   manifest: "/manifest.json",
 };

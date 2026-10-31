@@ -57,6 +57,13 @@
       "when": 1793178916064,
       "tag": "0007_care_confirmation",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1793376000000,
+      "tag": "0008_multimodal_workspace",
+      "breakpoints": true
     }
   ]
 }

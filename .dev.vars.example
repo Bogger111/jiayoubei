@@ -19,3 +19,6 @@ CARE_LIGHT_ENTITY=
 CARE_ENTITY_MAP={}
 CARE_CAPTURE_CATEGORY=bench
 CARE_CAPTURE_ID=
+
+# 授权同步的公共区域摄像头实体，以逗号分隔；不会向浏览器返回令牌或远程图像地址。
+HOME_TIMELINE_CAMERAS=

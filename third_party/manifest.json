@@ -1,0 +1,120 @@
+[
+  {
+    "repository": "valentinfrlch/llmvision-card",
+    "commit": "0a01fea40d05855628adf50b7b643ab58b424bfb",
+    "license": "Apache-2.0",
+    "files": [
+      {
+        "source": "LICENSE",
+        "local": "third_party/llmvision-card/LICENSE",
+        "sha256": "29f6bf2bd90a2e8ab6f01c805e4b28d47760597cea2f7474782221f3c283e594"
+      },
+      {
+        "source": "NOTICE",
+        "local": "third_party/llmvision-card/NOTICE",
+        "sha256": "c2cccff24f06d61eba1a5f3691b99c66a5e0b5e1654c09848aa943abef395170"
+      },
+      {
+        "source": "dist/llmvision-card.js",
+        "local": "public/integrations/vendor/timeline/llmvision-card.js",
+        "sha256": "4f48abc5c1bafb1d575e1cf2d8fa8573feb07719b8ef2787a56a71d9482ae9e9"
+      },
+      {
+        "source": "dist/llmvision-preview-card.js",
+        "local": "public/integrations/vendor/timeline/llmvision-preview-card.js",
+        "sha256": "446a0aa9afdf2ed743cb4d2df7bfbd23c4245c2c8e7b25e91e5f53330fb1113f"
+      },
+      {
+        "source": "dist/assets/lit-B0LBCVuH.js",
+        "local": "public/integrations/vendor/timeline/assets/lit-B0LBCVuH.js",
+        "sha256": "727fd0227c3220235d9503faa57b9f9429ce0f319b2d7de6b9268e7aa9f33144"
+      },
+      {
+        "source": "assets/timeline-light.png",
+        "local": "public/integrations/demos/timeline-light.png",
+        "sha256": "0afa8b0baa8f0abed11978c9168ade577fdf32236b801a512fce03d480b0c0a0"
+      },
+      {
+        "source": "assets/popup-light.png",
+        "local": "public/integrations/demos/timeline-popup-light.png",
+        "sha256": "ed0827c6e16acb51ee4950a421b41a88b5d52a4b02031a0ad7b43fad8d049bf2"
+      }
+    ]
+  },
+  {
+    "repository": "valentinfrlch/ha-llmvision",
+    "commit": "b81d62688f549332194413ae500eed81b313a58e",
+    "license": "Apache-2.0",
+    "files": [
+      {
+        "source": "LICENSE",
+        "local": "third_party/ha-llmvision/LICENSE",
+        "sha256": "29f6bf2bd90a2e8ab6f01c805e4b28d47760597cea2f7474782221f3c283e594"
+      },
+      {
+        "source": "NOTICE",
+        "local": "third_party/ha-llmvision/NOTICE",
+        "sha256": "345d3ccb101ec51cd23da7018c71a94bf2a6b96c75fae75607c979cfce2eac17"
+      },
+      {
+        "source": "timeline_openapi_specs.yaml",
+        "local": "third_party/ha-llmvision/timeline_openapi_specs.yaml",
+        "sha256": "979ab720ccd008c348202c01d680d26842089fdc7b668b63a5c3ab3fff38df6a"
+      }
+    ]
+  },
+  {
+    "repository": "78/xiaozhi-esp32",
+    "commit": "addb1ed59bd71e09a6a5e0c52ad2f1c474aa8ca1",
+    "license": "MIT",
+    "files": [
+      {
+        "source": "LICENSE",
+        "local": "third_party/xiaozhi-esp32/LICENSE",
+        "sha256": "0a5a839033bfe18fe75d32b50d9d028912cf876f69ef59c2791aeb2971335d05"
+      },
+      {
+        "source": "docs/mcp-protocol_zh.md",
+        "local": "third_party/xiaozhi-esp32/mcp-protocol_zh.md",
+        "sha256": "4c43225d1abdc4922f561b93af9d1b00d4959b16ca5837955f09d2f411968b77"
+      },
+      {
+        "source": "docs/websocket.md",
+        "local": "third_party/xiaozhi-esp32/websocket.md",
+        "sha256": "9b82fe22280c814e36bc96c1325c5c6f5c0d8993e57c90f44479d1203d949147"
+      }
+    ]
+  },
+  {
+    "repository": "home-assistant/intents",
+    "commit": "b1e9b9890fc444f426cafc073aa588ecdc8a0083",
+    "license": "CC-BY-4.0",
+    "files": [
+      {
+        "source": "LICENSE.md",
+        "local": "third_party/ha-intents/LICENSE.md",
+        "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+      },
+      {
+        "source": "sentences/zh-CN/HassTurnOn/name_only.yaml",
+        "local": "third_party/ha-intents/name_only.yaml",
+        "sha256": "d37b744582e15fa10d28434fd0b5d3dd33ffa2ea980b53c62da1e617d517d942"
+      },
+      {
+        "source": "sentences/zh-CN/HassTurnOn/name_area.yaml",
+        "local": "third_party/ha-intents/name_area.yaml",
+        "sha256": "33f9dbf1b33991cf62cb76f4637ef394bbcd9aca9b78813aa017ed967c5fc1d9"
+      },
+      {
+        "source": "rules/zh-CN/common.yaml",
+        "local": "third_party/ha-intents/common.yaml",
+        "sha256": "0b0ee5df78fd15db62de7ab7878e888eec9ecb6cd2f0d65c4bc5fb3cc9be7929"
+      },
+      {
+        "source": "rules/zh-CN/light.yaml",
+        "local": "third_party/ha-intents/light.yaml",
+        "sha256": "be59e28ade84ebed17bfcc6d3d64dd5b51eb105c00ee50b6505d8e76b6a1488f"
+      }
+    ]
+  }
+]

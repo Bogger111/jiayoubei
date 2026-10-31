@@ -2,12 +2,13 @@
 
 一、打开与放映
 用 Chrome 或 Edge 打开根目录“家有备-创客比赛.html”。图片、真实浏览器录屏、运行数据和互动逻辑均在文件内，可单独拷贝、断网演示。请勿打开 template.html。
-前 12 页主讲共 6 分钟；第 13 页互动演示 2 分钟；第 14 页为来源与运行记录附页。
+前 12 页主讲共 6 分钟；第 13 页互动演示 2 分钟；第 14 页为演示与运行记录附页。
 左右方向键、空格、PageUp / PageDown 翻页；N 讲稿；O 目录；F 全屏；Esc 关闭弹层。内嵌视频需点击播放。
 讲稿另存于 presentations/比赛讲稿-家庭协作版.txt，台上不需要念出其中的备查说明。
 
 二、讲述主线
-家有备是多模态家庭协作 Agent。首先服务子女与父母分居的家庭，帮助他们在异常联系不上时，把关心落实为安排。
+家有备是多模态家庭协作中枢。首先服务子女与父母分居的家庭，帮助他们在异常联系不上时，把关心落实为安排。
+第 6 页可先展示多模态中枢的实际软件录屏：回顾动态 → 中文整理灯光安排 → 家人确认 → 整理联系计划。第 14 页可切换两端协作录像，以及多事件时间线列表和详情示例。
 从“妈妈怎么还没回应”进入：汇合活动、门磁、语音回应与授权图像，整理一份完整计划，家人批准后协同执行，跟进到回应。
 商业方案是子女按家庭订阅，接入兼容已有设备。试用、定价、渠道合作与用户认可需要通过后续真实使用验证；不要将计划人数说成已有用户。
 视觉检测保留为一个可选感知模块，主讲不需要展开模型或摔倒片段。
@@ -25,12 +26,17 @@
 首页可调整联系人与等待时间、批准计划、记录家人回应、查看事件进度。设备依据和授权图像在“查看依据”中查看。
 顶部“家庭 / 行动 / 设备 / 记忆”为常用入口；“更多功能”提供家庭事件、成员、联系人、授权、审计、视觉模块和比赛演示。
 Ctrl/Cmd + K 搜索事件、任务、家人和设备。手机端使用右上角菜单。
+多模态中枢地址为 http://localhost:3000/home-agent，首页与更多菜单均有入口。点击“载入软件演练”即可使用；未配置实际设备时显示“设备连接待配置”。中枢动态、灯光安排与处理记录保存在本地 D1，刷新后仍在。
 默认首页的软件演练保存在当前页面会话；/care 工作台使用真实后端并持久化计划、任务和截止时间。真实成员协作的配置与启动见 docs/care-p0/启动与复现.md。
 
 五、开发者复现
 本次环境：Windows、Node 24.18.0、本机 Chrome。脚本默认 Chrome 路径为 C:/Program Files/Google/Chrome/Application/chrome.exe。
 启动演示前端后依次执行：
   npm run test:care:e2e
+  npm run home:verify-vendor
+  npm run build
+  npm run test:home:api
+  npm run home:prove
   npm run deck:family
   npm run test:deck:family
 浏览器检查会重新生成录屏和截图；构建器读取这些媒体及 JSON，再生成根目录与 public/competition/index.html 两份相同的离线文件。
@@ -42,7 +48,9 @@ Ctrl/Cmd + K 搜索事件、任务、家人和设备。手机端使用右上角�
 共享计划程序：lib/care-agent.ts。
 情景与执行约束结果：public/evidence/care-run.json。
 浏览器操作结果：public/evidence/care-browser-checks.json。
-录屏：public/evidence/media/family-agent-run.webm。
+中枢录屏：public/evidence/media/home-agent-run.webm。
+双账号协作录屏：public/evidence/media/care-p0-family.webm 与 care-p0-admin.webm。
+原演练录屏：public/evidence/media/family-agent-run.webm。
 设计复核：design-qa.md。
 新增P0证据：npm run test:care:api、npm run test:care:ha、npm run care:replay、npm run care:prove、npm run care:report。
 关怀证据报告：public/care-evidence/index.html。硬件模板与采集材料：examples/care/ 和 docs/care-p0/。
@@ -53,6 +61,6 @@ Ctrl/Cmd + K 搜索事件、任务、家人和设备。手机端使用右上角�
 家庭记忆页面支持录入与检索；目前尚未把自动学习生活习惯接入新的计划程序。
 人物、家居素材为 AI 生成的视觉示意。实际首页截图与操作录屏来自运行中的应用。
 ESP32 接线、烧录、实物回执与外部消息送达尚未完成。真实访谈、试用反馈、团队与合作信息仍待补充。
-人口来源、互联标准、语音能力来源链接见附页与讲稿。人口数字是需求背景，不能直接等同于付费市场规模。
+第三方来源、固定版本、改动和完整许可见根目录 appendix.md 及 third_party/。PPT 正文和讲稿不放作者或引用清单；分发展示稿时附带 appendix.md 与许可文件。人口数字是需求背景，不能直接等同于付费市场规模。
 视觉专项报告统一保存在 public/evidence/index.html，可由视觉页面的“实测记录”打开。两段已保存的姿态轨迹位于 benchmarks/vision/pose-traces/；重新评测时可用 prepare-urfd.py 下载临时视频。URFD 相关素材使用 CC BY-NC-SA 4.0，见 public/evidence/NOTICE.txt。新版主讲不依赖这些视频。
 本次生成文件保存在本地，未由生成器自动上传或部署。

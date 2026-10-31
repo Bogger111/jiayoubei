@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const port = 3010;
@@ -18,7 +19,7 @@ async function waitForHttp(child, output) {
   throw new Error(`production server did not become ready\n${output.join("")}`);
 }
 
-test("production start serves the dashboard", { timeout: 45_000 }, async () => {
+test("production start serves the dashboard, household hub and pinned local demos", { timeout: 45_000 }, async () => {
   const output = [];
   const windows = process.platform === "win32";
   const command = windows ? (process.env.ComSpec ?? "cmd.exe") : "npm";
@@ -34,6 +35,18 @@ test("production start serves the dashboard", { timeout: 45_000 }, async () => {
     const response = await waitForHttp(child, output);
     const html = await response.text();
     assert.match(html, /家有备/);
+    const hub = await fetch(`http://localhost:${port}/home-agent`);
+    assert.equal(hub.status, 200);
+    assert.match(await hub.text(), /家有备/);
+    const manifest = JSON.parse(await readFile(new URL("../third_party/manifest.json", import.meta.url), "utf8"));
+    for (const entry of manifest.flatMap((project) => project.files).filter((entry) => entry.local.startsWith("public/"))) {
+      const asset = await fetch(`http://localhost:${port}/${entry.local.slice(7)}`);
+      assert.equal(asset.status, 200, entry.local);
+      assert.deepEqual(Buffer.from(await asset.arrayBuffer()), await readFile(new URL("../" + entry.local, import.meta.url)), entry.local);
+    }
+    const deck = await fetch(`http://localhost:${port}/competition/`);
+    assert.equal(deck.status, 200);
+    assert.equal(await deck.text(), await readFile(new URL("../家有备-创客比赛.html", import.meta.url), "utf8"));
   } finally {
     if (process.platform === "win32" && child.pid) spawnSync("taskkill", ["/PID", String(child.pid), "/T", "/F"], { windowsHide: true });
     else child.kill("SIGTERM");

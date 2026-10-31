@@ -28,7 +28,7 @@ export default function CareHome() {
   const icons = [Activity, DoorOpen, Phone, Camera];
   const today = new Date(current).toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long", timeZone: state.family.timezone });
   return <div className="care-home">
-    <div className="care-date">{today}</div>
+    <div className="care-date">{today}<AppLink href="/home-agent" className="home-agent-entry">多模态家庭中枢 <ArrowRight size={15}/></AppLink></div>
     <div className="care-columns">
       <section className="care-overview">
         <h1><span>把远方的牵挂，</span><wbr /><span>放在心上</span></h1>

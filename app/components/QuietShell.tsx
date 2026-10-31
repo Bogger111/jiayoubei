@@ -7,7 +7,7 @@ import { useRecordSync } from "./useRecordSync";
 import Dialog from "./Dialog";
 import GlobalSearch from "./GlobalSearch";
 const primary = [["/", "家庭", Home], ["/tasks", "行动", CheckCircle2], ["/devices", "设备", Wifi], ["/memory", "记忆", BookOpen]] as const;
-const more = [["/care", "关怀确认", CheckCircle2], ["/events", "家庭事件", Activity], ["/ai", "和家有备聊聊", Sparkles], ["/members", "家庭成员", Users], ["/services", "附近联系人与服务", CircleHelp], ["/authorizations", "家庭授权", ShieldCheck], ["/audit", "操作记录", ScrollText], ["/cv", "视觉感知", Camera], ["/settings", "设置", Settings]] as const;
+const more = [["/home-agent", "多模态家庭中枢", Sparkles], ["/care", "关怀确认", CheckCircle2], ["/events", "家庭事件", Activity], ["/ai", "和家有备聊聊", Sparkles], ["/members", "家庭成员", Users], ["/services", "附近联系人与服务", CircleHelp], ["/authorizations", "家庭授权", ShieldCheck], ["/audit", "操作记录", ScrollText], ["/cv", "视觉感知", Camera], ["/settings", "设置", Settings]] as const;
 export default function QuietShell({ children, path }: { children: ReactNode; path: string }) {
   const state = useProductStore();
   useRecordSync(!state.demoMode && state.hydrationStatus === "ready");
