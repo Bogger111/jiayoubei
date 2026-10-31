@@ -52,7 +52,8 @@
     "test:assistant:home": "node tests/e2e-assistant-home.mjs",
     "test:assistant:api": "node tests/assistant-service-api.mjs",
     "test:demo:access": "node tests/public-demo-access.mjs",
-    "test:demo:browser": "node tests/public-demo-browser.mjs"
+    "test:demo:browser": "node tests/public-demo-browser.mjs",
+    "test:space:direct": "node tests/space-direct-api.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",

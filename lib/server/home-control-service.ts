@@ -2,7 +2,7 @@ import {env} from 'cloudflare:workers';
 import {ProductInputError} from '@/lib/product-input';
 import furnitureCatalog from '@/lib/space/furniture-catalog.json';
 import {readRuntimeEnv} from '@/lib/runtime-env';
-import {actionDescription,deviceCapabilities,capabilitiesForEntity,deviceStateSignature,interpretDeviceActions,validateHomeAction,type HomeAction,type HomeControlPlan,type HomeDevice,type HomeDeviceWorkspace,type HomeReceipt} from '@/lib/home-control';
+import {actionDescription,actionFromSpace,deviceCapabilities,capabilitiesForEntity,deviceStateSignature,interpretDeviceActions,validateHomeAction,type HomeAction,type HomeControlPlan,type HomeDevice,type HomeDeviceWorkspace,type HomeReceipt} from '@/lib/home-control';
 import type {SpaceEntity,SpaceWorkspace} from '@/lib/space/types';
 import {readHomeSpace} from './home-space-service';
 import {adapterFor,haConfigured,homeAssistantAdapter} from './home-device-adapters';
@@ -65,7 +65,7 @@ export async function updateHomeDevice(user:SessionUser,input:Record<string,unkn
   const next={...device,name:input.name===undefined?device.name:text(input.name,80),roomId,furnitureId,policy,version:device.version+1};
   const r=await db().prepare('UPDATE home_device_registry SET version=?,data_json=? WHERE family_id=? AND entity_id=? AND version=? AND NOT EXISTS(SELECT 1 FROM home_control_leases WHERE family_id=? AND entity_id=? AND expires_at>?)').bind(next.version,JSON.stringify(next),user.familyId,device.id,device.version,user.familyId,device.id,Date.now()).run();if(!r.meta.changes)throw new ProductInputError('设备设置已更新，请刷新',409);return next;
 }
-export async function prepareHomeControl(user:SessionUser,input:Record<string,unknown>){admin(user);const workspace=await readHomeDevices(user);
+export async function prepareHomeControl(user:SessionUser,input:Record<string,unknown>,preloaded?:HomeDeviceWorkspace){admin(user);const workspace=preloaded??await readHomeDevices(user);
   let raw=input.steps;if(input.text!==undefined){try{raw=interpretDeviceActions(text(input.text,1000),workspace.devices);}catch(e){throw new ProductInputError(e instanceof Error?e.message:'请明确要调控的设备');}}
   if(!Array.isArray(raw)||!raw.length||raw.length>12)throw new ProductInputError('一次计划请安排 1–12 台设备');
   const seen=new Set<string>();const steps=raw.map(item=>{const id=item&&typeof item==='object'?(item as Record<string,unknown>).deviceId:undefined,device=workspace.devices.find(d=>d.id===id);if(!device)throw new ProductInputError('设备不存在或不属于当前家庭',404);if(seen.has(device.id))throw new ProductInputError('同一计划每台设备只指定一个目标状态');seen.add(device.id);let action:HomeAction;try{action=validateHomeAction(item,device);}catch(e){throw new ProductInputError(e instanceof Error?e.message:'动作无效');}return {...action,deviceName:device.name,deviceVersion:device.version,before:device.entity,driver:device.driver};});
@@ -112,11 +112,25 @@ export async function withHomeDevices(user:SessionUser,space:SpaceWorkspace):Pro
   const areas={...space.areas};for(const room of space.config.rooms)areas[room.id]={area_id:room.id,name:room.name??room.id};
   return {...space,states,entities,areas,config:{...space.config,devices}};
 }
+/** A direct user interaction in the 3D space is itself the authorization. */
+export async function executeSpaceAction(user:SessionUser,input:Record<string,unknown>){
+  admin(user);
+  const entityId=text(input.entityId,160),service=text(input.service,80);
+  if(!input.data||typeof input.data!=='object'||Array.isArray(input.data)||Object.keys(input.data).length>20)throw new ProductInputError('设备操作格式不正确');
+  const workspace=await readHomeDevices(user),device=workspace.devices.find(item=>item.id===entityId);
+  if(!device)throw new ProductInputError('请先在智能设备中部署这台设备',404);
+  let action:HomeAction;
+  try{action=actionFromSpace(device,service,input.data as Record<string,unknown>);}
+  catch(error){throw new ProductInputError(error instanceof Error?error.message:'设备操作不支持');}
+  const plan=await prepareHomeControl(user,{steps:[action],source:'space',title:'家庭空间设备操作'},workspace);
+  return approveHomeControl(user,{operation:'approve',id:plan.id,version:plan.version,confirmed:true});
+}
 export async function homeControlCommand(user:SessionUser,input:Record<string,unknown>){
   if(input.operation==='discover')return {candidates:await discoverHomeDevices(user)};
   if(input.operation==='register')return {device:await registerHomeDevice(user,input)};
   if(input.operation==='update')return {device:await updateHomeDevice(user,input)};
   if(input.operation==='prepare')return {plan:await prepareHomeControl(user,input)};
+  if(input.operation==='space_action')return {plan:await executeSpaceAction(user,input)};
   if(input.operation==='approve'||input.operation==='cancel')return {plan:await approveHomeControl(user,input)};
   throw new ProductInputError('不支持的设备操作');
 }

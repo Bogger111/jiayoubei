@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
-import { Bell, BookOpen, Box, Camera, CheckCircle2, ChevronDown, CircleHelp, Home, Menu, Search, Settings, ShieldCheck, Users, Wifi, Activity, Presentation, Play, Sparkles, ScrollText } from "lucide-react";
+import { Bell, BookOpen, Box, Camera, CheckCircle2, ChevronDown, CircleHelp, Menu, Search, Settings, ShieldCheck, Users, Wifi, Activity, Presentation, Play, Sparkles, ScrollText } from "lucide-react";
 import { productStore, useProductStore } from "@/lib/product-store";
 import { AppLink, navigate } from "./navigation";
 import { useRecordSync } from "./useRecordSync";
 import Dialog from "./Dialog";
 import GlobalSearch from "./GlobalSearch";
-const primary = [["/", "助手", Sparkles], ["/dashboard", "家庭", Home], ["/space", "空间", Box], ["/tasks", "行动", CheckCircle2], ["/devices", "设备", Wifi], ["/memory", "记忆", BookOpen]] as const;
+const primary = [["/", "助手", Sparkles], ["/space", "空间", Box], ["/tasks", "行动", CheckCircle2], ["/devices", "设备", Wifi], ["/memory", "记忆", BookOpen]] as const;
 const more = [["/create-space", "照片搭建三维家居", Box], ["/showcase", "比赛核心演示", Play], ["/experience", "完整产品体验", Play], ["/home-agent", "多模态家庭中枢", Sparkles], ["/care", "关怀确认", CheckCircle2], ["/events", "家庭事件", Activity], ["/ai", "和家有备聊聊", Sparkles], ["/members", "家庭成员", Users], ["/services", "附近联系人与服务", CircleHelp], ["/authorizations", "家庭授权", ShieldCheck], ["/audit", "操作记录", ScrollText], ["/cv", "视觉感知", Camera], ["/settings", "设置", Settings]] as const;
 export default function QuietShell({ children, path }: { children: ReactNode; path: string }) {
   const state = useProductStore();
@@ -41,7 +41,7 @@ export default function QuietShell({ children, path }: { children: ReactNode; pa
         <button className="q-icon" aria-label="更多功能" aria-expanded={menu} onClick={() => setMenu(true)}><Menu size={22} /></button>
       </div>
     </header>
-    <main id="main-content" tabIndex={-1} className={`q-main page-content ${path === "/" || path === "/dashboard" ? "q-home-main" : ""}`}>
+    <main id="main-content" tabIndex={-1} className={`q-main page-content ${path === "/" ? "q-home-main" : ""}`}>
       {(state.recordsSyncError || state.lastError) && <section role="alert" className="q-error"><span>{state.recordsSyncError || state.lastError}</span><button onClick={() => state.recordsSyncError ? void productStore.refreshRecords() : productStore.clearError()}>{state.recordsSyncError ? "重新获取" : "关闭提示"}</button></section>}
       {children}
     </main>

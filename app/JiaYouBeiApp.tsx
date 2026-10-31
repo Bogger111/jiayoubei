@@ -5,7 +5,6 @@ import AssistantHome from './components/AssistantHome';
 import { FormEvent, useEffect, useState } from "react";
 import CvFallMonitor from "./CvFallMonitor";
 import AppShell from "./components/QuietShell";
-import Dashboard from "./components/FamilyDashboard";
 import HomeSpace from "./components/HomeSpace";
 import ReconstructionPage from "./components/ReconstructionPage";
 import PhotoHomeBuilder from "./components/PhotoHomeBuilder";
@@ -2178,12 +2177,16 @@ function AppRouter({ initialPath }: { initialPath: string }) {
       globalNotify = null;
     };
   }, []);
+  useEffect(() => {
+    if (path !== "/dashboard") return;
+    window.history.replaceState(window.history.state, "", "/");
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }, [path]);
   if (path === "/join") return <JoinFamilyPage />;
   if (state.hydrationStatus === "unauthorized")
     return <Login onSuccess={() => productStore.retryHydrate()} />;
   let content: React.ReactNode;
-  if (path === "/") content = <Assistant key={`${state.family.id}-${state.user.id}`} />;
-  else if (path === "/dashboard") content = <Dashboard />;
+  if (path === "/" || path === "/dashboard") content = <Assistant key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/space") content = <HomeSpace key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/reconstruct") content = <ReconstructionPage key={`${state.family.id}-${state.user.id}`} />;
   else if (path === "/create-space") content = <PhotoHomeBuilder key={`${state.family.id}-${state.user.id}`} />;

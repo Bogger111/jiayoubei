@@ -2,7 +2,7 @@ import {chromium} from 'playwright-core';
 import {mkdir,writeFile} from 'node:fs/promises';
 const output='test-results/visual-upgrade',base='http://localhost:3000';
 await mkdir(output,{recursive:true});
-const routes=[['assistant','/'],['family','/dashboard'],['space','/space'],['actions','/tasks'],['devices','/devices'],['memory','/memory'],['photos','/create-space'],['scan','/reconstruct'],['events','/events'],['members','/members'],['services','/services'],['settings','/settings'],['audit','/audit'],['notifications','/notifications'],['permissions','/authorizations'],['care','/care'],['vision','/cv']];
+const routes=[['assistant','/'],['legacy-family-redirect','/dashboard'],['space','/space'],['actions','/tasks'],['devices','/devices'],['memory','/memory'],['photos','/create-space'],['scan','/reconstruct'],['events','/events'],['members','/members'],['services','/services'],['settings','/settings'],['audit','/audit'],['notifications','/notifications'],['permissions','/authorizations'],['care','/care'],['vision','/cv']];
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true}),results=[];
 try{
  for(const width of [1536,768,390]){

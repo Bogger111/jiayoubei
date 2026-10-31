@@ -325,3 +325,5 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .home-hub-history .family-section-title>span{font-size:12px;max-width:130px}.q-more{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.space-action-status { margin: 10px 2px 0; color: var(--text-secondary); font-size: 13px; }
