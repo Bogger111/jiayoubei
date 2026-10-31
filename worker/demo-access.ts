@@ -46,7 +46,7 @@ function htmlPage(setup: boolean, message = "", status = 200) {
   const body = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title} · 家有备</title><style>
   *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#f5f7f3;color:#172d27;font:16px/1.5 system-ui,-apple-system,"Microsoft YaHei",sans-serif}.panel{width:min(100%,430px);background:white;border:1px solid #dbe4dc;border-radius:24px;padding:40px;box-shadow:0 20px 60px #183b2910}.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#e8f0e8;color:#24584c;font-size:19px}h1{font-size:29px;letter-spacing:-.04em;margin:35px 0 8px}p{color:#667a70;margin:0 0 28px}label{display:block;font-weight:600;font-size:14px;margin:18px 0 8px}input{width:100%;height:48px;border:1px solid #b8cbc0;border-radius:12px;padding:0 14px;font:inherit;background:#fff;color:#172d27}input:focus{outline:3px solid #b8d8c7;border-color:#235749}button{width:100%;height:48px;border:0;border-radius:12px;margin-top:24px;color:white;background:#214f42;font:600 15px system-ui;cursor:pointer}button:hover{background:#173e33}.hint{font-size:13px;color:#71847a;margin:10px 0 0}.error{font-size:14px;color:#a8322d;margin:12px 0 0}.footer{font-size:12px;color:#8b9a91;margin:26px 0 0}@media(max-width:480px){.panel{padding:28px}}
   </style></head><body><main class="panel"><div class="brand"><span class="mark">⌂</span>家有备</div><h1>${title}</h1><p>${explanation}</p><form method="post" action="${setup ? "/__demo/setup" : "/__demo/unlock"}"><label for="code">访问码</label><input id="code" name="code" type="password" minlength="12" maxlength="128" required autofocus autocomplete="${setup ? "new-password" : "current-password"}">${repeat}${setup ? '<div class="hint">请使用 12—128 位英文字母、数字或符号。</div>' : ""}${message ? `<div class="error" role="alert">${message}</div>` : ""}<button type="submit">${setup ? "设置并进入" : "进入家有备"}</button></form><div class="footer">家庭协作 · 空间 · 记忆</div></main></body></html>`;
-  return new Response(body, { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'", "Referrer-Policy": "no-referrer", "X-Content-Type-Options": "nosniff" } });
+  return new Response(body, { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'", "Referrer-Policy": "same-origin", "X-Content-Type-Options": "nosniff" } });
 }
 async function readForm(request: Request): Promise<URLSearchParams | null> {
   if (!request.headers.get("content-type")?.startsWith("application/x-www-form-urlencoded")) return null;
@@ -99,7 +99,7 @@ export async function publicDemoGate(request: Request, env: DemoEnv): Promise<Re
       if (request.method === "GET") return htmlPage(true);
       if (request.method !== "POST") return new Response("Method not allowed", { status: 405 });
       const origin = request.headers.get("Origin");
-      if (origin && origin !== url.origin) return new Response("Forbidden", { status: 403 });
+      if (origin && origin !== url.origin) return htmlPage(true, "请返回并重新输入访问码。", 403);
       const form = await readForm(request), code = form?.get("code") ?? "";
       if (!/^[\x21-\x7e]{12,128}$/.test(code) || form?.get("confirm") !== code) return htmlPage(true, "请检查访问码格式，并确保两次输入一致。", 400);
       const salt = crypto.getRandomValues(new Uint8Array(16));
@@ -113,7 +113,7 @@ export async function publicDemoGate(request: Request, env: DemoEnv): Promise<Re
       if (request.method === "GET") return htmlPage(false);
       if (request.method !== "POST") return new Response("Method not allowed", { status: 405 });
       const origin = request.headers.get("Origin");
-      if (origin && origin !== url.origin) return new Response("Forbidden", { status: 403 });
+      if (origin && origin !== url.origin) return htmlPage(false, "请返回并重新输入访问码。", 403);
       const key = await failureKey(request, secret), failures = await failureState(env.DB, key);
       if (failures.count >= maxFailures) return htmlPage(false, "尝试次数过多，请稍后再试。", 429);
       const form = await readForm(request), code = form?.get("code") ?? "";
